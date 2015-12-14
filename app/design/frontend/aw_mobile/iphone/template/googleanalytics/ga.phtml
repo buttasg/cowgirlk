@@ -1,0 +1,49 @@
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/AW-LICENSE.txt
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * =================================================================
+ * This software is designed to work with Magento community edition and
+ * its use on an edition other than specified is prohibited. aheadWorks does not
+ * provide extension support in case of incorrect edition use.
+ * =================================================================
+ *
+ * @category   AW
+ * @package    AW_Mobile
+ * @version    1.6.7
+ * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
+ */
+?><?php if (!Mage::helper('core/cookie')->isUserNotAllowSaveCookie()): ?>
+<?php $accountId = Mage::getStoreConfig(AW_Mobile_Helper_Data::XML_PATH_GA_ACCOUNT, Mage::app()->getStore()->getId()) ?>
+<?php if (!$accountId)
+    {
+        $accountId = Mage::getStoreConfig(Mage_GoogleAnalytics_Helper_Data::XML_PATH_ACCOUNT);
+    }
+    ?>
+<!-- BEGIN GOOGLE ANALYTICS CODEs-->
+<script type="text/javascript">
+//<![CDATA[
+    var _gaq = _gaq || [];
+    <?php echo $this->_getPageTrackingCode($accountId) ?>
+    <?php echo $this->_getOrdersTrackingCode() ?>
+
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+//]]>
+</script>
+<!-- END GOOGLE ANALYTICS CODE -->
+<?php endif; ?>

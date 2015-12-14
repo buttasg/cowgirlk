@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <account_adminhtml_account_index>
+        <reference name="content">
+            <block type="account/adminhtml_account" name="account" />
+        </reference>
+    </account_adminhtml_account_index>
+</layout>

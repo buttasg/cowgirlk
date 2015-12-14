@@ -1,0 +1,191 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2013 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+
+
+ <!--[if !IE]>newsletter-sec div start here<![endif]-->
+    <div class="newsletter-sec">
+      <div class="newsletter-left">
+        <div class="newsletter-right">
+          <div class="newsletter-box">
+            <h4>NEWSLETTER</h4>
+            <p>Don’t miss out on all things Western Chic!<br/>
+              Subscribe to our newsletter and start receiving special deals, exclusive offers, and styling tips from Cowgirl Kim.</p>
+            <div class="newsletter-search">
+              <input type="text" value="Enter Your Email Address" />
+              <input name=""  type="submit" />
+            </div>
+          </div>
+          <div class="footer-main">
+            <div class="footer-left">
+              <div class="footer-link">
+                <h5>Category</h5>
+                <?php echo $this->getLayout()->createBlock('core/template')->setTemplate('catalog/category/footer_links.phtml')->toHtml();?>
+              </div>
+              <div class="footer-link footer-link1">
+                <h5>Customer Service</h5>
+                <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('footer_customer_service_links')->toHtml();?>
+              </div>
+            </div>
+            <div class="footer-right">
+              <div class="footer-link">
+                <h5>About us </h5>
+                <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('footer_about_us_links')->toHtml();?>
+              </div>
+              <div class="footer-link fowllow-us">
+                <h5>Follow us</h5>
+                <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('footer_follow_us_links')->toHtml();?>
+              </div>
+            </div>
+          </div>
+          <div class="footer-main1 nobor">
+            <div class="footer-left">
+              <div class="blog-sec">
+                <h5> BLOG </h5>
+                <ul>
+                  <li>
+                    <p>New Lane boots for winter</p>
+                    <span>December 25 2013</span> </li>
+                  <li>
+                    <p>New Lane boots for winter</p>
+                    <span>December 25 2013</span> </li>
+                  <li class="nobor last-btn"> <a href="/blog" title="blog"><img src="<?php echo $this->getSkinUrl('images/view-more-btn.png')?>" alt="" /> </a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="footer-right">
+              <div class="facebook-sec">
+                <h5> FACEBOOK FEED</h5>
+                <ul>
+                  <li>
+                    <p>CowGirlKim</p>
+                    <span>December 25 2013</span> </li>
+                  <li>
+                    <p class="txt">More "Chasing Santa Fe" From DD Ranch! The La Cienaga Serape Tank Top, skirt and Carracas Concho Belt! Click link below for more <br/>details!</p>
+                  </li>
+                  <li> 
+                  <div id="facebook_like_button_holder">
+		    <fb:like href="http://cowgirlkim.easysitedemo.info/" layout="button_count" show_faces="false" width="450" action="like"></fb:like>
+		    <div id="cgk_facebook_button"></div>
+    		  </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+ <style type="text/css">
+	#facebook_like_button_holder {
+	position:relative;
+	width:153px;
+	height: 46px;
+	overflow:hidden;
+	color:#fff;
+	background:black;
+	float: right;	
+	}
+	#facebook_like_button_holder iframe 
+	{
+	   height: 46px !important;
+	   width:153px !important;
+	}
+	
+	
+	#facebook_like_button_holder iframe {
+	position:absolute;
+	top: 0px;
+	width: 153px !important;
+	height: 46px !important;
+	}
+	
+	#cgk_facebook_button {
+	pointer-events: none;
+	position:absolute;
+	width: 153px;
+	height: 46px;
+	left:0;
+	top:0;
+	/*z-index: 99999;*/
+	}
+	iframe
+{
+transform: scale(2);
+-ms-transform: scale(2); 
+-webkit-transform: scale(2); 
+-o-transform: scale(2); 
+-moz-transform: scale(2); 
+transform-origin: top left;
+-ms-transform-origin: top left;
+-webkit-transform-origin: top left;
+-moz-transform-origin: top left;
+-webkit-transform-origin: top left;
+}
+</style>
+<script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script>
+<script type="text/javascript">
+FB.Event.subscribe('edge.create', function(response) {
+	facebookLike();
+});
+FB.Event.subscribe('edge.remove', function(response) {
+	facebookDislike();
+});
+//var frame=jQuery('iframe');
+//var content=frame.contents();
+//content.find('body').html();
+//alert(content.find('form').children('button').attr('type'));
+document.domain = 'www.facebook.com';
+var iframe = top.frames[0].document;
+var css = '' +
+          '<style type="text/css">' +
+          'body{margin:0;padding:0;background:transparent}' +
+          '</style>';
+iframe.open();
+iframe.write(css);
+iframe.close();
+</script>
+    <!--[if !IE]>newsletter-sec div end here<![endif]-->
+    
+   <!--[if !IE]>footer-sec div start here<![endif]-->
+    <div class="footer-sec">
+   <div class="copy-right"><?php echo $this->getCopyright() ?></div>
+      <div class="footer-contact "> Contact Us<br/>
+        <span class="phone-icon default-img">&nbsp;</span><span><?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('phone_number')->toHtml() ?> </span> </div>
+      <div class="copy-right text-align"> Site by SuperWebSolutions </div>
+    </div>
+   <!--[if !IE]>footer-sec div end here<![endif]-->
+  </div>
+</div>
+  <!--[if !IE]>mt-wrapper div end here<![endif]-->
+
+<!--div class="footer-container">
+    <div class="footer">
+        <?php echo $this->getChildHtml() ?>
+        <p class="bugs"><?php echo $this->__('Help Us to Keep Magento Healthy') ?> - <a href="http://www.magentocommerce.com/bug-tracking" onclick="this.target='_blank'"><strong><?php echo $this->__('Report All Bugs') ?></strong></a> <?php echo $this->__('(ver. %s)', Mage::getVersion()) ?></p>
+        <address><?php echo $this->getCopyright() ?></address>
+    </div>
+</div-->

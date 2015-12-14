@@ -1,0 +1,201 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2013 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+
+
+ <!--[if !IE]>newsletter-sec div start here<![endif]-->
+    <div class="newsletter-sec">
+      <div class="newsletter-left">
+        <div class="newsletter-right">
+          
+          <?php echo $this->getLayout()->createBlock('core/template')->setTemplate('constantcontact/footer_signup.phtml')->toHtml();?>
+          <div class="footer-main">
+            <div class="footer-left">
+              <div class="footer-link">
+                <h5>Category</h5>
+                <?php echo $this->getLayout()->createBlock('core/template')->setTemplate('catalog/category/footer_links.phtml')->toHtml();?>
+              </div>
+              <div class="footer-link footer-link1">
+                <h5>Customer Service</h5>
+                <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('footer_customer_service_links')->toHtml();?>
+              </div>
+            </div>
+            <div class="footer-right">
+              <div class="footer-link">
+                <h5>About us </h5>
+                <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('footer_about_us_links')->toHtml();?>
+              </div>
+              <div class="footer-link fowllow-us">
+                <h5>Follow us</h5>
+                <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('footer_follow_us_links')->toHtml();?>
+              </div>
+            </div>
+          </div>
+          <div class="footer-main1 nobor">
+            <div class="footer-left">
+              <div class="blog-sec">
+                <h5> BLOG </h5>
+                <?php $resource=Mage::getSingleton('core/resource');?>
+                <?php $read= $resource->getConnection('core_read');
+		      $postTable = $resource->getTableName('wp_posts');
+		      $select = $read->select()
+                       		     ->from($postTable,array('*'))
+                       		     ->where('post_status=?','publish')
+			   	     ->where('post_type=?','post')
+			   	     ->order("post_date DESC")->limit(2);		   
+		    $posts = $read->fetchAll($select);
+		   if($posts ){
+		   ?>
+		<ul>
+		<?php
+		   foreach($posts as $post){
+		?>
+                  <li>
+                    <p>
+                    <a href="/blog/<?php echo $post['post_name']?>" title="<?php echo $post['post_title']?>"><?php echo $post['post_title']?></a></p>
+                    <span><?php echo date('F d Y',strtotime($post['post_date']))?></span> </li>
+                
+                <?php
+                   }
+                   ?>
+                   <li class="nobor last-btn"> <a href="/blog" title="View more"><img alt="View more" src="<?php echo $this->getSkinUrl('images/view-more-btn.png')?>"> </a></li>
+                   </ul>
+                <?php }?>
+              </div>
+            </div>
+            <div class="footer-right">
+              <div class="facebook-sec">
+                <h5> FACEBOOK FEED</h5>
+                <ul>
+                 <?php echo $this->getLayout()->createBlock('facebook/facebook')->setTemplate('facebook/facebook.phtml')->toHtml();?>
+                  <li> 
+                  <div id="facebook_like_button_holder">
+		    <fb:like href="http://cowgirlkim.easysitedemo.info/" layout="button_count" show_faces="false" width="450" action="like"></fb:like>
+		    <div id="cgk_facebook_button"></div>
+    		  </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+ <style type="text/css">
+	#facebook_like_button_holder {
+	position:relative;
+	width:158px;
+	height: 48px;
+	overflow:hidden;
+	color:#fff;
+	background:black;
+	float: right;	
+	}
+	/*#facebook_like_button_holder iframe 
+	{
+	   height: 48px !important;
+	   width:158px !important;
+	}*/
+	
+	
+	/*#facebook_like_button_holder iframe {
+	position:absolute;
+	top: 0px;
+	width: 158px !important;
+	height: 48px !important;
+	}*/
+	
+	#cgk_facebook_button {
+	pointer-events: none;
+	position:absolute;
+	width: 158px;
+	height: 48px;
+	left:0;
+	top:0;
+	}
+	iframe
+	{	
+	position:absolute;
+	transform: scale(3);
+	-ms-transform: scale(3); 
+	-webkit-transform: scale(3); 
+	-o-transform: scale(3); 
+	-moz-transform: scale(3); 
+	transform-origin: top left;
+	-ms-transform-origin: top left;
+	-webkit-transform-origin: top left;
+	-moz-transform-origin: top left;
+	-webkit-transform-origin: top left;
+	opcity:0.0;
+	}
+</style>
+<script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script>
+<script type="text/javascript">
+FB.Event.subscribe('edge.create', function(response) {
+	facebookLike();
+});
+FB.Event.subscribe('edge.remove', function(response) {
+	facebookDislike();
+});
+//var frame=jQuery('iframe');
+//var content=frame.contents();
+//content.find('body').html();
+//alert(content.find('form').children('button').attr('type'));
+//document.domain = 'www.facebook.com';
+/*var iframe = top.frames[0].document;
+var css = '' +
+          '<style type="text/css">' +
+          'body{margin:0;padding:0;background:transparent}' +
+          '</style>';
+iframe.open();
+iframe.write(css);
+iframe.close();*/
+function openLike()
+{	
+	/*var src=jQuery('#facebook_like_button_holder iframe').attr('src');
+	jQuery('<iframe>', {src: src,id:'facebookframe',frameborder: 0,scrolling: 'no'});*/
+	var html=jQuery('#facebook_like_button_holder iframe').html();
+	alert(html);
+}
+</script>
+    <!--[if !IE]>newsletter-sec div end here<![endif]-->
+    
+   <!--[if !IE]>footer-sec div start here<![endif]-->
+    <div class="footer-sec">
+   <div class="copy-right"><?php echo $this->getCopyright() ?></div>
+      <div class="footer-contact "> Contact Us<br/>
+        <span class="phone-icon default-img">&nbsp;</span><span><?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('phone_number')->toHtml() ?> </span> </div>
+      <div class="copy-right text-align"> Site by SuperWebSolutions </div>
+    </div>
+   <!--[if !IE]>footer-sec div end here<![endif]-->
+  </div>
+</div>
+  <!--[if !IE]>mt-wrapper div end here<![endif]-->
+  <?php echo $this->getLayout()->createBlock('core/template')->setTemplate('constantcontact/popup.phtml')->toHtml();?>
+  <script src="//tdcdn.blob.core.windows.net/toolbar/assets/prod/td.js" data-trackduck-id="5374cbb56d4c4b7b42d19681" async=""></script>
+
+
+  

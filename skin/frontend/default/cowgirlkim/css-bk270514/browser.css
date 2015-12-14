@@ -1,0 +1,224 @@
+/********************window********************/
+
+.win-chrome .facebook-sec img {
+	margin: 14px 0 0 240px;
+}
+.win-safari .nav-bar ul {
+	margin: 0;
+	padding: 0;
+	width: 125%;
+}
+
+ .win-chrome .facebook-sec img {
+		margin: 15px 0 0 240px;
+}
+
+ .win-chrome .nav-bar li.nav-4.parent:hover ul {
+right:26.3%;
+	
+}
+
+ .win-safari .facebook-sec img {
+		margin: 2px 0 0 240px;
+}
+
+
+ .win-safari .nav-bar li.nav-4.parent:hover ul {
+    right: 26.4%;
+}
+
+body.win-safari {overflow-x:hidden;}
+body {overflow-x:hidden;}
+/********************ie********************/
+
+.win-Netscape .giftcard-sec{width:175px;}
+
+.win-msie .giftcard-sec{width:176px;}
+
+
+.win-Netscape  .nav-bar li.parent:hover ul {
+    margin-top: 60px;
+
+}
+
+
+
+
+ .win-Netscape .facebook-sec img {
+		margin: 14px 0 0 240px;
+}
+
+ .win-msie .facebook-sec img {
+    margin: 14px 0 0 240px;
+}
+
+
+.mac-Version .search-btn{display:none;}
+.mac-Version  .product-options dd select  {background:none;}
+.win-msie-8  .product-options dd select  {background:none;}
+.win-msie-9  .product-options dd select  {background:none;}
+.win-msie-10 .product-options dd select  {background:none;}
+.win-Netscape  .product-options dd select  {background:none;}
+
+
+.win-msie-8  .add-to-cart select {background:none;}
+.win-msie-9  .add-to-cart select {background:none;}
+.win-msie-10 .add-to-cart select  {background:none;}
+.win-Netscape  .add-to-cart select  {background:none;}
+
+.mac-Version  .add-to-cart select  {background:none;}
+
+ .win-msie-8  .register-container select {background:none;}
+ .win-msie-9  .register-container select {background:none;}
+ .win-msie-10  .register-container select {background:none;}
+ .win-Netscape .register-container select {background:none;}
+
+
+
+ .win-msie .nav-bar ul {
+
+margin-left:1px;
+}
+
+/********************mac********************/
+
+
+.mac-chrome .new-arrivals-sec ul {
+	width:1200px;
+}
+
+
+
+/*
+.mac-safari .nav-bar li a {
+	padding-top: 12px;
+}
+
+.mac-chrome .nav-bar li a {
+	padding: 11px 14px 12px;
+}
+.mac-firefox .nav-bar li a {
+	padding: 11px 14px 11px;
+}
+*/
+
+
+
+
+.mac-safari .nav-bar li.parent:hover ul {margin-top: 58px;}
+.mac-chrome .nav-bar li.parent:hover ul {margin-top: 58px;}
+.mac-firefox .nav-bar li.parent:hover ul {margin-top: 58px;}
+
+
+ .mac-firefox .nav-bar li.nav-4.parent:hover ul {
+    right: 26.9%;
+}
+ .mac-safari .nav-bar li.nav-4.parent:hover ul {
+    right: 26.7%;
+}
+ .mac-chrome .nav-bar li.nav-4.parent:hover ul {
+    right: 26.4%;
+}
+
+ @media (min-width: 320px) and (max-width: 640px) {
+ .facebook-sec img {
+ margin: 14px 0 50px 240px;
+}
+ .top-container {
+ background: url("../images/line.jpg") repeat-x scroll 0 29px #F8F6F2;
+ float: left;
+ height: 30px;
+ position: inherit;
+ width: 100%;
+ z-index: 99999999;
+ margin-bottom:-10px;
+}
+.register-container select {
+    background: #fff;
+ 
+}
+}
+
+ @media (min-width: 768px) and (max-width: 959px) {
+.buttons-set .button span span {line-height: 48px;}
+
+.register-container select {
+    background: #fff;
+ 
+}
+
+.clearer:after,
+.header-container:after,
+.header-container .top-container:after,
+.header:after,
+.header .quick-access:after,
+#nav:after,
+.main:after,
+.footer:after,
+.footer-container .bottom-container:after,
+.col-main:after,
+.col2-set:after,
+.col3-set:after,
+.col3-layout .product-options-bottom .price-box:after,
+.col4-set:after,
+.search-autocomplete li:after,
+.block .block-content:after,
+.block .actions:after,
+.block li.item:after,
+.block-poll li:after,
+.block-layered-nav .currently li:after,
+.page-title:after,
+.products-grid:after,
+.products-list li.item:after,
+.box-account .box-head:after,
+.dashboard .box .box-title:after,
+.box-reviews li.item:after,
+.box-tags li.item:after,
+.pager:after,
+.sorter:after,
+.ratings:after,
+.add-to-box:after,
+.add-to-cart:after,
+.product-essential:after,
+.product-collateral:after,
+.product-view .product-img-box .more-views ul:after,
+.product-view .box-tags .form-add:after,
+.product-view .product-shop .short-description:after,
+.product-view .box-description:after,
+.product-options .options-list li:after,
+.product-options-bottom:after,
+.product-review:after,
+.cart:after,
+.cart-collaterals:after,
+.cart .crosssell li.item:after,
+.opc .step-title:after,
+.checkout-progress:after,
+.multiple-checkout .place-order:after,
+.group-select li:after,
+.form-list li:after,
+.form-list .field:after,
+.buttons-set:after,
+.page-print .print-head:after,
+.advanced-search-summary:after,
+.gift-messages-form .item:after,
+.send-friend .form-list li p:after { 
+display:block; 
+content:"."; 
+clear:none; font-size:0; line-height:0; height:0; overflow:hidden; }
+.nav-bar li.parent:hover ul {margin-top: 58px;}
+
+}
+
+
+ @media (min-width: 1000px) and (max-width: 1900px) {
+.mt-wrapper{overflow:hidden;}
+
+}
+
+
+
+
+
+.mac-safari .buttons-set .button span span {line-height: 48px;}
+.mac-chrome .buttons-set .button span span {line-height: 48px;}
+.mac-firefox .buttons-set .button span span {line-height: 48px;}

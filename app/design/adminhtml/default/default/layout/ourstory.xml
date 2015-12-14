@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <ourstory_adminhtml_ourstory_index>
+        <reference name="content">
+            <block type="ourstory/adminhtml_ourstory" name="ourstory" />
+        </reference>
+    </ourstory_adminhtml_ourstory_index>
+     <ourstory_adminhtml_staff_index>
+        <reference name="content">
+            <block type="ourstory/adminhtml_staff" name="staff" />
+        </reference>
+    </ourstory_adminhtml_staff_index>
+</layout>

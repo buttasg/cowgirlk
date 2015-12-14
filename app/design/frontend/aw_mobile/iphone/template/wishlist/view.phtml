@@ -1,0 +1,85 @@
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/AW-LICENSE.txt
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * =================================================================
+ * This software is designed to work with Magento community edition and
+ * its use on an edition other than specified is prohibited. aheadWorks does not
+ * provide extension support in case of incorrect edition use.
+ * =================================================================
+ *
+ * @category   AW
+ * @package    AW_Mobile
+ * @version    1.6.7
+ * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
+ */
+?><?php
+/* @var $this Mage_Wishlist_Block_Customer_Wishlist */
+?>
+<div class="in-page">
+    <div class="page-head"><h3><?php echo $this->__('My Wishlist') ?></h3></div>
+    <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+    <?php if ($this->hasWishlistItems()): ?>
+    <form action="<?php echo $this->getUrl('*/*/update') ?>" method="post">
+        <?php echo $this->getBlockHtml('formkey')?>
+        <table cellspacing="0" class="shopping-cart product-data" id="wishlist-table">
+            <thead>
+                <tr>
+                    <th><?php echo $this->__('Product') ?></th>
+                    <th><?php echo $this->__('Added') ?></th>
+                    <th class="a-center"><?php echo $this->__('Action') ?></th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php foreach($this->getWishlistItems() as $item): ?>
+                <?php $product = $item instanceof Mage_Catalog_Model_Product ? $item : $item->getProduct() ?>
+                <tr class="td-noborder">
+                    <td style="padding-top:15px;">
+                        <div class="aw-mobile-wishlist-item"><a class="aw-mobile-wishlist-item-img" href="<?php echo $this->getProductUrl($item) ?>"><img src="<?php echo $this->helper('catalog/image')->init($product, 'small_image')->resize(65, 65); ?>" alt="<?php echo $this->htmlEscape($item->getName()) ?>" width="65" /></a>
+                        <a class="aw-mobile-wishlist-item-name" href="<?php echo $this->getProductUrl($item) ?>" title="<?php echo $this->htmlEscape($item->getName()) ?>"><?php echo $this->htmlEscape($item->getName()) ?></a></div>
+                        <?php echo $this->getPriceHtml($product) ?>
+                    </td>
+                    <td class="a-center">
+                        <?php echo $this->getFormatedDate($item->getAddedAt()) ?>
+                    </td>
+                    <td class="a-center">
+                    <?php if($product->isSaleable()): ?>
+                        <a href="<?php echo $this->getItemAddToCartUrl($item) ?>" class="link-cart"><?php echo $this->__('Add to Cart') ?></a><br />
+                    <?php endif; ?>
+                        <br /><a href="<?php echo $this->getItemRemoveUrl($item) ?>" onclick="return confirmRemoveWishlistItem();" class="link-remove" ><?php echo $this->__('Remove') ?></a>
+                    </td>
+                </tr>
+
+            <?php endforeach ?>
+            </tbody>
+        </table>
+        <script type="text/javascript">decorateTable('wishlist-table')</script>
+        <div class="small-buttons a-center nobr">
+
+            <?php if($this->isSaleable()):?>
+            <button onclick="setLocation('<?php echo $this->getUrl('*/*/allcart') ?>')" class="form-button-alt form-button""  type="button"><span><?php echo $this->__('Add All to Cart') ?></span></button>
+            <?php endif;?>
+
+        </div>
+    </form>
+    <?php else: ?>
+        <p><?php echo $this->__('You have no items in your wishlist.') ?></p>
+    <?php endif ?>
+    <a class="button grey left"  title="Go back" href="<?php echo Mage::getUrl('customer/account');?>"><span class="nowrap"><?php echo $this->__('Back');?></span></a><br /><br />
+</div>
+
+<script type="text/javascript">
+    function confirmRemoveWishlistItem() {
+        return confirm('<?php echo $this->__('Are you sure you want to remove this product from your wishlist?') ?>');
+    }
+</script>

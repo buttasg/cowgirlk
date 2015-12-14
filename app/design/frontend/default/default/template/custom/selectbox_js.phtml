@@ -1,0 +1,12 @@
+<script type="text/javascript">
+jQuery(function () {
+	jQuery("select.sort_bx").selectbox();
+	jQuery(".display_bx").selectbox();
+	
+	jQuery("ul.sbOptions li a").each(function(){
+			var href=jQuery(this).attr('href').replace('#','');
+			jQuery(this).attr('href',href);
+			jQuery(this).click(function(){ location.href=jQuery(this).attr('href'); })
+		});
+});
+</script>

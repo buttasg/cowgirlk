@@ -1,0 +1,34 @@
+ <?php 
+ $customerEmail=null;
+ if (Mage::getSingleton('customer/session')->isLoggedIn()) {
+ 	
+ 	$customer = Mage::getSingleton('customer/session')->getCustomer();
+	 $customerEmail = $customer->getEmail();
+ }
+ $postEmail=Mage::getSingleton('customer/session')->getPostedEmail();
+ $email=(!empty($postEmail))?$postEmail:$customerEmail;
+ 
+ ?>
+ <?php $url=Mage::helper('custom')->getCommonProtocolUrl(Mage::getUrl('constantcontact/index/subscribeVisitor'));?>
+ <div id="form_newletter">
+          <input name="email" id="cc_email" type="text" placeholder="Enter Your Email Address" value="<?php echo $email;?>"/>
+          
+          <span><?php echo $this->__('Enter your Email Address to receive special offers and promotions!')?></span> </div>
+		  
+        <img id="btnSubmit" src="<?php echo $this->getSkinUrl('images/subscribe-btn1.png')?>" alt="<?php echo $this->__('Subscribe newsletter')?>"  /> 
+        <div id="cc_error" class="no-dispaly"></div>
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+jQuery(function(){
+	jQuery('#form_newletter').cc({textId: "#cc_email",
+		   buttonId: "#btnSubmit",
+		   errorDivId:"#cc_error",
+		   fadeImgPath:"<?php echo $this->getSkinUrl('images/subscribe-btn.png')?>",
+		   highlightImgPath:"<?php echo $this->getSkinUrl('images/subscribe-btn1.png')?>",
+		   url:"<?php echo $url?>"
+		   });
+});
+ //]]>
+</script>

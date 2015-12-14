@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <homeslider_adminhtml_homeslider_index>
+        <reference name="content">
+            <block type="homeslider/adminhtml_homeslider" name="homeslider" />
+        </reference>
+    </homeslider_adminhtml_homeslider_index>
+</layout>

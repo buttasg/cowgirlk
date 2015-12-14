@@ -1,0 +1,34 @@
+<config>
+    <modules>
+        <CommerceExtensions_Urlrewritesimportexport>
+            <version>0.1.0</version>
+        </CommerceExtensions_Urlrewritesimportexport>
+    </modules>   
+    <global>
+        <models>
+            <commerceextensions_urlrewritesimportexport>
+                <class>CommerceExtensions_Urlrewritesimportexport_Model</class>
+            </commerceextensions_urlrewritesimportexport>
+        </models>
+        <resources><!--
+            <urlrewritesimportexportt_setup>
+                <setup>
+                    <module>CommerceExtensions_Urlrewritesimportexport</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </urlrewritesimportexport_setup> -->
+            <urlrewritesimportexport_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </urlrewritesimportexport_write>
+            <urlrewritesimportexport_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </urlrewritesimportexport_read>
+        </resources>
+    </global>
+</config>

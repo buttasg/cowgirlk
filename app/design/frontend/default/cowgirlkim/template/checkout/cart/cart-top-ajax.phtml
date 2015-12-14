@@ -1,0 +1,58 @@
+<?php $_cartQty = $this->getSummaryCount(); if ( is_null($_cartQty) ) $_cartQty = 0; ?>
+<?php if($_cartQty>0): ?>
+<?php $_imgHelper= Mage::helper('catalog/image'); ?>
+<li class="mycart" >
+<a href="<?php echo $this->getUrl('checkout/cart') ?>" title="My Cart"><?php echo $this->__('My Cart')?></a><span><?php echo $_cartQty?></span> 
+<div class="cart-arrow cart-display">
+  <?php $_items = $this->getRecentItems() ?>
+   <ul class="cart-dropdown">        
+         <?php foreach($_items as $_item): ?>
+         <?php $_product = $_item->getProduct();?>
+          <li>
+            <div class="cart-img-dropdown"><a href="<?php echo $_product->getProductUrl() ; ?>"><img src="<?php echo $_imgHelper->init($_product, 'small_image')->resize(61,53);?>" width="61" alt=""  height="53"/></a></div>
+            <div class="cart-info-dropdown"> <span class="heading"><a href="<?php echo $_product->getProductUrl() ; ?>"><?php echo $this->escapeHtml($_product->getName()) ?></a></span> <span class="price"><?php echo Mage::helper('checkout')->formatPrice($_item->getCalculationPrice()) ?> </span> <span class="qty">Qty: <?php echo $_item->getQty();?></span> </div>
+         </li> 
+         <?php endforeach; ?>
+          <li class="checkout-btn"> <a href="<?php echo $this->getUrl('checkout/cart') ?>"> <img src="<?php echo $this->getSkinUrl('images/checkout-btn.png')?>" alt="Checkout" title="Checkout"   /></a> </li>
+      </ul>
+</div>
+</li>
+<?php endif;?>
+<?php if($_cartQty==0): ?>
+     <li class="mycart cart-empty" ><a href="<?php echo $this->getUrl('checkout/cart') ?>" title=""><?php echo $this->__('My Cart')?></a><span></span>
+        <div class="cart-arrow cart-display">
+          <ul class="cart-dropdown">
+            <li>
+              
+              <div class="empty-txt ">
+              <?php echo $this->__('It appears that your cart')?> <br/> <?php echo $this->__('is currently empty')?>
+              </div>
+			  <div class="empty-line default-img "></div>
+              <div class="empty-txt1">
+            <?php echo $this->__('You can continue browsing here!')?>
+              </div>
+              
+            </li>
+            
+     
+          </ul>
+        </div>
+      </li>
+<?php endif;?>
+<script>
+jQuery(function($){
+//cart dropdown
+    var config = {
+        over: function(){
+            $('.mycart .cart-arrow').animate({opacity:1, height:'toggle'}, 200);
+        },
+        timeout: 200, // number = milliseconds delay before onMouseOut
+        out: function(){
+            $('.mycart .cart-arrow').animate({opacity:0, height:'toggle'}, 200);
+        }
+    };
+    
+	$('.mycart .cart-arrow').animate({opacity:1, height:'toggle'}, 200);
+	setTimeout(function(){$('.mycart .cart-arrow').animate({opacity:0, height:'toggle'}, 200);  $("li.mycart").hoverIntent( config ); },5000);
+})
+</script>

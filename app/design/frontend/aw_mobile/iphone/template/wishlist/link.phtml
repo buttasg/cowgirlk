@@ -1,0 +1,48 @@
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/AW-LICENSE.txt
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * =================================================================
+ * This software is designed to work with Magento community edition and
+ * its use on an edition other than specified is prohibited. aheadWorks does not
+ * provide extension support in case of incorrect edition use.
+ * =================================================================
+ *
+ * @category   AW
+ * @package    AW_Mobile
+ * @version    1.6.7
+ * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
+ */
+?><?php
+/* @var $this Mage_Wishlist_Block_Customer_Wishlist */
+
+?>
+<?php
+$url = $this->helper('wishlist')->getListUrl();
+$count = $this->helper('wishlist')->getItemCount();
+?>
+<div>
+<div class="dashboard-block">
+    <div class="page-head" style="position: relative;">
+        <h3><?php echo $this->__('My Wishlist') ?></h3>
+        <a class="edit" href="<?php echo $url ?>"><img src="<?php echo $this->getSkinUrl('images/edit.gif') ?>" alt="<?php echo $this->__('View') ?>" /></a>
+    </div>
+    <?php if($count == 1):
+        echo $this->__("You have %s item in wishlist",$count);
+    elseif($count > 1):
+        echo $this->__("You have %s items in wishlist",$count);
+    else:?>
+    <p><?php echo $this->__('You have no items in your wishlist.') ?></p>
+    <?php endif ?>
+</div>
+</div>

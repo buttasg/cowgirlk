@@ -1,0 +1,424 @@
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/AW-LICENSE.txt
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * =================================================================
+ * This software is designed to work with Magento community edition and
+ * its use on an edition other than specified is prohibited. aheadWorks does not
+ * provide extension support in case of incorrect edition use.
+ * =================================================================
+ *
+ * @category   AW
+ * @package    AW_Giftcard
+ * @version    1.0.6
+ * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
+ */
+?><?php
+$_product = $this->getProduct();
+$_id = $_product->getId();
+$preConfiguredValues = $this->getPreConfiguredValues();
+?>
+
+<div class="main-container">
+  <h1><?php echo $this->__('GIFT CERTIFICATE')?></h1>
+  <div class="gift-certificate-container">
+    <div class="gift-certificate-inner">
+      <div class="gift-certificate-inner1">
+        <div class="gift-top-bar">
+          <div class="the-field-txt"><?php echo $this->__('The fields marked')?> <span>*</span><?php echo $this->__(' are mandatory')?></div>
+          <div class="gift-vaildate-box"> <span><?php echo $this->__('Validate / Redeem Gift Certificate')?></span>
+            <div class="enter-code">
+            <form autocomplete="off" action="<?php echo Mage::getUrl('awgiftcard/card/check') ?>" method="post" name="code_chk" id="code_chk">
+              <input name="giftcard_code" id="giftcard_code" type="text" value="" placeholder="Enter Code:" class="required-entry input-text"/>
+              <input name="chk_button" type="button" value="Enter" onclick="codeChkForm.submit(this)" />
+            </form>
+            </div>
+          </div>
+ <script type="text/javascript">
+    //<![CDATA[
+        var codeChkForm = new VarienForm('code_chk');
+        codeChkForm.submit = function(button, url) {
+            
+            if (this.validator.validate()) {
+                var form = this.form;
+                var oldUrl = form.action;
+
+                if (url) {
+                   form.action = url;
+                }
+                var e = null;
+                try {
+                    this.form.submit();
+                } catch (e) {
+                }
+                this.form.action = oldUrl;
+                if (e) {
+                    throw e;
+                }
+
+                if (button && button != 'undefined') {
+                    button.disabled = true;
+                }
+            }
+        }.bind(codeChkForm);
+    //]]>;
+    </script>
+ 
+     <form autocomplete="off" method="post" id="product_addtocart_form"<?php if($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
+        <?php echo $this->getBlockHtml('formkey') ?>
+        <div class="no-display">
+            <input type="hidden" name="product" value="<?php echo $_product->getId() ?>" />
+            <input type="hidden" name="related_product" id="related-products-field" value="" />
+        </div>
+          
+          
+     <?php if($_product->isSaleable()): ?>
+       <!-- <p class="availability in-stock">
+            <?php echo $this->helper('catalog')->__('Availability:') ?>
+            <span><?php echo $this->helper('catalog')->__('In stock') ?></span>
+        </p>-->
+    <?php else: ?>
+        <p class="availability out-of-stock">
+            <?php echo $this->helper('catalog')->__('Availability:') ?>
+            <span>
+                <?php echo $this->helper('catalog')->__('Out of stock') ?>
+            </span>
+        </p>
+    <?php endif; ?>
+          
+		  
+          
+          <?php echo $this->getChildHtml('product_type_data_extra') ?>
+          
+          
+          <div class="postal-mail-sec">
+            <ul>
+              <li>
+                <input type="text" id="aw-gc-recipient-name" name="aw_gc_recipient_name" class="required-entry input-text" value="<?php echo $this->escapeHtml($preConfiguredValues->getData('aw_gc_recipient_name')) ?>" placeholder="Recipient Name: *"/>
+              </li>
+              <li>
+                <?php $senderName = $preConfiguredValues->getData('aw_gc_sender_name') ? $preConfiguredValues->getData('aw_gc_sender_name') : $this->getCustomerName();?>
+              <input type="text" id="aw-gc-sender-name" name="aw_gc_sender_name" class="required-entry input-text" value="<?php echo $this->escapeHtml($senderName); ?>" placeholder="Sender Name: *"/>
+              </li>
+              
+              <li class="price-input">
+                    <?php if ($_product->isSaleable() && $this->hasAmountOptions()): ?>
+        <?php if (!$_product->getAwGcAllowOpenAmount() && (count($this->getAmountOptions()) == 1)): ?>
+            <?php $_amount = $this->getAmountOptions(); $_amount = array_shift($_amount); ?>
+            <div class="price-box">
+                <span class="regular-price">
+                    <span class="price" id="product-price-<?php echo $_id ?><?php echo $this->getIdSuffix() ?>">
+                        <?php echo Mage::helper('core')->currency($_amount, true, false); ?>
+                    </span>
+                </span>
+            </div>
+            <script type="text/javascript">
+                //<![CDATA[
+                optionsPrice.productPrice = "<?php echo $_amount;?>";
+                //]]>
+            </script>
+        <?php else: ?>
+            <div class="aw-gc-amount-form">
+              
+                        <?php if (count($this->getAmountOptions()) > 0): ?>
+                            <label for="aw-gc-amount" id="aw-gc-amount-label-select" class="required">
+                                <em>*</em>
+                                <?php echo $this->__('Amount');?>
+                            </label>
+                        <?php endif; ?>
+
+                        <?php if ($_product->getAwGcAllowOpenAmount()): ?>
+                            <!--<label for="aw-gc-custom-amount" id="aw-gc-custom-amount-label-input" class="required">
+                                <em>*</em>
+                                <?php // echo $this->__('Amount in %s', $this->getCurrentCurrency()); ?>
+                            </label>-->
+                             <div id="aw-gc-amount-box" class="">
+                                <span class="v-fix">
+                                    <input type="text" id="aw-gc-custom-amount" value="<?php echo $this->escapeHtml($preConfiguredValues->getData('aw_gc_custom_amount')) ?>" name="aw_gc_custom_amount" class="validate-number required-entry input-text aw-gc-amount-entry aw-gc-min-amount aw-gc-max-amount" placeholder="$0.00 *"/>
+                                </span>
+
+                                <?php if ($_product->getAwGcOpenAmountMin() || $_product->getAwGcOpenAmountMax()): ?>
+                                    <?php $_minAmount = Mage::helper('core')->currency($_product->getAwGcOpenAmountMin(), true, false); ?>
+                                    <?php $_maxAmount = Mage::helper('core')->currency($_product->getAwGcOpenAmountMax(), true, false); ?>
+									<br/><br/><br/>
+                                    <p class="notice account-txt">
+                                       
+                                        <?php if ($_product->getAwGcOpenAmountMax()): ?>
+                                            <span>
+                                                <?php echo $this->__('Amount should not be higher than  %s', $_maxAmount); ?>
+                                            </span>
+                                        <?php endif; ?>
+                                        
+                                        <?php if ($_product->getAwGcOpenAmountMin()): ?>
+                                            <span>
+                                                &nbsp;<?php echo $this->__('and less than  %s', $_minAmount); ?>
+                                            </span>
+                                        <?php endif; ?>
+                                    </p>
+
+                                    <script type="text/javascript">
+                                        //<![CDATA[
+                                        var minAllowedAmount = <?php echo Mage::helper('core')->currency($_product->getAwGcOpenAmountMin(), false, false) ?>;
+                                        var maxAllowedAmount = <?php echo Mage::helper('core')->currency($_product->getAwGcOpenAmountMax(), false, false) ?>;
+
+                                        function parsePrice(value) {
+                                            value = value.replace('\'', '').replace(' ', '');
+                                            var separatorComa = value.indexOf(',');
+                                            var separatorDot  = value.indexOf('.');
+
+                                            if (separatorComa != -1 && separatorDot != -1) {
+                                                if (separatorComa > separatorDot) {
+                                                    value = value.replace('.', '').replace(',', '.');
+                                                } else {
+                                                    value = value.replace(',', '');
+                                                }
+                                            } else if (separatorComa != -1) {
+                                                value = value.replace(',', '.');
+                                            }
+                                            return parseFloat(value);
+                                        }
+
+                                        Validation.add('aw-gc-min-amount', <?php echo Zend_Json::encode($this->__('Entered amount is too low')); ?>, function(v) {
+                                            return (parsePrice(v) >= minAllowedAmount);
+                                        });
+                                        Validation.add('aw-gc-max-amount', <?php echo Zend_Json::encode($this->__('Entered amount is too high')); ?>, function(v) {
+                                            if (maxAllowedAmount == 0) {return true;}
+                                            return (parsePrice(v) <= maxAllowedAmount);
+                                        });
+                                        //]]>
+                                    </script>
+                                <?php endif; ?>
+                            </div>
+                        <?php endif; ?>
+                        <?php if (count($this->getAmountOptions()) > 0): ?>
+                            <?php $configValue = $preConfiguredValues->getData('aw_gc_amounts');?>
+                            <div class="input-box">
+                                <select name="aw_gc_amount" id="aw-gc-amount" class="required-entry aw-gc-amount-entry">
+                                    <option value="">
+                                        <?php echo $this->__('Choose an Amount...') ?>
+                                    </option>
+
+                                    <?php foreach ($this->getAmountOptions() as $value): ?>
+                                        <option value="<?php echo $value; ?>" <?php echo (($configValue == $value) ? 'selected' : '')?>>
+                                            <?php echo Mage::helper('core')->currency($value, true, false); ?>
+                                        </option>
+                                    <?php endforeach; ?>
+
+                                    <?php if ($_product->getAwGcAllowOpenAmount()): ?>
+                                        <option value="custom" <?php echo (($configValue == 'custom') ? 'selected' : '')?>>
+                                            <?php echo $this->__('Other Amount...') ?>
+                                        </option>
+                                    <?php endif; ?>
+                                </select>
+                            </div>
+                        <?php endif; ?>
+    
+            </div>
+            <script type="text/javascript">
+                //<![CDATA[
+                if ($('aw-gc-amount') && $('aw-gc-custom-amount')) {
+                    $('aw-gc-custom-amount').hide();
+                    $('aw-gc-amount-box').hide();
+                    $('aw-gc-custom-amount-label-input').hide();
+                    Event.observe($('aw-gc-amount'), 'change', switchGiftCardInputs);
+                }
+
+                function switchGiftCardInputs()
+                {
+                    if (!$('aw-gc-amount') || !$('aw-gc-custom-amount')) {
+                        return;
+                    }
+
+                    var value = $('aw-gc-amount').options[$('aw-gc-amount').selectedIndex].value;
+                    if (value == 'custom') {
+                        $('aw-gc-custom-amount').show();
+                        $('aw-gc-amount-box').show();
+
+                        $('aw-gc-amount-label-select').hide();
+                        $('aw-gc-custom-amount-label-input').show();
+                    } else {
+                        $('aw-gc-custom-amount').hide();
+                        $('aw-gc-amount-box').hide();
+
+                        $('aw-gc-amount-label-select').show();
+                        $('aw-gc-custom-amount-label-input').hide();
+                    }
+                }
+                switchGiftCardInputs();
+                //]]>
+            </script>
+        <?php endif; ?>
+                
+                </li>
+              
+              <?php if ($this->isAllowMessage()): ?>
+              <li>
+                <label><?php echo $this->__('Personal Note: *')?></label>
+                <textarea name="aw_gc_message" id="aw-gc-message" class="input-text required-entry" cols="4" rows="5"><?php echo $this->escapeHtml($preConfiguredValues->getData('aw_gc_message')) ?></textarea>
+              </li>
+            <?php  endif;?>
+              <li class="radio" >
+                <input type="radio" name="aw_gc_send_via" id="send_via_1" value="email" onclick="toggleMethod()" <?php echo ($preConfiguredValues->getData('aw_gc_message')=="email")?'checked="checked"':'' ?>/>
+                <span><label for="send_via_1">Send via Email</label></span>
+                <input type="radio" name="aw_gc_send_via" id="send_via_2" value="post" <?php echo ($preConfiguredValues->getData('aw_gc_message')=="post" || $preConfiguredValues->getData('aw_gc_message')=='')?'checked="checked"':'' ?> onclick="toggleMethod()"/>
+                <span><label for="send_via_2">Send via Postal Mail</label></span> </li>
+              <li>
+                <label class="email-txt">Email</label>
+                 <input type="text" id="aw-gc-recipient-email" name="aw_gc_recipient_email" class="validate-email required-entry input-text ignore-in-perview" value="<?php echo $this->escapeHtml($preConfiguredValues->getData('aw_gc_recipient_email')) ?>" placeholder="Enter Recipient Email: *"/>
+              </li>
+
+              <?php if ($this->isAllowEmail()): ?>
+              <li>
+              <?php $senderEmail = $preConfiguredValues->getData('aw_gc_sender_email') ? $preConfiguredValues->getData('aw_gc_sender_email') : $this->getCustomerEmail();?>
+           <input type="text" id="aw-gc-sender-email" name="aw_gc_sender_email" class="validate-email required-entry input-text ignore-in-perview" value="<?php echo $this->escapeHtml($senderEmail);?>" placeholder="Enter Your Email: *"/>
+                </li>
+              <?php endif;?>
+              
+            </ul>
+          </div>
+          <div class="postal-mail-sec" id="postal-section">
+            <h3><?php echo $this->__('Postal Mail')?></h3>
+            <ul>
+              <li>
+                <input type="text" value="<?php echo $this->escapeHtml($preConfiguredValues->getData('aw_gc_address1')) ?>" name="aw_gc_address1" id="address1" placeholder="<?php echo $this->__('Address: *')?>" class="postal-address required-entry ignore-in-perview">
+              </li>
+              <li>
+                <input type="text" value="<?php echo $this->escapeHtml($preConfiguredValues->getData('aw_gc_address2')) ?>" name="aw_gc_address2" id="address2" placeholder="<?php echo $this->__('Address (line 2):')?>" />
+              </li>
+              <li>
+                <input type="text" value="<?php echo $this->escapeHtml($preConfiguredValues->getData('aw_gc_city')) ?>" name="aw_gc_city"  id="city" placeholder="City: *" class="postal-address required-entry ignore-in-perview"/>
+              </li>
+              <li>
+                <input type="text" value="<?php echo $this->escapeHtml($preConfiguredValues->getData('aw_gc_country')) ?>"  name="aw_gc_country" id="country"  placeholder="Country: *" class="postal-address required-entry ignore-in-perview"/>
+              </li>
+              <li>
+                <input type="text" value="<?php echo $this->escapeHtml($preConfiguredValues->getData('aw_gc_state')) ?>" name="aw_gc_state" id="state"  placeholder="State / Province: *" class="postal-address required-entry ignore-in-perview"/>
+              </li>
+              <li>
+                <input type="text" value="<?php echo $this->escapeHtml($preConfiguredValues->getData('aw_gc_zip')) ?>" name="aw_gc_zip"  id="zip" placeholder="Zip / Postal Code: *" class="postal-address required-entry ignore-in-perview"/>
+              </li>
+              <li>
+                <input type="text" value="<?php echo $this->escapeHtml($preConfiguredValues->getData('aw_gc_telephone')) ?>" name="aw_gc_telephone" id="telephone" placeholder="Phone: *" class="postal-address required-entry ignore-in-perview"/>
+              </li>
+            </ul>
+          </div>
+          
+              <?php elseif ($_product->isSaleable()): ?>
+       		 <?php echo $this->getPriceHtml($_product); ?>
+    		<?php endif; ?>
+          <!--div class="postal-table-sec">
+            <div class="postal-table-heading-main">
+              <div class="postal-table-name">Name</div>
+              <div class="postal-table-qty">Quantity</div>
+            </div>
+            <div class="postal-table-listing">
+              <div class="postal-table-nametxt">Name</div>
+              <div class="postal-table-qty">1</div>
+            </div>
+          </div>
+          <br />
+          <div class="add-product-txt"><a href="#" title="Add Product">Add Product></a></div>
+          -->
+          <div class="add-to-cart-txt">
+          <?php $buttonTitle = $this->__('Add to Cart'); ?>
+<?php if($_product->isSaleable()): ?>
+    <div class="add-to-cart">
+		
+		<input type="image" class="btn-submit" onclick="productAddToCartForm.submit(this)" src="<?php echo $this->getSkinUrl('images/add-to-cart-btn1.png')?>" alt="Add to Cart">	
+		
+        <!--<button type="button" title="<?php echo $buttonTitle ?>" class="button btn-cart" onclick="productAddToCartForm.submit(this)"><span><span><?php echo $buttonTitle ?></span></span></button>-->
+		<a href="javascript:void(0);" title="Add Product" id="btnCgPerview">Preview></a>
+    </div>
+<?php endif; ?>
+        </div>
+              </form>
+        
+
+		  <div class="go-back-txt"><a href="javascript:window.history.back()" title="Add Product">&lt; GO BACK</a></div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+<script type="text/javascript">
+ //<![CDATA[
+function toggleMethod()
+{
+	 if(jQuery('#send_via_1').is(':checked'))
+            {
+            	removePostalValidation();
+            	jQuery('#postal-section').hide();
+            }
+            
+            if(jQuery('#send_via_2').is(':checked'))
+            {
+            	applyPostalValidation();
+            	jQuery('#postal-section').show();
+            }
+}
+
+function applyPostalValidation(){ jQuery('.postal-address').each(function(){ jQuery(this).removeClass('required-entry');});}
+function removePostalValidation(){ jQuery('.postal-address').each(function(){ jQuery(this).addClass('required-entry');});}
+function previewOn(){jQuery('.ignore-in-perview').each(function(){ jQuery(this).removeClass('required-entry');});}
+function previewOff(){jQuery('.ignore-in-perview').each(function(){ jQuery(this).addClass('required-entry');});}
+
+$$('#btnCgPerview').each(function(element) {
+    element.observe('click', perviewGC);
+});
+ 
+ var previewSuggestForm = new VarienForm('product_addtocart_form');
+ 
+ 
+function perviewGC() 
+ {	previewOn();
+	
+	if (previewSuggestForm.validator.validate()) {
+	jQuery('.gift-popup').bPopup({
+		    	    onOpen: function(){ 
+		    	    			jQuery('.preview-to-name').text(jQuery('#aw-gc-recipient-name').val());
+		    	    			jQuery('.preview-from-name').text(jQuery('#aw-gc-sender-name').val())
+		    	    			jQuery('.preview-amount').text('$'+jQuery('#aw-gc-custom-amount').val())
+		    	    			jQuery('.preview-message').text(jQuery('#aw-gc-message').val())
+		    	    		      },
+		    	    onClose: function(){ previewOff()},
+			    fadeSpeed: 'slow', //can be a string ('slow'/'fast') or int
+			    followSpeed: 1500, //can be a string ('slow'/'fast') or int
+			    modalColor: 'white'
+			});
+	}	
+
+};
+
+  //]]>
+</script>
+<div class="gift-popup no-display">
+  <div class="gift-top-bar1">
+   <div class="close-icon1"><a href="javascript:void(0);" title="Close" class="button b-close"><img src="<?php echo $this->getSkinUrl('images/close-icn.png')?>" alt="Close"/></a></div>
+    <div class="gift-left-txt">
+    GIFT CERTIFICATE</div>
+    <div class="gift-right-txt">
+     Gift Certificate Code<br/>
+      <span>xxx - xxxx - xxxx - xxxx</span> </div>
+  </div>
+  <div class="gift-top-bar2">
+    <div class="gift-left-txt"><span>To:</span> <span class="preview-to-name"></span><br/>
+      <span>From:</span> <span class="preview-from-name"></span></div>
+    <div class="gift-right-txt"><span class="preview-amount"> </span></div>
+  </div>
+  <div class="free-txt preview-message"> </div>
+</div>
+
+<!--[if !IE]>banner-section div end here<![endif]-->
+<!------------------------------------------------------>
+</div>

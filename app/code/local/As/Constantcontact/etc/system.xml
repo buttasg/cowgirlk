@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<config>
+    <tabs>
+        <constantcontact translate="label" module="constantcontact">
+            <label>Constant contact</label>
+            <sort_order>300</sort_order>
+        </constantcontact>
+    </tabs>
+    <sections>
+        <constantcontact translate="label" module="constantcontact">
+            <label>Constant contact</label>
+            <tab>constantcontact</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>99999</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <constantcontact>
+                    <label>Configuration</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>60</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                    	<api_key translate="label">
+                             <label>Api Key:</label>
+                               <comment></comment>
+                               <frontend_type>text</frontend_type>
+                                    <sort_order>10</sort_order>
+				   <show_in_default>1</show_in_default>
+				   <show_in_website>1</show_in_website>
+				<show_in_store>1</show_in_store>
+                    	</api_key>
+                    	<token translate="label">
+                             <label>Access Token:</label>
+                               <comment></comment>
+                               <frontend_type>text</frontend_type>
+                                    <sort_order>20</sort_order>
+				   <show_in_default>1</show_in_default>
+				   <show_in_website>1</show_in_website>
+				<show_in_store>1</show_in_store>
+                    	</token>
+                        <listid translate="label">
+                             <label>List Id:</label>
+                               <comment></comment>
+                               <frontend_type>text</frontend_type>
+                                    <sort_order>30</sort_order>
+				   <show_in_default>1</show_in_default>
+				   <show_in_website>1</show_in_website>
+				<show_in_store>1</show_in_store>
+                    	</listid>
+                    </fields>
+                </constantcontact>
+            </groups>
+        </constantcontact>
+    </sections>
+</config>

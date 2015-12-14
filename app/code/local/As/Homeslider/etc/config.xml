@@ -1,0 +1,147 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <As_Homeslider>
+            <version>0.1.0</version>
+        </As_Homeslider>
+    </modules>
+    <frontend>
+        <routers>
+            <homeslider>
+                <use>standard</use>
+                <args>
+                    <module>As_Homeslider</module>
+                    <frontName>homeslider</frontName>
+                </args>
+            </homeslider>
+        </routers>
+        <layout>
+            <updates>
+                <homeslider>
+                    <file>homeslider.xml</file>
+                </homeslider>
+            </updates>
+        </layout>
+    </frontend>
+    <admin>
+        <routers>
+			<homeslider>
+				<use>admin</use>
+				<args>
+					<module>As_Homeslider</module>
+					<frontName>homeslider</frontName>
+				</args>
+			</homeslider>
+        </routers>
+    </admin>
+    <adminhtml>
+		<!-- menu>
+			<homeslider module="homeslider">
+				<title>Homeslider</title>
+				<sort_order>72</sort_order>               
+				<children>
+					<items module="homeslider">
+						<title>Manage Items</title>
+						<sort_order>0</sort_order>
+						<action>homeslider/adminhtml_homeslider</action>
+					</items>
+				</children>
+			</homeslider>
+		</menu -->
+		<acl>
+			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all>
+				<admin>
+					<children>
+						<!--As_Homeslider>
+							<title>Homeslider Module</title>
+							<sort_order>10</sort_order>
+						</As_Homeslider>-->
+						<homeslider module="homeslider">
+							<children>
+								<items module="homeslider">
+									<title>Manage Homeslider</title>
+									<sort_order>11</sort_order>
+								</items>
+							</children>
+						</homeslider>
+						  <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <homeslider>
+                                            <title>Homeslider Module</title>
+                                        </homeslider>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+		<layout>
+			<updates>
+				<homeslider>
+					<file>homeslider.xml</file>
+				</homeslider>
+			</updates>
+		</layout>
+    </adminhtml>   
+    <global>
+        <models>
+            <homeslider>
+                <class>As_Homeslider_Model</class>
+                <resourceModel>homeslider_mysql4</resourceModel>
+            </homeslider>
+            <homeslider_mysql4>
+                <class>As_Homeslider_Model_Mysql4</class>
+                <entities>
+                    <homeslider>
+                        <table>homeslider</table>
+                    </homeslider>
+                </entities>
+            </homeslider_mysql4>
+        </models>
+        <resources>
+            <homeslider_setup>
+                <setup>
+                    <module>As_Homeslider</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </homeslider_setup>
+            <homeslider_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </homeslider_write>
+            <homeslider_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </homeslider_read>
+        </resources>
+        <blocks>
+            <homeslider>
+                <class>As_Homeslider_Block</class>
+            </homeslider>
+        </blocks>
+        <helpers>
+            <homeslider>
+                <class>As_Homeslider_Helper</class>
+            </homeslider>
+        </helpers>
+    </global>
+	<default>
+		<homeslider><!--section-->
+			<homeslider><!--group-->
+				<model>homeslider/homeslider</model>
+				<field1>Default Text</field1><!--field-->
+			</homeslider>
+		</homeslider>
+	</default>
+</config>

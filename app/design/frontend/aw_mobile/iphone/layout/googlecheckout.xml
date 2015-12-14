@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+        <reference name="checkout.cart">
+            <block type="googlecheckout/link" name="checkout.cart.googlecheckout.link" as="googlecheckout_link" template="googlecheckout/link.phtml" />
+        </reference>
+    </default>
+</layout>

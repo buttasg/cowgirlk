@@ -1,0 +1,28 @@
+.product-price-sec .soical-icon {line-height: 0; top: 6px;}
+.soical-icon a{padding: 0;}
+.soical-icon p{display: none !important;}
+.product-shop .product-options-bottom .add-to-links {
+    padding: 15px 0px 0px !important;
+    float: right;
+}
+.product-shop .add-to-box{
+    float: right;
+}
+.payment-methods #paypal_direct_cc_type_exp_div{
+    padding-bottom: 10px;
+}
+.product-info {
+    margin-top: 5px;
+}
+#open img{
+    margin-top: 25px;
+}
+#msg input[type=image]{
+    margin-top: 2px;
+}
+#open img:hover, #msg input[type=image]:hover{
+    opacity: 0.5;
+}
+.followprice{
+    clear: both;
+}

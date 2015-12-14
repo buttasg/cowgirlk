@@ -1,0 +1,91 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2013 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<div id="messages_product_view"><?php echo $this->getMessagesBlock()->getGroupedHtml() ?></div>
+<div class="page-title">
+    <h2><?php echo Mage::helper('contacts')->__('Contact Us') ?></h2>
+</div>
+
+<div class="signin-container">
+<div class="register-container">
+<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('contact_address')->toHtml()?>
+<div class="contact-right-sec">
+<form action="<?php echo $this->getFormAction(); ?>" id="contactForm" method="post" autocomplete="off">
+    <div>
+        <ul>
+            <li class="email-input">
+
+  <input name="name" id="name" title="<?php echo Mage::helper('contacts')->__('Name') ?>" value="" data-watermark="<?php echo Mage::helper('contacts')->__('Name *') ?>" class="input-text required-entry" type="text"  />
+	  </li>
+	  <li class="email-input">
+          <input name="email" id="email" title="<?php echo Mage::helper('contacts')->__('Email Address') ?>" value="" data-watermark="<?php echo Mage::helper('contacts')->__('Email Address *') ?>" class="input-text required-entry validate-email" type="text" />
+            </li>
+            <li>
+				<input name="telephone" id="telephone" title="<?php echo Mage::helper('contacts')->__('Phone') ?>" value="" data-watermark="<?php echo Mage::helper('contacts')->__('Phone #') ?>" class="input-text" type="text" />
+
+            </li>
+             <li>
+
+            <input name="order" id="order" title="<?php echo Mage::helper('contacts')->__('Order') ?>" value"" data-watermark="<?php echo Mage::helper('contacts')->__('Order #') ?>" class="input-text required-entry" type="text" />
+
+            </li>
+            
+            <li class="email-input">
+            <select name="question" id="question">
+            <option><?php echo Mage::helper('contacts')->__('How Can We Help?')?></option>
+            <option><?php echo Mage::helper('contacts')->__('I have a general question?')?></option>
+            <option><?php echo Mage::helper('contacts')->__('I have a question about my account?')?></option>
+            <option><?php echo Mage::helper('contacts')->__('I have a question about my order?')?></option>
+            <option><?php echo Mage::helper('contacts')->__('I have a technical website question?')?></option>    
+            </select>
+          </li>
+            
+            
+            <li class="email-input textarea-watermark">
+           <textarea name="comment" id="comment" title="<?php echo Mage::helper('contacts')->__('Tell us more') ?>" data-watermark="<?php echo Mage::helper('contacts')->__('Tell us more *') ?>" class="required-entry input-text" cols="5" rows="3"></textarea>
+            </li>
+        </ul>
+        <p class="we-txt"><?php echo Mage::helper('contacts')->__('We are here to help, so go ahead and submit your question. We will reply within one business day.')?></p>
+    </div>
+    <div class="buttons-set">
+        <p class="required"><?php echo Mage::helper('contacts')->__('* Required Fields') ?></p>
+        <input type="text" name="hideit" id="hideit" value="" style="display:none !important;" />
+        <!--<button type="submit" title="<?php echo Mage::helper('contacts')->__('Submit') ?>" class="button" onclick="validateForm('contactForm')"><span><span><?php echo Mage::helper('contacts')->__('Submit') ?></span></span></button>-->
+		
+		<input type="image" onclick="validateForm('contactForm')" src="<?php echo $this->getSkinUrl('images/submit-btn.png')?>">
+		
+
+		
+    </div>
+</form>
+</div>
+</div>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+    //var contactForm = new VarienForm('contactForm', true);
+//]]>
+</script>

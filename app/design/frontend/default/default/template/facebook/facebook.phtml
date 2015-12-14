@@ -1,0 +1,27 @@
+<?php 
+$feed=$this->getfeed();
+//print_r($feed);
+if(is_array($feed))
+{
+	if(isset($feed['feed']['data'][0]['story']) || isset($feed['feed']['data'][0]['message']))
+	{
+	  $txt=isset($feed['feed']['data'][0]['message'])?$feed['feed']['data'][0]['message']:null;
+	  
+	  if(empty($feed['feed']['data'][0]['message']))
+	  {
+	  	$txt=isset($feed['feed']['data'][0]['story'])?$feed['feed']['data'][0]['story']:null;
+	  }
+?>
+<li>
+<p>Cowgirl Kim</p>
+
+<span><?php echo date('F d Y',strtotime($feed['feed']['data'][0]['updated_time']))?></span> </li>
+<li>
+  <p class="txt"><?php echo $txt?></p>
+ </li>
+<?php 
+
+	}
+}
+?>
+

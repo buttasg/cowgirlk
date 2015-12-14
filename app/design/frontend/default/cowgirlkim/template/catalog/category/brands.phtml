@@ -1,0 +1,88 @@
+<?php
+$_show=true;
+$_categoryId  = Mage::getStoreConfig('brand/brand/category_id');
+$_category=Mage::getModel('catalog/category')->load($_categoryId);
+$_show=$_category->getIsActive();
+$_title=$this->getData('page_title');
+$_title=(!empty($_title))?$_title:'Brands';
+
+?>
+
+
+<?php   $brands=null;
+	if($_show)
+	{	$brands = $_category->getChildren();
+		//$brands = Mage::getModel('catalog/category')->getCategories($_categoryId);
+	}
+?>
+<?php if(!$_show || empty($brands)): ?>
+<p class="note-msg"><?php echo $this->__('There are no products matching the selection.') ?></p>
+<?php else: ?>
+	
+	  <h1><?php echo $_title?></h1>
+	<?php
+		$brandList=array();
+		foreach(explode(',',$brands) as $brand):
+			$brand=Mage::getModel('catalog/category')->load($brand);
+		 if($brand->getIsActive())
+		 {	
+		 	$_imgSize = 311;
+
+                        $img=$this->helper('catalog/image')->init($brand, 'thumbnail')->constrainOnly(TRUE)->keepAspectRatio(false)->keepFrame(TRUE)->resize(238,115); 
+                        if ($image = $brand->getThumbnail()) {
+		            $img = Mage::getBaseUrl('media').'catalog/category/'.$image;
+        		}
+        		$name=$this->escapeHtml($brand->getName());
+			$brandList[$name]=array('title'=>$name,'image'=>$img,'url'=>$brand->getUrl());
+		 }
+		endforeach;
+		$count=count($brandList);
+		$remainder=$count%4;
+		if($remainder>0 && $remainder<4)
+		{
+		  $count=$count+(4-$remainder);
+		}
+		$parts= $count/4;
+		ksort($brandList);
+	?>
+ <div class="brands-sec">
+
+	<?php
+	$i=1;
+	foreach($brandList as $brand):
+		if($i==1)
+		{
+		  echo '<ul class="brands-link">';
+		}
+	?>
+		<li>
+		<a href="<?php echo $brand['url']?>" title="<?php echo $brand['title']?>"><?php echo $brand['title']?></a>
+		</li>
+	<?php 
+	if($i%$parts==0 && $i!=$count) {echo '</ul><ul class="brands-link">';}
+	
+	if($i==$count)
+	{
+	  echo '</ul>';
+	}
+	$i++
+	?>
+	
+	<?php endforeach;?>
+
+  </div>
+  <div class="brands-images"> 
+
+	<?php
+        reset($brandList);
+	foreach($brandList as $brand):
+	?>
+
+		  <a href="<?php echo $brand['url']?>" title="<?php echo $brand['title']?>">
+		<img src="<?php echo $brand['image']?>" alt="<?php echo $brand['title']?>" width="238" height="115"/>
+		</a>
+
+	<?php endforeach;?>
+  </div>
+<?php endif;?>
+

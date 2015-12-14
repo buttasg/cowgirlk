@@ -1,0 +1,39 @@
+<?php $_helper = Mage::helper('catalog/category') ?>
+<?php $_helperOuput = Mage::helper('catalog/output'); ?>
+<?php $_helperCustom = Mage::helper('custom'); ?>
+<?php $_helperBrands = Mage::helper('brand'); ?>
+<?php
+$collection=$_helperCustom->getHomeCategories();
+if($collection->count()):
+
+$brandCategoryId=Mage::getStoreConfig('brand/brand/category_id');
+$brandUrl=Mage::getUrl($_helperBrands->getBrandsUrl());
+$brands=$_helperBrands->getHomeBrands();
+?>
+<div class="category-sec ">
+  <h3 class="default-img">CATEGORIES</h3>
+  <ul>
+<?php
+    foreach ($collection as $_category):
+    $_category = Mage::getModel('catalog/category')->load($_category->getId()); 
+      $url=($brandCategoryId==$_category->getId()) ?$brandUrl:$_category->getUrl();
+      $prefix=($brandCategoryId==$_category->getId()) ?'by':'';
+?>
+<?php 
+                        $imgUrl=$this->helper('catalog/image')->init($_category, 'thumbnail')->constrainOnly(TRUE)->keepAspectRatio(false)->keepFrame(TRUE)->resize(238,279); 
+                        if ($image = $_category->getThumbnail()) {
+		            $imgUrl = Mage::getBaseUrl('media').'catalog/category/'.$image;
+        		}
+        		?>
+    <li> <img src="<?php echo $imgUrl ?>" width="238" height="279" alt="Shop <?php echo $prefix.' '.$_helperCustom->ufcase($_category->getName());?>" />
+      <div class="btn-button shop-btn"><a href="<?php echo  $url;?>"><span><span>Shop <?php echo $prefix.' '.$_helperCustom->ufcase($_category->getName());?></span></span></a></div>
+    </li>
+
+<?php
+endforeach;
+?>
+  </ul>
+</div>
+<?php
+endif;
+?>

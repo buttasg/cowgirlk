@@ -1,0 +1,209 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <As_Custom>
+            <version>0.1.0</version>
+        </As_Custom>
+    </modules>
+    <frontend>
+        <routers>
+            <custom>
+                <use>standard</use>
+                <args>
+                    <module>As_Custom</module>
+                    <frontName>custom</frontName>
+                </args>
+            </custom>
+        </routers>
+        <layout>
+            <updates>
+                <custom>
+                    <file>custom.xml</file>
+                </custom>
+            </updates>
+        </layout>
+    </frontend>
+    <admin>
+        <routers>
+	   <custom>
+		 <use>admin</use>
+		<args>
+		<module>As_Custom</module>
+		<frontName>custom</frontName>
+		</args>
+	  </custom>
+        </routers>
+    </admin>
+    <adminhtml>
+		<acl>
+			<resources>
+				<all>
+				<title>Allow Everything</title>
+				</all>
+				<admin>
+				<children>
+						
+				<custom module="custom">
+				    <children>
+						<items module="custom">
+						<title>Manage Custom</title>
+				        	<sort_order>11</sort_order>
+					</items>
+				   </children>
+				  </custom>
+				 <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <custom>
+                                            <title>Custom Module</title>
+                                        </custom>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+		<layout>
+			<updates>
+				<custom>
+					<file>custom.xml</file>
+				</custom>
+			</updates>
+		</layout>
+    </adminhtml>   
+    <global>
+        <models>
+            <custom>
+                <class>As_Custom_Model</class>
+                <resourceModel>custom_mysql4</resourceModel>
+            </custom>
+            <custom_mysql4>
+                <class>As_Custom_Model_Mysql4</class>
+                <entities>
+                    <custom>
+                        <table>custom</table>
+                    </custom>
+                </entities>
+            </custom_mysql4>
+            <aw_giftcard>
+            	<rewrite>
+            	 <catalog_product_type_giftcard>As_Custom_Model_Catalog_Product_Type_Giftcard</catalog_product_type_giftcard>
+            	</rewrite>
+            </aw_giftcard>
+        </models>
+        <resources>
+            <custom_setup>
+                <setup>
+                    <module>As_Custom</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </custom_setup>
+            <custom_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </custom_write>
+            <custom_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </custom_read>
+        </resources>
+        <blocks>
+            <custom>
+                <class>As_Custom_Block</class>
+            </custom>
+           <!-- <aw_giftcard>
+            	<rewrite>
+            	 <frontend_checkout_cart_item_renderer>As_Custom_Block_Frontend_Checkout_Cart_Item_Renderer</frontend_checkout_cart_item_renderer>
+            	</rewrite>
+            </aw_giftcard> -->
+            
+            <customer>              
+                   <rewrite>
+                        <account_navigation>As_Custom_Block_Account_Navigation</account_navigation>
+                    </rewrite>
+            </customer>
+                        
+            <page>
+            	<rewrite>
+                    <html_head>As_Custom_Block_Html_Head</html_head>
+           	 </rewrite>
+            </page>
+            
+        </blocks>
+        <helpers>
+            <custom>
+                <class>As_Custom_Helper</class>
+            </custom>
+        </helpers>
+        <events>
+        <sales_convert_quote_item_to_order_item>
+                <observers>
+                    <as_giftcard_sales_convert_quote_item_to_order_item>
+                        <class>custom/observer_giftcard</class>
+                        <method>convertQuoteItemToOrderItem</method>
+                    </as_giftcard_sales_convert_quote_item_to_order_item>
+                </observers>
+            </sales_convert_quote_item_to_order_item>
+	<catalog_category_save_commit_after>
+                <observers>
+                    <as_custom_catalog_category_save_commit_after>
+                        <class>custom/observer_wpmenu</class>
+                        <method>wpMenuCache</method>
+                    </as_custom_catalog_category_save_commit_after>
+                </observers>
+        </catalog_category_save_commit_after>
+        
+        <catalog_category_delete_after>
+            <observers>
+                <as_custom_catalog_category_delete_after>
+                    <type>singleton</type>
+                    <class>custom/observer_wpmenu</class>
+                    <method>wpMenuCache</method>
+                </as_custom_catalog_category_delete_after>
+            </observers>
+        </catalog_category_delete_after>
+        
+        
+        
+        <checkout_type_onepage_save_order>
+        <observers>
+          <as_ordercomments_onepage>
+            <type>singleton</type>
+            <class>As_Custom_Model_Observer_Comment</class>
+            <method>saveOrder</method>
+          </as_ordercomments_onepage>
+        </observers>
+      </checkout_type_onepage_save_order>
+        
+        
+        
+      <controller_action_layout_load_before>
+        <observers>
+            <theme_handle>
+                <class>custom/observer_theme</class>
+                <method>handleTheme</method>
+            </theme_handle>
+        </observers>
+     </controller_action_layout_load_before>
+        
+        
+        
+        </events>
+		
+	<crontab>
+        <jobs>
+            <delete_wp_cart_files>
+                <schedule><cron_expr>0 1 * * *</cron_expr></schedule>
+                <run><model>custom/observer_wpcart::remove</model></run>
+            </delete_wp_cart_files>
+        </jobs>
+	</crontab>
+    </global>
+</config>

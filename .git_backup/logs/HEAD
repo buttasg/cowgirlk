@@ -1,0 +1,25 @@
+0000000000000000000000000000000000000000 404d4d0c4328671de517b57cf5f88b98a8d2335a Cowgirlkim Server <git@cowgirlkim.com> 1430803168 -0500	clone: from /home/cowgirlk/gitrepository
+404d4d0c4328671de517b57cf5f88b98a8d2335a 7e2ce6235ef7c43ddea33aca2c8935bddbee45b1 Cowgirlkim Server <git@cowgirlkim.com> 1430803789 -0500	commit: Added gitignore file
+7e2ce6235ef7c43ddea33aca2c8935bddbee45b1 0bf2d8aa01504918a8ccb0f069987d0b6c1ff819 Cowgirlkim Server <git@cowgirlkim.com> 1430803838 -0500	commit: media files
+0bf2d8aa01504918a8ccb0f069987d0b6c1ff819 3f533bd1d38c67149aabf3049f99b9b550931173 Cowgirlkim Server <git@cowgirlkim.com> 1431410658 -0500	pull : Fast-forward
+3f533bd1d38c67149aabf3049f99b9b550931173 67b93c5143caeb818e6554edbbc0a3d31706247b Cowgirlkim Server <git@cowgirlkim.com> 1432002198 -0500	pull : Fast-forward
+67b93c5143caeb818e6554edbbc0a3d31706247b 5982511468d5e2c08687ddf219c28b285b507242 Cowgirlkim Server <git@cowgirlkim.com> 1432003955 -0500	pull : Fast-forward
+5982511468d5e2c08687ddf219c28b285b507242 a05d4c524c7e2b939af5c29dacfc1084145c54a6 Cowgirlkim Server <git@cowgirlkim.com> 1433652860 -0500	pull : Fast-forward
+a05d4c524c7e2b939af5c29dacfc1084145c54a6 9b28a890807876f0fce94e14628d6b49fc2dfc04 Cowgirlkim Server <git@cowgirlkim.com> 1434439419 -0500	commit: Lib directory
+9b28a890807876f0fce94e14628d6b49fc2dfc04 bc9da0ab3fcec013b733758a587c9cff79dba2a5 Cowgirlkim Server <git@cowgirlkim.com> 1434439488 -0500	commit: Fix for USPS api displaying 0.00 usd price for priority shipping international http://wiserobot.com/blog/usps-shipping-error-for-usa-to-canada-shipping/
+bc9da0ab3fcec013b733758a587c9cff79dba2a5 069091c847cce30cb356345b6d32317d9ff91e71 Cowgirlkim Server <git@cowgirlkim.com> 1434439529 -0500	commit: JS scripts
+069091c847cce30cb356345b6d32317d9ff91e71 6cfd50d68490581464bc8b3c33d94c4a84f3ff22 Cowgirlkim Server <git@cowgirlkim.com> 1434439787 -0500	commit: Core Modifications
+6cfd50d68490581464bc8b3c33d94c4a84f3ff22 ec39e86097b202d65562a31b59f6e59b7f291963 Cowgirlkim Server <git@cowgirlkim.com> 1434439805 -0500	commit: skin folder
+ec39e86097b202d65562a31b59f6e59b7f291963 632c2bb8d2e123c3f377395261be84d1881acfce Cowgirlkim Server <git@cowgirlkim.com> 1434439831 -0500	commit: lib folder
+632c2bb8d2e123c3f377395261be84d1881acfce 9ae4cd623203d1e65e336aedada830bd4cfb6b3c Cowgirlkim Server <git@cowgirlkim.com> 1434439872 -0500	commit: errors folder
+9ae4cd623203d1e65e336aedada830bd4cfb6b3c e512e7595a9b6eb76884bb432a2ab55a9c3bcff8 Cowgirlkim Server <git@cowgirlkim.com> 1434439944 -0500	commit: Other core files
+e512e7595a9b6eb76884bb432a2ab55a9c3bcff8 4fc87bb49864f612dc1883dd819c7e461555c1ec Cowgirlkim Server <git@cowgirlkim.com> 1434439978 -0500	commit: Removed sample files
+4fc87bb49864f612dc1883dd819c7e461555c1ec 9ac56dbbfaf714293e020b8fe60d2021922072ec Cowgirlkim Server <git@cowgirlkim.com> 1435101212 -0500	commit: Added Facebook Tracking
+9ac56dbbfaf714293e020b8fe60d2021922072ec 5c639d61c591515255caadcd4be8ed0b5a2d63d0 Cowgirlkim Server <git@cowgirlkim.com> 1436415597 -0500	commit: Magento Security Patch
+5c639d61c591515255caadcd4be8ed0b5a2d63d0 a0353c92cf8e61ca3cde8c25944f5fc0ea83fc4a Cowgirlkim Server <git@cowgirlkim.com> 1436415635 -0500	commit: Git ignore changes
+a0353c92cf8e61ca3cde8c25944f5fc0ea83fc4a ed2caaec6096ddaf9f6415bd53acde664a87d3b4 Cowgirlkim Server <git@cowgirlkim.com> 1445273628 -0500	commit: Magento patch done by hosting company
+ed2caaec6096ddaf9f6415bd53acde664a87d3b4 1b9d41d5197a77d90587e27734c6190dc22969dd Cowgirlkim Server <git@cowgirlkim.com> 1445274061 -0500	commit: Email template changes
+1b9d41d5197a77d90587e27734c6190dc22969dd 4d8eafe5cc72aa10845e2f367bfbd1346f02f66d Cowgirlkim Server <git@cowgirlkim.com> 1445274126 -0500	commit: Pricedrop alert change made by their customer support
+4d8eafe5cc72aa10845e2f367bfbd1346f02f66d 4871e2ac8fb291060437f262f44a6e648179a45e Cowgirlkim Server <git@cowgirlkim.com> 1445274242 -0500	commit: Add media files
+4871e2ac8fb291060437f262f44a6e648179a45e b6c950be8a14876ab3920a4c2030f369fde5c983 Cowgirlkim Server <git@cowgirlkim.com> 1445275238 -0500	commit: Installed Nosto extension
+b6c950be8a14876ab3920a4c2030f369fde5c983 de506d10d5deee94e8267215bab43d3d8787a7fd Cowgirlkim Server <git@cowgirlkim.com> 1445275266 -0500	commit: removed image

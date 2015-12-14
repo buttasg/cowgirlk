@@ -1,0 +1,78 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2013 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Customer login form template
+ *
+ * @see app/design/frontend/base/default/template/customer/form/login.phtml
+ */
+/** @var $this Mage_Customer_Block_Form_Login */
+?>
+    <?php //echo $this->getMessagesBlock()->getGroupedHtml() ?>
+<div class="signin-sec">
+<form action="<?php echo $this->getPostActionUrl() ?>" method="post" id="login-form">
+<?php echo $this->getBlockHtml('formkey'); ?>
+	<h3>Sign In</h3>
+	<?php $email=$this->escapeHtml($this->getUsername()) ?>
+		<ul>
+		    <li><input type="text" name="login[username]" value="<?php echo (!empty($email))?$email:$this->__('Email Address').' *' ?>" id="email" class="input-text required-entry validate-email" title="<?php echo $this->__('Email Address') ?>" onfocus="if(this.value=='<?php echo $this->__('Email Address').' *' ?>')this.value=''" onblur="if(this.value=='')this.value='<?php echo $this->__('Email Address').' *' ?>'"/>
+		    <div id="for-email" class="no-display error validation-advice">Please enter valid email address.</div>
+		    </li>
+		    <li>
+		    <input type="password" name="login[password]" class="input-text required-entry validate-password" id="login_pass" title="<?php echo $this->__('Password') ?>" />
+		    <input id="login_fake_pwd" type="text" value="Password *" name="login_fake_pwd" style="display:none">
+		    <div id="for-login_pass" class="no-display error validation-advice">This field is required.</div>
+		    </li>
+		
+		</ul>
+		<div class="register-sign-btn">
+		    <a href="javascript:void(0);" id="login_btn" ><img onclick="validateLogin()"  alt="<?php echo $this->__('Forgot your')?>" src="<?php echo $this->getSkinUrl('images/sign-in-btn1.png')?>"></a>
+		    <span class="forgot-txt">Forgot your <a title="Password" href="<?php echo $this->getForgotPasswordUrl() ?>">Password</a></span>
+	</div>
+</div>     
+        <?php if (Mage::helper('checkout')->isContextCheckout()): ?>
+            <input name="context" type="hidden" value="checkout" />
+        <?php endif; ?>
+    </form>
+    <script type="text/javascript">
+    //<![CDATA[
+    jQuery('#login_pass').hide();
+    jQuery('#login_fake_pwd').show();
+    jQuery('#login_fake_pwd').focus(function(){
+	    jQuery(this).hide();
+	    jQuery('#login_pass').show().focus();
+	});
+	jQuery('#login_pass').blur(function(){
+	    if(jQuery(this).val() == ""){ 
+		jQuery(this).hide();
+		jQuery('#login_fake_pwd').show();
+	    }
+	});
+        var dataForm = new VarienForm('login-form', true);
+    //]]>
+    </script>
+

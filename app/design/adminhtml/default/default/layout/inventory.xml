@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <inventory_adminhtml_inventory_index>
+        <reference name="content">
+            <block type="inventory/adminhtml_inventory" name="inventory" />
+        </reference>
+    </inventory_adminhtml_inventory_index>
+    
+    <inventory_adminhtml_adminhtml_sale>
+        <reference name="content">
+            <block type="inventory/adminhtml_inventory" name="salentax.report" />
+        </reference>
+    </inventory_adminhtml_adminhtml_sale>
+</layout>

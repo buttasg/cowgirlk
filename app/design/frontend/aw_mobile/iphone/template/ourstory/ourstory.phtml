@@ -1,0 +1,67 @@
+<?php
+$story=$this->getOurstory() ;
+$video=$this->getVideo() ;
+$staff=$this->getStaff(); 
+?>
+<h1><?php echo $this->__('OUR STORY')?></h1>
+<div class="order-story-container">
+
+<?php if($staff):?>
+<div class="order-story-slider">
+      <div id="owl-example" class="owl-carousel">
+<?php foreach($staff as $row):?>
+        <div> <img alt="<?php echo $row['name'];?>" src="<?php echo '/media/'.$row['filename'] ?>" width="304" height="260"> <span><?php echo $row['name'];?><br><span><?php echo $row['designation'];?></span></span> </div>
+<?php endforeach;?>
+      </div>
+    <!--  <span class="left slider-arrow default-img"></span> <span class="right slider-arrow default-img"></span> -->
+</div>
+<script>
+//<![CDATA[
+jQuery(document).ready(function($) {
+
+$("#owl-example").owlCarousel({
+items : 3,
+itemsTablet : [768, 1],
+autoPlay : true,
+stopOnHover : true,
+navigation : true,
+navigationText : ["", ""],
+afterInit : function(el){
+el.find(".owl-item").eq(0).addClass("synced");
+},
+afterAction : function(el){
+var current = this.currentItem;
+$("#owl-example")
+.find(".owl-item")
+.removeClass("synced")
+.eq(current)
+.addClass("synced");
+  //$('.owl-item .item').css('margin', '0');
+  //$('.synced').next().children('.item').css('margin-left', '7px');
+  //$('.synced').next().next().children('.item').css('margin-left', '13px');
+},
+afterAction : function(el){
+$('.owl-item').css('margin-right', '4px');
+$('.owl-item').css('width', '304px');
+//$('.synced').next().next().css('margin-right', '0');
+}
+}); 
+});
+  //]]>
+</script>
+<?php endif;?>
+
+<div class="order-story-inner">
+      <div class="order-story-left">
+        <?php echo isset($story['content'])?$story['content']:'Coming soon'?>
+      </div>
+      <div class="order-story-right">
+        <h3 class="default-img" >MEET KIM</h3>
+        <div class="order-video"> <?php echo isset($video['content'])?$video['content']:'Coming soon'?> </div>
+        <div class="filter-sec followsoical-sec">
+          <h3><span>Follow us</span></h3>
+          <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('social_media_links')->toHtml()?>
+        </div>
+      </div>
+    </div>
+</div>

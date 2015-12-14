@@ -1,0 +1,53 @@
+<?php
+ $_category=null;
+ $found=false;
+  $_categories=null;
+  
+?>
+<?php $_helperCustom = Mage::helper('custom'); ?>
+<?php if ($currentCategory=Mage::registry('current_category')) $found=true; ?>
+<?php
+   $id=0;
+   $level=0;
+   $currentId=0;
+   if($currentCategory)
+   {
+	  $ids=$currentCategory->getPathIds();
+	  $level=count($ids)-1;
+	  $id=(isset($ids[2])&&$ids[2]>0)?$ids[2]:0;
+	  $currentId=$currentCategory->getId();
+    }
+if($id>0)
+{
+   $_category = Mage::getModel('catalog/category')->load($id);
+   $_categories=$_category->getChildrenCategories();
+}
+/*if(!count($_categories))
+{
+$_categories=$helper =Mage::getModel('catalog/category')->getCollection()->addIsActiveFilter()->addLevelFilter(2);
+}*/
+?>
+<?php if(count($_categories)):?>
+      <h2>CATEGORY</h2>
+      <ul>
+<?php foreach ($_categories as $category):?>
+<?php $category = Mage::getModel('catalog/category')->load($category->getId()) ?>
+        <li>
+        <a title="<?php echo $_helperCustom->escapeCharacters($category->getName());?>"  href="<?php echo $category->getUrl();?>"><?php echo $category->getName();?> </a>
+        <?php if($level>=3 && $category->hasChildren() && in_array($category->getId(),$ids)) :?>
+          <span class="arrow"></span>
+          <ul>
+            <?php foreach($category->getChildrenCategories() as $child) : ?>
+            <?php $child = Mage::getModel('catalog/category')->load($child->getId()) ?>
+            <li <?php echo ($child->getId()==$currentId)?'class="act"':'';?>>
+            <a title="<?php echo $_helperCustom->escapeCharacters($child->getName())?>" href="<?php echo $child->getUrl()?>"
+             <?php echo ($child->getId()==$currentId)?'class="act"':'';?>><?php echo $child->getName()?>
+             </a>
+           </li>
+            <?php endforeach; ?>
+          </ul> 
+        <?php endif;?>
+        </li>
+<?php endforeach; ?>
+      </ul>
+<?php endif;?>

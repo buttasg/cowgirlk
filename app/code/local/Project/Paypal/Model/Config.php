@@ -1,0 +1,23 @@
+<?php
+class Project_Paypal_Model_Config extends Mage_Paypal_Model_Config
+{
+ 
+    /**
+     * BN code getter
+     * override method
+     *
+     * @param string $countryCode ISO 3166-1
+     */
+    public function getBuildNotationCode($countryCode = null)
+    {
+        $newBnCode = 'SuperWebSolutions_SI_MagentoCE';
+        //if you would like to retain the product and country code
+        //E.g., Company_Test_EC_US
+        //$bnCode = parent::getBuildNotationCode($countryCode);
+        //$newBnCode = str_replace('Varien_Cart','Prjoect_Test',$bnCode);
+        return $newBnCode;
+    }
+ 
+}
+
+?>

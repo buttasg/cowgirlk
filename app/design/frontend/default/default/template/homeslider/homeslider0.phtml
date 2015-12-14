@@ -1,0 +1,27 @@
+<?php
+$html='';
+$sliders=$this->getHomeslides()  ;          
+if(count($sliders)):
+$html.='<ul class="bxslider">';
+foreach($sliders as $row)
+{
+    $html.='<li>'
+           .'<div>'
+           .'<a href="'.$row['link'].'" title="'.$row['first_title'].' '.$row['second_title'].'"><img src="/media/'.$row['filename'].'" width="745" height="570" border="0"></a>'
+           .'<div class="info_wrapper">'
+           .'<div class="product_name"><span class="sproduct">'.$row['second_title'].'</span><span class="sbrand">'.$row['first_title'].'</span></div>'
+
+           .'<div class="link"><a href="'.$row['link'].'" title="Shop now">Shop Now</a></div>'
+           .'</div>'
+           .'</div>'
+           .'</li>';
+} 
+$html.='</ul>';
+echo $html;
+?>
+<script laguage="text/javascript">
+jQuery('.bxslider').bxSlider({});//auto: true
+</script>
+<?php
+endif;
+?>  

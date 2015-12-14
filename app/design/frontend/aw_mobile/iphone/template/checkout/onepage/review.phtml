@@ -1,0 +1,54 @@
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/AW-LICENSE.txt
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * =================================================================
+ * This software is designed to work with Magento community edition and
+ * its use on an edition other than specified is prohibited. aheadWorks does not
+ * provide extension support in case of incorrect edition use.
+ * =================================================================
+ *
+ * @category   AW
+ * @package    AW_Mobile
+ * @version    1.6.7
+ * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
+ */
+?><div id="checkout-review-load" class="default-box bottom-space">
+    <?php echo $this->getChildHtml('info') ?>
+</div>
+
+<div id="checkout-review-submit">
+    <?php if (Mage::getBlockSingleton('checkout/agreements')): ?>
+
+        <?php echo $this->getChildHtml('agreements') ?>
+    <?php endif; ?>
+    <div class="content">
+        <div class="a-center">
+                    <span id="review-buttons-container" class="a-center">
+                    <a class="button red" onclick="review.save();"
+                       href="javascript:return false;"><span><?php echo $this->__('Place Order') ?></span></a>
+                    </span>
+        </div>
+        <br/>
+            <span id="review-please-wait" style="display:none;padding:0 7px;" class="opc-please-wait">
+                <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>" class="v-middle" alt=""/> &nbsp; <?php echo $this->__(
+                    'Submitting order information...'
+                ) ?> &nbsp;
+            </span>
+    </div>
+
+    <script type="text/javascript">
+        var review = new Review('<?php echo $this->getUrl('checkout/onepage/saveOrder',array('form_key' => Mage::getSingleton('core/session')->getFormKey())) ?>', '<?php echo $this->getUrl('checkout/onepage/success') ?>', $('checkout-agreements'));
+    </script>
+</div>
+<div id="checkout-paypaliframe-load"></div>

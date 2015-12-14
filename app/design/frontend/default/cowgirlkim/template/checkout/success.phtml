@@ -1,0 +1,71 @@
+<!--[if !IE]>banner-section div start here<![endif]-->
+
+<!-- Facebook Conversion Code for yotpo_checkouts_pixel --> <script>(function() { var _fbq = window._fbq || (window._fbq = []); if (!_fbq.loaded) { var fbds = document.createElement('script'); fbds.async = true; fbds.src = '//connect.facebook.net/en_US/fbds.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(fbds, s); _fbq.loaded = true; } })(); window._fbq = window._fbq || []; window._fbq.push(['track', '6028644868676', {'value':'0.01','currency':'USD'}]); </script> <noscript><img height="1" width="1" alt="" style="display:none" src="https://www.facebook.com/tr?ev=6028644868676&amp;cd[value]=0.01&amp;cd[currency]=USD&amp;noscript=1" /></noscript>
+
+
+<div class="order-confirmation-sec">
+  <div class="thanksyou-sec"> <span><?php echo $this->__('THANK YOU FOR YOUR ORDER')?><br/>
+    <?php echo $this->__('YEEHAW!')?></span></div>
+  <div class="order-confir-sec">
+    <div class="order-inner">
+      <div class="order-video-sec"><?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('order_success_page_video')->toHtml()?></div>
+      <div class="order-video-right">
+       <div class="order-contact-sec default-img"> 
+        <span class="order-contact-txt"> Contact Us: <br><span><?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('phone_number')->toHtml()?></span> </span> 
+        <span class="order-email-txt"> Email Us:<br>
+         <span>
+         	<a title="Hello@CowgirlKim.com" href="mailto:<?php echo Mage::getStoreConfig('trans_email/ident_general/email') ?>"><?php echo Mage::getStoreConfig('trans_email/ident_general/email') ?></a></span> </span> </div>
+    		<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('order_success_page_content')->toHtml()?>
+      </div>
+    </div>
+    
+    <div class="order-newsletter-sec">
+      <div class="order-newsletter-inner">
+        <div class="ordernewsletter-txt"><?php echo $this->__('Newsletter')?></div>
+        <div class="order-newsletter-input">
+<!--
+          <input name="email" id="email" type="text" value="<?php echo Mage::getSingleton('customer/session')->getPostedEmail();?>"/>
+          <span><?php echo $this->__('Enter your Email Address to recieve special offers and promotions!')?></span> </div>
+        <img src="<?php echo $this->getSkinUrl('images/subscribe-btn1.png')?>" alt="<?php echo $this->__('Subscribe newsletter')?>"  /> 
+-->
+<?php echo $this->getLayout()->createBlock('core/template')->setTemplate('constantcontact/signup.phtml')->toHtml();?>
+        </div>
+      <div class="order-follow-inner">
+        <div class="ordernewsletter-txt">Follow Us:</div>
+        
+        <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('social_media_links')->toHtml()?>
+      </div>
+    </div>
+  </div>
+</div>
+<!--[if !IE]>banner-section div end here<![endif]-->
+<?php
+//$order_details = Mage::getModel('sales/order')->loadByIncrementId(Mage::getSingleton('checkout/session')->getLastRealOrderId());
+//$adwords_saleamt = $order_details->subtotal;
+?>
+<!-- Google Code for Order Confirmation Conversion Page -->
+<script type="text/javascript">
+/* <![CDATA[ */
+var google_conversion_id = 973168799;
+var google_conversion_language = "en";
+var google_conversion_format = "3";
+var google_conversion_color = "ffffff";
+var google_conversion_label = "wut-CNG3nVYQn8GF0AM";
+var google_remarketing_only = false;
+/* ]]> */
+</script>
+<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
+</script>
+<noscript>
+<div style="display:inline;">
+<img height="1" width="1" style="border-style:none;" alt="" src="//www.googleadservices.com/pagead/conversion/973168799/?label=wut-CNG3nVYQn8GF0AM&amp;guid=ON&amp;script=0"/>
+</div>
+</noscript>
+
+<!-- Twitter Conversion Code for yotpo_checkouts_pixel --> 
+<script src="//platform.twitter.com/oct.js" type="text/javascript"></script>
+<script type="text/javascript">
+twttr.conversion.trackPid('l52wd');</script>
+<noscript>
+<img height="1" width="1" style="display:none;" alt="" src="https://analytics.twitter.com/i/adsct?txn_id=l52wd&p_id=Twitter" />
+<img height="1" width="1" style="display:none;" alt="" src="//t.co/i/adsct?txn_id=l52wd&p_id=Twitter" /></noscript>

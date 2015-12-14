@@ -1,0 +1,25 @@
+ <div class="newsletter-box ">
+            <h4 class="default-img" >NEWSLETTER</h4>
+            <p>Don’t miss out on all things Western Chic!<br/>
+              Subscribe to our newsletter and start receiving special deals, exclusive offers, and styling tips from Cowgirl Kim.</p>
+            <div class="newsletter-search">
+              <input type="text" value="" data-watermark="Enter Your Email Address" id="footer_newsletter" name="email" />
+              <input name="btnNlSignup"  type="submit"  id="btnNlSignup" />
+            </div>
+            <div id="nsl_error" class="no-dispaly"></div>
+          </div>
+
+<script type="text/javascript">
+//<![CDATA[
+jQuery(function(){
+	jQuery('#footer_newsletter').attr('autocomplete',"off");
+	jQuery('#newsletter-box').cc({textId: "#footer_newsletter",
+		   buttonId: "#btnNlSignup",
+		   errorDivId:"#nsl_error",
+		   fadeImgPath:"http://cowgirlkim.magentostaging.com/skin/frontend/default/cowgirlkim/images/subscribe-btn.png",
+		   highlightImgPath:"http://cowgirlkim.magentostaging.com/skin/frontend/default/cowgirlkim/images/subscribe-btn1.png",
+		   url:"http://cowgirlkim.magentostaging.com/constantcontact/index/subscribeVisitor/"
+		   });
+});
+ //]]>
+</script>

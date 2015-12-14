@@ -1,0 +1,896 @@
+
+
+order deny,allow
+deny from all
+allow from env=allowclient
+SetEnvIf X-FORWARDED-FOR 192.88.134.2 allowclient
+SetEnvIf X-FORWARDED-FOR 192.88.135.2 allowclient
+SetEnvIf X-FORWARDED-FOR 185.93.228.2 allowclient
+SetEnvIf X-FORWARDED-FOR 185.93.229.2 allowclient
+SetEnvIf X-FORWARDED-FOR 185.93.230.2 allowclient
+SetEnvIf X-FORWARDED-FOR ^192.88. allowclient
+SetEnvIf X-FORWARDED-FOR ^185.93. allowclient
+SetEnvIf X-FORWARDED-FOR ^192.124.249. allowclient
+SetEnvIf X-FORWARDED-FOR 199.223.236.179 allowclient
+SetEnvIf X-FORWARDED-FOR 146.148.117.213 allowclient
+SetEnvIf X-FORWARDED-FOR 23.251.134.134 allowclient
+SetEnvIf X-FORWARDED-FOR 178.33.238.180 allowclient
+SetEnvIf X-FORWARDED-FOR ^142.4.217. allowclient
+SetEnvIf X-FORWARDED-FOR ^167.114.0. allowclient
+SetEnvIf X-FORWARDED-FOR ^192.99.17. allowclient
+SetEnvIf X-FORWARDED-FOR ^5.196.79. allowclient
+SetEnvIf X-FORWARDED-FOR ^130.211. allowclient
+SetEnvIf X-FORWARDED-FOR ^104.155. allowclient
+
+
+############################################
+## uncomment these lines for CGI mode
+## make sure to specify the correct cgi php binary file name
+## it might be /cgi-bin/php-cgi
+
+#    Action php5-cgi /cgi-bin/php5-cgi
+#    AddHandler php5-cgi .php
+
+############################################
+## GoDaddy specific options
+
+#   Options -MultiViews
+
+## you might also need to add this line to php.ini
+##     cgi.fix_pathinfo = 1
+## if it still doesn't work, rename php.ini to php5.ini
+
+############################################
+## this line is specific for 1and1 hosting
+
+    #AddType x-mapp-php5 .php
+    #AddHandler x-mapp-php5 .php
+
+############################################
+## default index file
+
+    DirectoryIndex index.php
+
+<IfModule mod_php5.c>
+
+############################################
+## adjust memory limit
+
+#    php_value memory_limit 64M
+    php_value memory_limit 256M
+    php_value max_execution_time 18000
+
+############################################
+## disable magic quotes for php request vars
+
+    php_flag magic_quotes_gpc off
+
+############################################
+## disable automatic session start
+## before autoload was initialized
+
+    php_flag session.auto_start off
+
+############################################
+## enable resulting html compression
+
+    #php_flag zlib.output_compression on
+
+###########################################
+# disable user agent verification to not break multiple image upload
+
+    php_flag suhosin.session.cryptua off
+
+###########################################
+# turn off compatibility with PHP4 when dealing with objects
+
+    php_flag zend.ze1_compatibility_mode Off
+
+</IfModule>
+
+<IfModule mod_security.c>
+###########################################
+# disable POST processing to not break multiple image upload
+
+    SecFilterEngine Off
+    SecFilterScanPOST Off
+</IfModule>
+
+<IfModule mod_deflate.c>
+
+############################################
+## enable apache served files compression
+## http://developer.yahoo.com/performance/rules.html#gzip
+
+    # Insert filter on all content
+    ###SetOutputFilter DEFLATE
+    # Insert filter on selected content types only
+    #AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript
+
+    # Netscape 4.x has some problems...
+    #BrowserMatch ^Mozilla/4 gzip-only-text/html
+
+    # Netscape 4.06-4.08 have some more problems
+    #BrowserMatch ^Mozilla/4\.0[678] no-gzip
+
+    # MSIE masquerades as Netscape, but it is fine
+    #BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
+
+    # Don't compress images
+    #SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png)$ no-gzip dont-vary
+
+    # Make sure proxies don't deliver the wrong content
+    #Header append Vary User-Agent env=!dont-vary
+
+</IfModule>
+
+<IfModule mod_ssl.c>
+
+############################################
+## make HTTPS env vars available for CGI mode
+
+    SSLOptions StdEnvVars
+
+</IfModule>
+
+<IfModule mod_rewrite.c>
+
+############################################
+## enable rewrites
+
+    Options +FollowSymLinks
+    RewriteEngine on
+
+############################################
+## you can put here your magento root folder
+## path relative to web root
+
+    #RewriteBase /magento/
+
+############################################
+## uncomment next line to enable light API calls processing
+
+#    RewriteRule ^api/([a-z][0-9a-z_]+)/?$ api.php?type=$1 [QSA,L]
+
+############################################
+## rewrite API2 calls to api.php (by now it is REST only)
+
+    RewriteRule ^api/rest api.php?type=rest [QSA,L]
+
+############################################
+## workaround for HTTP authorization
+## in CGI environment
+
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+############################################
+## TRACE and TRACK HTTP methods disabled to prevent XSS attacks
+
+    RewriteCond %{REQUEST_METHOD} ^TRAC[EK]
+    RewriteRule .* - [L,R=405]
+
+############################################
+## redirect for mobile user agents
+
+    #RewriteCond %{REQUEST_URI} !^/mobiledirectoryhere/.*$
+    #RewriteCond %{HTTP_USER_AGENT} "android|blackberry|ipad|iphone|ipod|iemobile|opera mobile|palmos|webos|googlebot-mobile" [NC]
+    #RewriteRule ^(.*)$ /mobiledirectoryhere/ [L,R=302]
+
+
+## CUSTOM REDIRECTS
+RewriteRule ^2-die-4-marrika-nakk-cinderella-caramella-skirt\.html$ /brands/marrika-nakk.html? [L,R=301]
+RewriteRule ^2-die-4-old-gringo-swarvoski-crystal-eagle-boots\.html$ /brands/old-gringo.html? [L,R=301]
+RewriteRule ^3-strand-navajo-pearl-and-turquoise-necklace\.html$ /accessories/jewelry/necklaces.html? [L,R=301]
+RewriteRule ^amazing-juan-antonio-rosal-red-tooled-leather-handbag\.html$ /brands/juan-antonio.html? [L,R=301]
+RewriteRule ^amazing-multi-stone-turq-cross-navajo-pearl-necklace\.html$ /accessories/jewelry/necklaces.html? [L,R=301]
+RewriteRule ^amazing-patricia-wolf-cody-duster\.html$ /brands/patricia-wolf.html? [L,R=301]
+RewriteRule ^american-west-annie-s-secret-collection-8155282\.html$ /brands/american-west.html? [L,R=301]
+RewriteRule ^american-west-annie-s-secret-collection-8170282\.html$ /brands/american-west.html? [L,R=301]
+RewriteRule ^american-west-annie-s-secret-collection-8183479\.html$ /brands/american-west.html? [L,R=301]
+RewriteRule ^american-west-annie-s-secret-collection-9150429\.html$ /brands/american-west.html? [L,R=301]
+RewriteRule ^american-west-birds-of-a-feather-4401282\.html$ /brands/american-west.html? [L,R=301]
+RewriteRule ^american-west-birds-of-a-feather-4403282\.html$ /brands/american-west.html? [L,R=301]
+RewriteRule ^american-west-birds-of-a-feather-4403576\.html$ /brands/american-west.html? [L,R=301]
+RewriteRule ^american-west-black-hills-zip-top-convertible-half-moon-tote\.html$ /brands/american-west.html? [L,R=301]
+RewriteRule ^american-west-carry-on-tote-6315204\.html$ /brands/american-west.html? [L,R=301]
+RewriteRule ^american-west-carry-on-tote-lcbt204\.html$ /brands/american-west.html? [L,R=301]
+RewriteRule ^american-west-cassidy-5707344\.html$ /brands/american-west.html? [L,R=301]
+RewriteRule ^american-west-cassidy-5760344\.html$ /brands/american-west.html? [L,R=301]
+RewriteRule ^american-west-cassidy-5770344\.html$ /brands/american-west.html? [L,R=301]
+RewriteRule ^american-west-cattle-drive-2585721\.html$ /brands/american-west.html? [L,R=301]
+RewriteRule ^american-west-cattle-drive-2585739\.html$ /brands/american-west.html? [L,R=301]
+RewriteRule ^american-west-chaps-7120518\.html$ /brands/american-west.html? [L,R=301]
+RewriteRule ^american-west-chaps-7162518\.html$ /brands/american-west.html? [L,R=301]
+RewriteRule ^american-west-coming-up-roses-8307282\.html$ /brands/american-west.html? [L,R=301]
+RewriteRule ^american-west-desert-wildflower-5683282\.html$ /brands/american-west.html? [L,R=301]
+RewriteRule ^american-west-dixie-girl-ladies-tri-fold-wallet-7200\.html$ /brands/american-west.html? [L,R=301]
+RewriteRule ^american-west-dixie-girl-ladies-tri-fold-wallet-7244\.html$ /accessories/handbags/wallets.html? [L,R=301]
+RewriteRule ^american-west-eagle-heart-9265612\.html$ /brands/american-west.html? [L,R=301]
+RewriteRule ^american-west-eagle-heart-9299279\.html$ /brands/american-west.html? [L,R=301]
+RewriteRule ^american-west-eagle-heart-9299576\.html$ /brands/american-west.html? [L,R=301]
+RewriteRule ^american-west-forget-me-not-7607282\.html$ /brands/american-west.html? [L,R=301]
+RewriteRule ^american-west-forget-me-not-7659282\.html$ /brands/american-west.html? [L,R=301]
+RewriteRule ^american-west-forget-me-not-7659985\.html$ /brands/american-west.html? [L,R=301]
+RewriteRule ^american-west-forget-me-not-7699282\.html$ /brands/american-west.html? [L,R=301]
+RewriteRule ^american-west-free-as-a-bird-7136568\.html$ /brands/american-west.html? [L,R=301]
+RewriteRule ^american-west-free-as-a-bird-7183568\.html$ /brands/american-west.html? [L,R=301]
+RewriteRule ^american-west-free-as-a-bird-7200006\.html$ /brands/american-west.html? [L,R=301]
+RewriteRule ^american-west-free-spirit-5125181\.html$ /brands/american-west.html? [L,R=301]
+RewriteRule ^american-west-globe-trotter-6120282\.html$ /brands/american-west.html? [L,R=301]
+RewriteRule ^american-west-globe-trotter-6165282\.html$ /brands/american-west.html? [L,R=301]
+RewriteRule ^american-west-globe-trotter-6170282\.html$ /brands/american-west.html? [L,R=301]
+RewriteRule ^american-west-graciebird-4444310\.html$ /brands/american-west.html? [L,R=301]
+RewriteRule ^american-west-lady-lace-lcbt394\.html$ /brands/american-west.html? [L,R=301]
+RewriteRule ^american-west-mahogany-oakleaf-2-compartment-briefcase-with-2-front-pockets\.html$ /brands/american-west.html? [L,R=301]
+RewriteRule ^american-west-mahogany-oakleaf-six-compartment-organized-briefcase\.html$ /brands/american-west.html? [L,R=301]
+RewriteRule ^american-west-mayflower-large-3-compartment-shopper-7709\.html$ /brands/american-west.html? [L,R=301]
+RewriteRule ^american-west-mayflower-large-3-compartment-shopper\.html$ /brands/american-west.html? [L,R=301]
+RewriteRule ^american-west-prairie-rose-pony900\.html$ /brands/american-west.html? [L,R=301]
+RewriteRule ^american-west-texas-two-step-5683982\.html$ /brands/american-west.html? [L,R=301]
+RewriteRule ^american-west-texas-two-step-6315982\.html$ /brands/american-west.html? [L,R=301]
+RewriteRule ^american-west-texas-two-step-7644982\.html$ /brands/american-west.html? [L,R=301]
+RewriteRule ^american-west-texas-two-step-8399982\.html$ /brands/american-west.html? [L,R=301]
+RewriteRule ^american-west-true-colors-1142282\.html$ /brands/american-west.html? [L,R=301]
+RewriteRule ^american-west-true-colors-1146282\.html$ /brands/american-west.html? [L,R=301]
+RewriteRule ^american-west-true-colors-3-compartment-zip-top-tote\.html$ /brands/american-west.html? [L,R=301]
+RewriteRule ^american-west-true-colors-ladies-tri-fold-wallet\.html$ /brands/american-west.html? [L,R=301]
+RewriteRule ^american-west-twisted-trail-convertible-zip-top-bucket-tote\.html$ /brands/american-west.html? [L,R=301]
+RewriteRule ^american-west-uptown-girl-9915497\.html$ /brands/american-west.html? [L,R=301]
+RewriteRule ^beautiful-vintage-collection-black-white-duster\.html$ /brands/vintage-collection.html? [L,R=301]
+RewriteRule ^brands/double-d-ranch-spring-2015-8-second-ride-top\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^brands/double-d-ranch-spring-2015-mississippi-girl-tee\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^brands/navajo-pawn-sterling-turq-concho-belt\.html$ /accessories/belts/concho-belts.html? [L,R=301]
+RewriteRule ^brands/tasha-polizzi-spring-2015-settler-shirt\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^breathtaking-raymond-cortiz-santo-domingo-huge-navajo-pearl-cross-collectible-necklace\.html$ /accessories/jewelry/necklaces.html? [L,R=301]
+RewriteRule ^clothes/roja-fall-2014-mayan-snowflake-skirt-2-color-options\.html$ /brands/roja-collection.html? [L,R=301]
+RewriteRule ^cock-of-the-walk-power-of-love-boots\.html$ /shoes/boots.html? [L,R=301]
+RewriteRule ^colorful-roie-jaque-spiny-oyster-and-turquoise-necklace\.html$ /accessories/jewelry/necklaces.html? [L,R=301]
+RewriteRule ^cowgirl-brands/double-d-ranch/dd-ranch-fall-2013-war-pony-tee\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^cowgirl-brands/double-d-ranch/double-d-ranch-color-of-the-wind-jacket\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^cowgirl-brands/double-d-ranch/double-d-ranch-santo-domingo-top\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^cowgirl-brands/double-d-ranch/double-d-ranch-spring-2013-soco-cowgirl-dress\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^cowgirl-brands/double-d-ranch/double-d-ranch-spring-2014-bena-blanket-maxi-skirt\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^cowgirl-brands/double-d-ranch/double-d-ranch-spring-2014-el-rancho-round-up-tee\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^cowgirl-brands/double-d-ranch/double-d-ranch-spring-2014-florez-floral-dress-in-black\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^cowgirl-brands/double-d-ranch/double-d-ranch-spring-2014-santo-domingo-tote\.html$ /accessories/handbags/totes.html? [L,R=301]
+RewriteRule ^cowgirl-brands/lane-boots-en/lane-dolly-boot\.html$ /brands/lane-boots.html? [L,R=301]
+RewriteRule ^cowgirl-brands/lane-boots-en/lane-stud-rocker-boots\.html$ /brands/lane-boots.html? [L,R=301]
+RewriteRule ^cowgirl-brands/roja/roja-navajo-design-fox-and-knit-duster-coat\.html$ /brands/roja-collection.html? [L,R=301]
+RewriteRule ^cowgirl-brands/roja/roja-sophia-ballet-top\.html$ /clothes/tops/ballet.html? [L,R=301]
+RewriteRule ^cowgirl-brands/vintage-collection/vintage-collection-black-embroidered-silhouette-dress\.html$ /brands/vintage-collection.html? [L,R=301]
+RewriteRule ^cowgirl-brands/vintage-collection/vintage-collection-fall-2014-apple-martini-short-skirt\.html$ /brands/vintage-collection.html? [L,R=301]
+RewriteRule ^cowgirl-brands/vintage-collection/vintage-collection-fall-2014-apple-martini-top\.html$ /brands/vintage-collection.html? [L,R=301]
+RewriteRule ^cowgirl-brands/vintage-collection/vintage-collection-fall-2014-apple-martini-tunic\.html$ /brands/vintage-collection.html? [L,R=301]
+RewriteRule ^cowgirl-brands/vintage-collection/vintage-collection-fall-2014-aztec-rose-long-skirt\.html$ /brands/vintage-collection.html? [L,R=301]
+RewriteRule ^cowgirl-brands/vintage-collection/vintage-collection-fall-2014-aztec-rose-peplum-top\.html$ /brands/vintage-collection.html? [L,R=301]
+RewriteRule ^cowgirl-chic-juan-antonio-tooled-leather-turquoise-purse\.html$ /brands/juan-antonio.html? [L,R=301]
+RewriteRule ^cowgirl-fashion/belts/sexy-juan-antonio-wide-belt\.html$ /brands/juan-antonio.html? [L,R=301]
+RewriteRule ^cowgirl-fashion/jackets-and-blazers/vintage-collection-2014-light-weight-denim-embroidered-jacket\.html$ /brands/vintage-collection.html? [L,R=301]
+RewriteRule ^cowgirl-fashion/scarves/tasha-polizzi-fall-2014-woodsman-cape\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^cowgirl-fashion/seasonal-items/double-d-ranch-fall-2013-en-2/dd-ranch-fall-2013-cree-round-dancer-top\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^cowgirl-fashion/seasonal-items/roja-collections-fall-2013/fall-2013-roja-saltillo-short-knit-skirt\.html$ /brands/roja-collection.html? [L,R=301]
+RewriteRule ^cowgirl-fashion/seasonal-items/roja-collections-fall-2013/roja-collection-cut-velvet-rose-ballet-top\.html$ /clothes/tops/ballet.html? [L,R=301]
+RewriteRule ^cowgirl-fashion/seasonal-items/roja-collections-fall-2013/roja-fall-2013-short-fringe-skirt\.html$ /brands/roja-collection.html? [L,R=301]
+RewriteRule ^cowgirl-just-cisco-poncho-style-shawl\.html$ /brands/cowgirl-justice.html? [L,R=301]
+RewriteRule ^cowgirl-justice-fall-2014-aztec-skirt-with-fringe-short-skirt\.html$ /brands/cowgirl-justice.html? [L,R=301]
+RewriteRule ^cowgirl-justice-fall-2014-bella-fringed-skirt\.html$ /brands/cowgirl-justice.html? [L,R=301]
+RewriteRule ^cowgirl-justice-fall-2014-mexia-floral-embroidered-denim-shirt\.html$ /brands/cowgirl-justice.html? [L,R=301]
+RewriteRule ^cowgirl-justice-headdress-tank\.html$ /brands/cowgirl-justice.html? [L,R=301]
+RewriteRule ^cowgirl-justice-india-pink-palazzo-pant\.html$ /brands/cowgirl-justice.html? [L,R=301]
+RewriteRule ^cowgirl-justice-lizzy-sundress\.html$ /brands/cowgirl-justice.html? [L,R=301]
+RewriteRule ^cowgirl-justice-reata-cardigan\.html$ /brands/cowgirl-justice.html? [L,R=301]
+RewriteRule ^cowgirl-justice-renegade-embroidered-black-snap-dress\.html$ /brands/cowgirl-justice.html? [L,R=301]
+RewriteRule ^cowgirl-justice-sedona-wrap-2-color-choices\.html$ /brands/cowgirl-justice.html? [L,R=301]
+RewriteRule ^cowgirl-justice-sonora-fringed-poncho\.html$ /brands/cowgirl-justice.html? [L,R=301]
+RewriteRule ^dd-ranch-fall-2014-mandala-moon-vest\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^dd-ranch-fall-2014-petticoats-on-the-prairie-dress\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^dd-ranch-fall-2014-wandering-melissa-duster\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^dd-ranchwear-2014-amaya-suede-embroidered-jacket-in-black\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-2014-bedouin-necklace-tee-available-in-3-colors\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-2014-possibles-bag-tee-choice-of-3-colors\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-adele-peasant-top-3-colors\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-annette-top\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-beaded-folk-belt\.html$ /accessories/belts.html? [L,R=301]
+RewriteRule ^double-d-ranch-concho-hip-belt\.html$ /accessories/belts/hip-belts.html? [L,R=301]
+RewriteRule ^double-d-ranch-essential-concho-leggings\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-fall-2014-american-hero-field-jacket-2-colors\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-fall-2014-american-hero-tee\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-fall-2014-arabella-dress-6027\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-fall-2014-arabella-dress\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-fall-2014-bernalillo-field-jacket\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-fall-2014-bisbee-tq-top\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-fall-2014-camp-blanket-palazzo-pants\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-fall-2014-caravan-girl-jacket\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-fall-2014-consuelo-belt\.html$ /accessories/belts.html? [L,R=301]
+RewriteRule ^double-d-ranch-fall-2014-indian-plum-vest\.html$ /clothes/jackets-coats/vests.html? [L,R=301]
+RewriteRule ^double-d-ranch-fall-2014-jesse-leather-biker-jacket\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-fall-2014-jypsy-dress\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-fall-2014-lady-liberty-belt\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-fall-2014-leather-trigger-biker-jacket\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-fall-2014-mixed-up-trucker-leather-jacket\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-fall-2014-mohawk-trail-tee\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-fall-2014-mountain-crow-bomber\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-fall-2014-naomi-field-jacket\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-fall-2014-nekoti-top\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-fall-2014-new-age-traveler-top\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-fall-2014-parfleche-duster\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-fall-2014-pelipa-beaded-vest\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-fall-2014-penella-dress\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-fall-2014-petticoats-on-the-prairie-blouse\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-fall-2014-petticoats-on-the-prairie-short-skirt\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-fall-2014-phar-lap-tee-2-color-options\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-fall-2014-plains-milkweed-suede-beaded-jacket\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-fall-2014-rainbow-traveler-top\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-fall-2014-ranch-romance-top-2-colors\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-fall-2014-red-twilight-sky-top-2-colors\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-fall-2014-rides-with-thunder-top\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-fall-2014-rough-rider-jeggings\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-fall-2014-salcedo-leather-studded-jacket\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-fall-2014-samira-s-rug-mini-skirt\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-fall-2014-samira-s-rug-palazzo-pant\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-fall-2014-silk-velvet-turquoise-cross-necklace-top\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-fall-2014-silver-trader-jacket-2-colors\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-fall-2014-sweat-lodge-leopard-collared-jacket\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-fall-2014-sweetbird-dress\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-fall-2014-tahki-s-necklace-tee-2-colors\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-fall-2014-thunderbling-top\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-fall-2014-whistling-waters-top-6991\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-fall-2014-whistling-waters-top-7011\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-fall-2014-whistling-waters-top-7090\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-fall-2014-whistling-waters-top-7095\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-fall-2014-whistling-waters-top-7148\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-fall-2014-whistling-waters-top-7240\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-fall-2014-whistling-waters-top\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-fall-2014-wild-free-top-2-colors\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-fall-2014-yilan-cardigan\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-fall-2015-chicora-blanket-poncho\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-fall-bryony-jacket\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-fall-cristo-dios-tee-2-color-options\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-fall-live-lucky-tee\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-fall-winter-2015-b$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-fall-winter-high-mountain-biker-jacket\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-faux-turq-leather-carracas-concho-belt\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-jypsy-scarf\.html$ /accessories/extras/scarves-shawls.html? [L,R=301]
+RewriteRule ^double-d-ranch-lane-cheetah-chic-boots\.html$ /shoes/boots.html? [L,R=301]
+RewriteRule ^double-d-ranch-lane-garcitas-half-pint-boots-hot-pink\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-lane-jaw-dropping-warrior-dreams-beaded-boots\.html$ /shoes/boots.html? [L,R=301]
+RewriteRule ^double-d-ranch-lane-stars-stripes-distressed-denim-studded-boots\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-leather-american-honor-biker-jacket\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-saqui-concho-belt\.html$ /accessories/belts/concho-belts.html? [L,R=301]
+RewriteRule ^double-d-ranch-silversmith-s-daughter-velvet-studded-jacket-5348\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-silversmith-s-daughter-velvet-studded-jacket-5352\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-silversmith-s-daughter-velvet-studded-jacket-5371\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-silversmith-s-daughter-velvet-studded-jacket-5374\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-silversmith-s-daughter-velvet-studded-jacket-5377\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-silversmith-s-daughter-velvet-studded-jacket-5378\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-silversmith-s-daughter-velvet-studded-jacket-5405\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-silversmith-s-daughter-velvet-studded-jacket-5466\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-silversmith-s-daughter-velvet-studded-jacket-5467\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-silversmith-s-daughter-velvet-studded-jacket-5474\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-silversmith-s-daughter-velvet-studded-jacket-5547\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-silversmith-s-daughter-velvet-studded-jacket-5564\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-silversmith-s-daughter-velvet-studded-jacket-5585\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-silversmith-s-daughter-velvet-studded-jacket-5646\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-silversmith-s-daughter-velvet-studded-jacket-5647\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-spring-2014-cristo-rey-top\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-spring-2014-true-american-tee\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-spring-2014-two-arrows-suede-embroidered-jacket\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-spring-2015-8-second-ride-top\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-spring-2015-carleen-rodeo-top\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-spring-2015-change-of-worlds-indian-chief-top\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-spring-2015-girl-trick-roper-tank\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-spring-2015-girls-day-out-top\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-spring-2015-git-along-lil-doggie-leather-jacket\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-spring-2015-joleen-jewels-tank\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-spring-2015-keep-on-the-sunny-side-sheer-embroidered-top\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-spring-2015-little-flower-serape-mini-skirt\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-spring-2015-little-flower-serape-scarf\.html$ /accessories/extras/scarves-shawls.html? [L,R=301]
+RewriteRule ^double-d-ranch-spring-2015-lucky-star-camp-scarf\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-spring-2015-mississippi-girl-tee\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-spring-2015-mustangs-tank-two-colors-string-off-white-1x\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-spring-2015-mustangs-tank-two-colors-string-off-white-2x\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-spring-2015-mustangs-tank-two-colors-string-off-white-l\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-spring-2015-mustangs-tank-two-colors-string-off-white-m\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-spring-2015-mustangs-tank-two-colors-string-off-white-s\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-spring-2015-mustangs-tank-two-colors-string-off-white-xl\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-spring-2015-mustangs-tank-two-colors-string-off-white-xs\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-spring-2015-mustangs-tank-two-colors\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-spring-2015-princess-little-flower-tee\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-spring-2015-saddle-up-gals-tote\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-spring-2015-shadowflax-trucker-jacket\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-spring-2015-star-blanket-vest\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-spring-2015-wild-luck-horseshoe-top\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-summer-2015-wanekia-huipil-top-2-color-choices\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-thunder-cloud-s-drums-jacket\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-velvet-arabella-dress\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranch-velvet-silversmith-s-daughter-dress-duster\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranchwear-fall-2014-samira-s-rug-poncho\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranchwear-spring-2015-leaving-cheyenne-vest\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranchwear-spring-2015-princess-little-flower-workshirt\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranchwear-spring-2015-time-of-peace-denim-poncho\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-ranchwear-thunder-cloud-s-drums-tee-3-color-options\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-spring-2015-little-flower-cross-top\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-spring-2015-little-flower-serape-necklace-top\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-spring-2015-little-flower-serape-tank\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-spring-2015-rodeo-dance-top-3-colors\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-spring-2015-where-eagles-fly-jacket\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^double-d-spring-2015-where-eagles-fly-vest\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^dramatic-navajo-pearl-hoop-earrings\.html$ /accessories/jewelry/earrings.html? [L,R=301]
+RewriteRule ^edgy-juan-antonio-wide-leather-belts\.html$ /brands/juan-antonio.html? [L,R=301]
+RewriteRule ^extraordinary-native-american-rosarita-and-sterling-pendant\.html$ /accessories/jewelry/pendants.html? [L,R=301]
+RewriteRule ^fabulous-vincent-platero-sterling-and-spiny-oyster-earrings\.html$ /accessories/jewelry/earrings.html? [L,R=301]
+RewriteRule ^handbags-luggage/wallets/american-west-coming-up-roses-8342282\.html$ /accessories/handbags/wallets.html? [L,R=301]
+RewriteRule ^huge-stunning-mike-thompson-turq-slab-necklace-set\.html$ /accessories/jewelry/necklaces.html? [L,R=301]
+RewriteRule ^husband-and-wife-navajo-turquoise-or-multistone-bangle-bracelets\.html$ /accessories/jewelry/bracelets-watches.html? [L,R=301]
+RewriteRule ^jaw-dropping-double-d-ranch-mandala-moon-duster-coat-w-fur\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^jaw-dropping-vincent-platero-sterling-sampler-concho-belt\.html$ /accessories/belts/concho-belts.html? [L,R=301]
+RewriteRule ^jewelry/rainbird-coat/desert-pearls-collection\.html$ /accessories/jewelry.html? [L,R=301]
+RewriteRule ^joan-slifka-huge-native-american-inspired-sterling-clip-earrings\.html$ /accessories/jewelry/earrings.html? [L,R=301]
+RewriteRule ^johnny-was-baya-collection-kreena-hoodie\.html$ /brands/johnny-was.html? [L,R=301]
+RewriteRule ^johnny-was-biya-collection-kaleeb-wrap\.html$ /brands/johnny-was.html? [L,R=301]
+RewriteRule ^johnny-was-helen-peasant-top\.html$ /brands/johnny-was.html? [L,R=301]
+RewriteRule ^johnny-was-milla-kimono\.html$ /brands/johnny-was.html? [L,R=301]
+RewriteRule ^johnny-was-peacock-tunic\.html$ /brands/johnny-was.html? [L,R=301]
+RewriteRule ^johnny-was-vanessa-blouse\.html$ /brands/johnny-was.html? [L,R=301]
+RewriteRule ^juan-antonio-amazing-tooled-wide-belt-with-turquoise\.html$ /brands/juan-antonio.html? [L,R=301]
+RewriteRule ^juan-antonio-perfect-pink-purse\.html$ /brands/juan-antonio.html? [L,R=301]
+RewriteRule ^juan-antonio-tooled-saddle-bags\.html$ /brands/juan-antonio.html? [L,R=301]
+RewriteRule ^juan-willie-turquoise-amethyst-heart-cross-earrings\.html$ /accessories/jewelry/earrings.html? [L,R=301]
+RewriteRule ^lady-of-guadalupe-concho-belt\.html$ /accessories/belts/concho-belts.html? [L,R=301]
+RewriteRule ^lane-amber-turquoise-knee-high-boots-turquoise\.html$ /shoes/boots.html? [L,R=301]
+RewriteRule ^lane-dakota-boots\.html$ /brands/lane-boots.html? [L,R=301]
+RewriteRule ^lane-double-d-ranch-high-plains-cruiser-women-s-cowboy-boot-4429\.html$ /shoes/boots.html? [L,R=301]
+RewriteRule ^lane-double-d-ranch-high-plains-cruiser-women-s-cowboy-boot\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^lane-maggie-turquoise-and-brown-boots\.html$ /shoes/boots.html? [L,R=301]
+RewriteRule ^lone-eagle-i-love-you-earrings\.html$ /accessories/jewelry/earrings.html? [L,R=301]
+RewriteRule ^love-tokens-brushed-sterling-heart-and-turquoise-flower-earrings\.html$ /accessories/jewelry/earrings.html? [L,R=301]
+RewriteRule ^marrika-nakk-sexy-t\.html$ /brands/marrika-nakk.html? [L,R=301]
+RewriteRule ^marrika-nakk-velvet-lace-peasant-top-6635\.html$ /brands/marrika-nakk.html? [L,R=301]
+RewriteRule ^navajo-spiny-oyster-squash-blossom-necklace\.html$ /accessories/jewelry/necklaces.html? [L,R=301]
+RewriteRule ^navajo-sterling-turq-hoop-earrings\.html$ /accessories/jewelry/earrings.html? [L,R=301]
+RewriteRule ^old-gringo-2014-mayra-bis-women-s-boots\.html$ /brands/old-gringo.html? [L,R=301]
+RewriteRule ^old-gringo-beaded-eagle-chaquira-distressed-black-aqua-red-boots\.html$ /brands/old-gringo.html? [L,R=301]
+RewriteRule ^old-gringo-beaded-eagle-chaquira-distressed-brown-brass-boots\.html$ /brands/old-gringo.html? [L,R=301]
+RewriteRule ^old-gringo-clarise-embroidered-boots\.html$ /brands/old-gringo.html? [L,R=301]
+RewriteRule ^old-gringo-diego-crystal-boots\.html$ /brands/old-gringo.html? [L,R=301]
+RewriteRule ^old-gringo-elina-brass-knee-high-boots\.html$ /brands/old-gringo.html? [L,R=301]
+RewriteRule ^old-gringo-klak-boot\.html$ /brands/old-gringo.html? [L,R=301]
+RewriteRule ^old-gringo-mary-jo-tapestry-boots\.html$ /brands/old-gringo.html? [L,R=301]
+RewriteRule ^old-gringo-orleans-brass-boots\.html$ /brands/old-gringo.html? [L,R=301]
+RewriteRule ^old-gringo-s-belinda-snow-furia-boots\.html$ /brands/old-gringo.html? [L,R=301]
+RewriteRule ^old-gringo-vibrant-eagle-chaquira-beaded-cowboy-boots\.html$ /brands/old-gringo.html? [L,R=301]
+RewriteRule ^omg-lane-double-d-ranch-ammunition-boots-turq\.html$ /brands/lane-boots.html? [L,R=301]
+RewriteRule ^one-of-a-kind-lone-eagle-turquoise-conchos-and-feathers-necklace\.html$ /accessories/jewelry/necklaces.html? [L,R=301]
+RewriteRule ^pat-dahnke-amazing-long-fringe-yoke-belt\.html$ /brands/pat-dahnke.html? [L,R=301]
+RewriteRule ^pat-dahnke-bright-bias-silk-fringe-top\.html$ /brands/pat-dahnke.html? [L,R=301]
+RewriteRule ^pat-dahnke-burn-out-top\.html$ /brands/pat-dahnke.html? [L,R=301]
+RewriteRule ^pat-dahnke-convertible-skirt-dress-3-colors-to-choose-from\.html$ /brands/pat-dahnke.html? [L,R=301]
+RewriteRule ^pat-dahnke-cotton-fringe-shawl\.html$ /brands/pat-dahnke.html? [L,R=301]
+RewriteRule ^pat-dahnke-fall-2014-chic-hipster-reversible-beaded-belt\.html$ /brands/pat-dahnke.html? [L,R=301]
+RewriteRule ^pat-dahnke-fringed-feathered-shawl\.html$ /brands/pat-dahnke.html? [L,R=301]
+RewriteRule ^pat-dahnke-fringed-feathered-studded-vests-3-lengths\.html$ /brands/pat-dahnke.html? [L,R=301]
+RewriteRule ^pat-dahnke-ivory-lace-leggings\.html$ /brands/pat-dahnke.html? [L,R=301]
+RewriteRule ^pat-dahnke-ivory-lace-sleeveless-tunic\.html$ /brands/pat-dahnke.html? [L,R=301]
+RewriteRule ^pat-dahnke-lace-cutout-shoulder-top\.html$ /brands/pat-dahnke.html? [L,R=301]
+RewriteRule ^pat-dahnke-leather-and-lace-outfit\.html$ /brands/pat-dahnke.html? [L,R=301]
+RewriteRule ^pat-dahnke-long-fringed-suede-belt-w-turquoise\.html$ /brands/pat-dahnke.html? [L,R=301]
+RewriteRule ^pat-dahnke-long-sleeve-feathered-distressed-top\.html$ /brands/pat-dahnke.html? [L,R=301]
+RewriteRule ^pat-dahnke-magenta-hipster-belt\.html$ /brands/pat-dahnke.html? [L,R=301]
+RewriteRule ^pat-dahnke-romantic-corset\.html$ /brands/pat-dahnke.html? [L,R=301]
+RewriteRule ^pat-dahnke-sunday-afternoon-romantic-white-gauze-dress\.html$ /brands/pat-dahnke.html? [L,R=301]
+RewriteRule ^pat-dahnke-tiered-fringed-feathered-distressed-yoga-pants\.html$ /brands/pat-dahnke.html? [L,R=301]
+RewriteRule ^pat-dahnke-velvet-magenta-skirt-top\.html$ /brands/pat-dahnke.html? [L,R=301]
+RewriteRule ^patricia-wolf-desert-rose-gauntlet-gloves\.html$ /brands/patricia-wolf.html? [L,R=301]
+RewriteRule ^petite-sterling-concho-belt\.html$ /accessories/belts/concho-belts.html? [L,R=301]
+RewriteRule ^princess-little-flower-tote\.html$ /accessories/handbags/totes.html? [L,R=301]
+RewriteRule ^que-chula-colorful-leather-tooled-clutch\.html$ /brands/que-chula.html? [L,R=301]
+RewriteRule ^que-chula-large-tooled-leather-clutch-tote\.html$ /brands/que-chula.html? [L,R=301]
+RewriteRule ^que-chula-tooled-leather-handbag\.html$ /brands/que-chula.html? [L,R=301]
+RewriteRule ^que-chula-tooled-tote\.html$ /brands/que-chula.html? [L,R=301]
+RewriteRule ^que-chula-vibrant-red-tooled-handbag\.html$ /brands/que-chula.html? [L,R=301]
+RewriteRule ^rancho-estancia-fall-2014-clear-crystal-billo-concho-belt\.html$ /accessories/belts/concho-belts.html? [L,R=301]
+RewriteRule ^rockwell-tharp-maui-ranch-one-of-a-kind-hand-embroidered-boots\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^rockwell-tharp-parisian-nights-black-damask-knee-high-boots\.html$ /shoes/boots.html? [L,R=301]
+RewriteRule ^roja-2014-collection-sherpa-s-quilted-coat-black-multi\.html$ /brands/roja-collection.html? [L,R=301]
+RewriteRule ^roja-2014-reflection-bell-sleeve-tunic\.html$ /brands/roja-collection.html? [L,R=301]
+RewriteRule ^roja-2014-victorian-patchwork-coverup\.html$ /brands/roja-collection.html? [L,R=301]
+RewriteRule ^roja-2014-winter-rainbow-shimmer-coverup\.html$ /brands/roja-collection.html? [L,R=301]
+RewriteRule ^roja-4-corners-short-knit-red-black-skirt\.html$ /brands/roja-collection.html? [L,R=301]
+RewriteRule ^roja-collection-2014-long-neon-velvet-party-skirt\.html$ /brands/roja-collection.html? [L,R=301]
+RewriteRule ^roja-collection-2014-peacock-embroidered-blouse\.html$ /brands/roja-collection.html? [L,R=301]
+RewriteRule ^roja-collection-2014-saltillo-stars-top\.html$ /brands/roja-collection.html? [L,R=301]
+RewriteRule ^roja-collection-fall-2014-mayan-temple-sweater-coat\.html$ /brands/roja-collection.html? [L,R=301]
+RewriteRule ^roja-collection-fall-2014-rainbow-ceremonial-robe\.html$ /brands/roja-collection.html? [L,R=301]
+RewriteRule ^roja-fall-2014-boat-neck-sweater-cream-or-black\.html$ /brands/roja-collection.html? [L,R=301]
+RewriteRule ^roja-fall-2014-ceremonial-blouse-2-colors\.html$ /brands/roja-collection.html? [L,R=301]
+RewriteRule ^roja-fall-2014-fringe-knit-top-red-or-black\.html$ /brands/roja-collection.html? [L,R=301]
+RewriteRule ^roja-fall-2014-iconic-bamboo-shirt-jacket\.html$ /brands/roja-collection.html? [L,R=301]
+RewriteRule ^roja-fall-2014-la-cruz-short-skirt\.html$ /brands/roja-collection.html? [L,R=301]
+RewriteRule ^roja-fall-2014-mayan-snowflake-skirt-2-color-options\.html$ /brands/roja-collection.html? [L,R=301]
+RewriteRule ^roja-fall-2014-mesa-dance-blouse\.html$ /brands/roja-collection.html? [L,R=301]
+RewriteRule ^roja-fall-2014-saltillo-stars-concho-cardigan-2-colors\.html$ /brands/roja-collection.html? [L,R=301]
+RewriteRule ^roja-fall-2014-taos-night-short-skirt\.html$ /brands/roja-collection.html? [L,R=301]
+RewriteRule ^roja-fall-2014-winter-dance-triangle-knit-cardigan\.html$ /brands/roja-collection.html? [L,R=301]
+RewriteRule ^roja-holiday-2014-piano-shawl-blouse\.html$ /brands/roja-collection.html? [L,R=301]
+RewriteRule ^roja-spring-2014-fit-and-flair-black-knit-skirt\.html$ /brands/roja-collection.html? [L,R=301]
+RewriteRule ^roja-spring-2014-georgette-tuxedo-blouse\.html$ /brands/roja-collection.html? [L,R=301]
+RewriteRule ^roja-spring-2014-piano-turquoise-shawl-short-skirt\.html$ /brands/roja-collection.html? [L,R=301]
+RewriteRule ^roja-spring-2015-embroidered-otomi-tunic-style-cover-up\.html$ /brands/roja-collection.html? [L,R=301]
+RewriteRule ^romance-marrika-nakk-cowgirl-dress\.html$ /brands/marrika-nakk.html? [L,R=301]
+RewriteRule ^sale-items/vintage-collection-vivid-lace-dress\.html$ /brands/vintage-collection.html? [L,R=301]
+RewriteRule ^saltwater-cowgirl-indian-river-flip-flop\.html$ /shoes/flip-flops.html? [L,R=301]
+RewriteRule ^sexy-juan-antonio-wide-leather-corset-belt\.html$ /brands/juan-antonio.html? [L,R=301]
+RewriteRule ^sexy-pat-dahnke-short-fringe-leather-chaps-belt\.html$ /brands/pat-dahnke.html? [L,R=301]
+RewriteRule ^shoes/boots/mid-calf\.html$ /shoes/boots.html? [L,R=301]
+RewriteRule ^shoes/boots/short-boots\.html$ /shoes/boots.html? [L,R=301]
+RewriteRule ^shoes/boots/tall-boots\.html$ /shoes/boots.html? [L,R=301]
+RewriteRule ^shop/Boots/Lane-Boots/LANE-TALL-AMBER-RED-BOOTS/prod_1536\.html$ /brands/lane-boots.html? [L,R=301]
+RewriteRule ^shop/Boots/Lane/DD-Ranchwear-Boots/DD-RANCH/LANE-PRESCOTT-FRINGED-BOOTS-/prod_1437\.html$ /shoes/boots.html? [L,R=301]
+RewriteRule ^shop/Boots/Lane/DD-Ranchwear-Boots/LANE-DD-RANCH-KILLA-FLAG-BOOTS-/prod_1357\.html$ /shoes/boots.html? [L,R=301]
+RewriteRule ^shop/Boots/Lane/DD-Ranchwear-Boots/LANE-DD-RANCH-VAQUERO-FRINGED-BOOT-/prod_1361\.html$ /shoes/boots.html? [L,R=301]
+RewriteRule ^shop/Boots/Lane/DD-Ranchwear-Boots/OMG-LANE/DOUBLE-D-RANCH-AMMUNITION-BOOTS-/prod_1341\.html$ /shoes/boots.html? [L,R=301]
+RewriteRule ^shop/dan-dodson-jewelry-turquoise/cat_113\.html$ /accessories/jewelry.html? [L,R=301]
+RewriteRule ^shop/ddranch-double-d-ranch-clothing-jewelry-black-as-crow-onyx-nested-in-sterling-silver/cat_3\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^shop/Double-D-Ranch-Beaded-Folk-Belt/prod_263\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^shop/Double-D-Ranch-Ladies-Western-Wear-Lane-Boots/prod_1353\.html$ /shoes/boots.html? [L,R=301]
+RewriteRule ^shop/double-d-ranch/cat_3\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^shop/Double-D-Ranch/DD-RANCH-LOVE-CONQUERS-ALL-TEE-/prod_562\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^shop/Double-D-Ranch/DOUBLE-D-RANCH-CHERRY-CAPPADOCIA-JACKET-/prod_201\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^shop/Double-D-Ranch/DOUBLE-D-RANCH-COPTIC-CROSS-VELVET-RED-DUSTER-XL/prod_491\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^shop/Double-D-Ranch/DOUBLE-D-RANCH-FAUX-TURQ/LEATHER-THE-HOUSTON-CONCHO-BELT/prod_99\.html$ /accessories/belts/concho-belts.html? [L,R=301]
+RewriteRule ^shop/Double-D-Ranch/DOUBLE-D-RANCH-LOVE-CONQUERS-ALL-DRESS-/prod_546\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^shop/Double-D-Ranch/FALL-2011/DD-RANCH-2ND-CHRONICLES-CROSS-JACKET-/prod_936\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^shop/Double-D-Ranch/SPRING-2011-DD-RANCH-GO-WEST-MAIDEN-TEE-/prod_565\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^shop/Double-D-Ranch/Spring-2013/DD-RANCH-INDIGO-ICE-TOP-/prod_1796\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^shop/Double-D-Ranch/Spring-2013/DD-RANCH-LIVE-SHOW-JACKET-/prod_1770\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^shop/Double-D-Ranch/Spring-2013/DD-RANCH-SPRING-2013-ARMADILLO-STAMP-TEE-/prod_1753\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^shop/Double-D-Ranch/Spring-2013/DD-RANCH-SPRING-2013-HANG-LOOSE-JACKET/prod_1850\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^shop/Double-D-Ranch/Spring-2013/DOUBLE-D-RANCH-SPRING-2013-BINGOL-VELVET-TOP/prod_1772\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^shop/Double-D-Ranch/Spring-2013/DOUBLE-D-RANCH-SPRING-2013-SOCO-COWGIRL-DRESS-/prod_1980\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^shop/ITEM-SEARCH/Belts/JUAN-ANTONIO-TOOLED-LEATHER-WIDE-BELT-/prod_408\.html$ /brands/juan-antonio.html? [L,R=301]
+RewriteRule ^shop/Jewelry/Bracelets/MAD-COW-EXTRA-WIDE-CORAL/TURQ-CUFF-BRACELET/prod_924\.html$ /accessories/jewelry/bracelets-watches.html? [L,R=301]
+RewriteRule ^shop/Jewelry/COWGIRL-CHANDELIER-EARRINGS/prod_1891\.html$ /accessories/jewelry/earrings.html? [L,R=301]
+RewriteRule ^shop/Jewelry/Earrings/CLASSIC-CONTEMPORARY-PURPLE-KINGMAN-EARRINGS/prod_1649\.html$ /accessories/jewelry/earrings.html? [L,R=301]
+RewriteRule ^shop/Jewelry/Earrings/DARRYL-BECENTI-TURQ/CORAL-EARRINGS-/prod_1595\.html$ /accessories/jewelry/earrings.html? [L,R=301]
+RewriteRule ^shop/Jewelry/Earrings/NAVAJO-GOTHIC-CROSS-STERLING-EARRINGS-/prod_1465\.html$ /accessories/jewelry/earrings.html? [L,R=301]
+RewriteRule ^shop/Jewelry/Earrings/NAVAJO-PEARL-TOOLED-EARRINGS-/prod_1470\.html$ /accessories/jewelry/earrings.html? [L,R=301]
+RewriteRule ^shop/Jewelry/ELEGANT-TURQUOISE/STERLING-SLAB-NECKLACE-/prod_279\.html$ /accessories/jewelry/necklaces.html? [L,R=301]
+RewriteRule ^shop/Jewelry/ELEGANT-VINTAGE-REVIVAL-STAMPED-DROP-EARRINGS/prod_1139\.html$ /accessories/jewelry/earrings.html? [L,R=301]
+RewriteRule ^shop/Jewelry/Necklace/AMAZING-BLUE-TURQ-SQUASH-BLOSSOM-NECKLACE-EARRINGS-/prod_1636\.html$ /accessories/jewelry/earrings.html? [L,R=301]
+RewriteRule ^shop/Jewelry/Necklace/KINGMAN-TURQUOISE-SQUASH-BLOSSOM-NECKLACE-EARRINGS-/prod_1452\.html$ /accessories/jewelry/earrings.html? [L,R=301]
+RewriteRule ^shop/Jewelry/Necklace/NAVAJO-MULTI-STONE-CHARM-NECKLACE-/prod_1602\.html$ /accessories/jewelry/necklaces.html? [L,R=301]
+RewriteRule ^shop/Jewelry/Necklace/SPINY-OYSTER-HEART-CHARM-REVERSABLE-NECKLACE-/prod_1610\.html$ /accessories/jewelry/necklaces.html? [L,R=301]
+RewriteRule ^shop/Jewelry/Necklace/THREE-STRAND-NAVAJO-PEARLS-NECKLACE-/prod_1634\.html$ /accessories/jewelry/necklaces.html? [L,R=301]
+RewriteRule ^shop/Jewelry/Rings/AMAZING-NAVAJO-MIKE-THOMAS-RINGS/prod_1600\.html$ /accessories/jewelry/rings.html? [L,R=301]
+RewriteRule ^shop/JUAN-ANTONIO/JUAN-ANTONIO-TOOLED-TURQ/BROWN-ROSE-BELT-/prod_492\.html$ /brands/juan-antonio.html? [L,R=301]
+RewriteRule ^shop/Ladies-Western-Wear-Double-D-Ranch-Beaded-Folk-Belt/prod_263\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^shop/Lane-Sunflower-Boots-Ladies-Western-Wear/prod_1952\.html$ /brands/lane-boots.html? [L,R=301]
+RewriteRule ^shop/lone-eagle-studios/cat_165\.html$ /brands/lone-eagle-studios.html? [L,R=301]
+RewriteRule ^shop/Old-Gringo-Ladies-Western-Pink-Heart-Boots/prod_1779\.html$ /brands/old-gringo.html? [L,R=301]
+RewriteRule ^shop/Patricia-Wolf/PATRICIA-WOLF-STUNNING-SUEDE-JACKET-/prod_382\.html$ /brands/patricia-wolf.html? [L,R=301]
+RewriteRule ^shop/Rocki-Gorman/BREATHTAKING-ROCKI-GORMAN-SQUARE-TURQUOISE-CONCHO-BELT-/prod_168\.html$ /accessories/belts/concho-belts.html? [L,R=301]
+RewriteRule ^shop/Rocki-Gorman/ROCKI-GORMAN-VINTAGE-COLLECTION-CONCHO-BELT-/prod_157\.html$ /brands/vintage-collection.html? [L,R=301]
+RewriteRule ^shop/sale-/yoga-pants/cat_141\.html$ /sales/sale-clothes.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/American-West/AMERICAN-WEST-HAIR-ON-HIDE-CONCEALED-CARRY-HANDBAG-/prod_1925\.html$ /brands/american-west.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/American-West/AMERICAN-WEST-LEATHER-COMPUTER-CASE-/prod_1909\.html$ /accessories/handbags/tablet-case.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/David-Troutman/BEAUTIFUL-TURQUOISE-BARREL-EARRINGS-/prod_1884\.html$ /accessories/jewelry/earrings.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/David-Troutman/DAVID-TROUTMAN-TURQ-CORAL-HEART-CROSS-EARRINGS-/prod_1881\.html$ /accessories/jewelry/earrings.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/Double-D-Ranch/2-DIE-4-DOUBLE-D-RANCH-RAILWAY-DUSTER-/prod_405\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/Double-D-Ranch/DD-RANCH-2012-HAWKEN-HENLEY-TOP/prod_1350\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/Double-D-Ranch/DD-RANCH-2012-LEATHER-PLACED-FLOWER-TOP-/prod_1146\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/Double-D-Ranch/DD-RANCH-BRAVE-EAGLE-TEE/prod_1033\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/Double-D-Ranch/DD-RANCH-JOYA-REAL-VEST-/prod_1135\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/Double-D-Ranch/DD-RANCH-LIFE-IN-THE-FAST-LANE-BIKER-JACKET-/prod_592\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/Double-D-Ranch/DD-RANCHWEAR-CORINTHIANS-LEATHER-DUSTER-/prod_411\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/Double-D-Ranch/DOUBLE-D-RANCH-2012-SPOKANE-SERAPE-SKIRT-/prod_1422\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/Double-D-Ranch/DOUBLE-D-RANCH-BADLANDS-DAMASK-PEACOAT-/prod_846\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/Double-D-Ranch/DOUBLE-D-RANCH-FRONTIER-CORDUROY-JEGGINGS-/prod_1362\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/Double-D-Ranch/DOUBLE-D-RANCH-JACKS-WIZARD-OIL-STUDDED-JACKET-S/prod_20\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/Double-D-Ranch/DOUBLE-D-RANCH-NOBLE-BRAVE-DENIM-JACKET-/prod_1032\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/Double-D-Ranch/DOUBLE-D-RANCH-PINK-CAPPADOCIA-JACKET-/prod_201\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/Double-D-Ranch/DOUBLE-D-RANCH-PLACED-FLOWERS-JACKET/prod_1472\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/Double-D-Ranch/DOUBLE-D-RANCH-SHANGHAI-TEE-/prod_428\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/Double-D-Ranch/DOUBLE-D-RANCH-VERSATILE-KNIT-DRESSES-/prod_208\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/Double-D-Ranch/DOUBLE-D-RANCH-WALLFLOWER-EMBROIDER-LEATHER-JACKET-/prod_40\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/Double-D-Ranch/DOUBLE-D-RANCH-WILD-JUSTICE-BIKER-JACKET-/prod_909\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/Double-D-Ranch/WOW-DD-RANCH-SWINOMISH-FUR-COAT-/prod_1646\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/Juan-Antonio/COWGIRL-CHIC-JUAN-ANTONIO-TOOLED-LEATHER-TURQUOISE-PURSE/prod_1089\.html$ /brands/juan-antonio.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/Juan-Antonio/WOW-JUAN-ANTONIO-CONCEALED-HANDGUN-BAG-/prod_1974\.html$ /brands/juan-antonio.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/Lane-Boots/ESMERELDA-BOOTS-BY-LANE/prod_1852\.html$ /brands/lane-boots.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/Lane-Boots/LANE-DAMASK-DISTRESSED/prod_1435\.html$ /brands/lane-boots.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/Lone-Eagle-Studios/LONE-EAGLE-ONE-OF-A-KIND-STERLING-FEATHER-EARRINGS-/prod_1741\.html$ /brands/lone-eagle-studios.html? [L,R=301]
+RewriteRule ^shop/shop-by-brand/marrika-nakk/cat_51\.html$ /brands/marrika-nakk.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/Marrika-Nakk/MARRIKA-NAKK-SEXY-T-/prod_1122\.html$ /brands/marrika-nakk.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/Marrika-Nakk/ROMANCE-MARRIKA-NAKK-COWGIRL-DRESS-/prod_640\.html$ /brands/marrika-nakk.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/Marrika-Nakk/SEXY-MARRIKA-NAKK-LEOPARD-SKIRT-TOP-/prod_665\.html$ /brands/marrika-nakk.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/Marrika-Nakk/SEXY-MARRIKA-NAKK-PRINCESS-SKIRT-/prod_647\.html$ /brands/marrika-nakk.html? [L,R=301]
+RewriteRule ^shop/shop-by-brand/old-gringo/cat_50\.html$ /brands/old-gringo.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/Old-Gringo/OLD-GRINGO-TAKA-NEON-PINK-BOOTS-/prod_1972\.html$ /brands/old-gringo.html? [L,R=301]
+RewriteRule ^shop/shop-by-brand/paige-wallace/cat_39\.html$ /brands/paige-wallace.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/Paige-Wallace/JAW-DROPPING-PAIGE-WALLACE-STERLING-CONCHO/TURQ-NECKLACE-/prod_625\.html$ /brands/paige-wallace.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/Paige-Wallace/PAIGE-WALLACE-LEATHER/TURQ-CUFF-BRACELET/prod_697\.html$ /brands/paige-wallace.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/Paige-Wallace/PAIGE-WALLACE-TURQ/TOPAZ-HEART-NECKLACE-/prod_707\.html$ /brands/paige-wallace.html? [L,R=301]
+RewriteRule ^shop/shop-by-brand/patricia-wolf/cat_6\.html$ /brands/patricia-wolf.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/Patricia-Wolf/PATRICIA-WOLF-TOOLED-LEATHER-WRAP-BELT-/prod_677\.html$ /brands/patricia-wolf.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/Rocki-Gorman/ROCKI-GORMAN-MOJAVE/BLUE-TURQ-NAJA-NECKLACE-/prod_913\.html$ /accessories/jewelry/necklaces.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/Roja/2-DIE-4-RARE-ROJA-SUNRISE-SILK/HAND-EMBROIDERED-SKIRT-/prod_1410\.html$ /brands/roja-collection.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/Roja/2-DIE-4-ROJA-ORNATELY-EMBROIDERED-CHIFFON-TOP-/prod_1345\.html$ /brands/roja-collection.html? [L,R=301]
+RewriteRule ^shop/shop-by-brand/roja/cat_57\.html$ /brands/roja-collection.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/Roja/ROJA-SHIMMER-SKIRT-/prod_1370\.html$ /brands/roja-collection.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/Tasha-Polizzi/TASHA-POLIZZI-2012-PRINTED-BUCKSKIN-VEST/prod_1569\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/Tasha-Polizzi/TASHA-POLIZZI-2012-SAGAMORE-FAUX-FUR-COAT-/prod_1495\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/Tasha-Polizzi/TASHA-POLIZZI-BELVEDERE-SKIRT/prod_1937\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/Tasha-Polizzi/TASHA-POLIZZI-CHOCOLATE-RIDING-LEGGING/prod_1421\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/Tasha-Polizzi/TASHA-POLIZZI-MOUNTAIN-WOLF-LEG-WARMERS-/prod_1502\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/Tasha-Polizzi/TASHA-POLIZZI-SAGAMORE-VEST-/prod_1500\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/Tasha-Polizzi/TASHA-POLIZZI-SANTA-ROSA-SHRUG-/prod_1017\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/Tasha-Polizzi/TASHA-POLIZZI-SPANISH-ROSE-SKIRT-TOP-/prod_632\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/Tasha-Polizzi/TASHA-POLIZZI-TRADE-BLANKET-SHAWL-/prod_1721\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/Tasha-Polizzi/TASHA-POLIZZI-VELVET-LUCKY-SHIRT-/prod_1558\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/Tasha-Polizzi/TASHA-POLIZZI-VELVET-TUXEDO-SHIRT-/prod_1556\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^shop/shop-by-brand/vintage-collection/cat_35\.html$ /brands/vintage-collection.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/Vintage-Collection/NEW-2012-VINTAGE-COLLECTION-SALTILLO-DRESS/prod_1027\.html$ /brands/vintage-collection.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/Vintage-Collection/VINTAGE-COLLECTION-2012-ROSE-EMBROIDERED-TOP-/prod_1142\.html$ /brands/vintage-collection.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/Vintage-Collection/VINTAGE-COLLECTION-EMBROIDERED-DUSTER-/prod_857\.html$ /brands/vintage-collection.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/Vintage-Collection/VINTAGE-COLLECTION-EMBROIDERED-MESH-SKIRT-/prod_838\.html$ /brands/vintage-collection.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/Vintage-Collection/VINTAGE-COLLECTION-HEIRLOOM-FLORAL-SKIRT-/prod_366\.html$ /brands/vintage-collection.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/Vintage-Collection/VINTAGE-COLLECTION-MILITARY-STYLE-JEAN-JACKET-/prod_473\.html$ /brands/vintage-collection.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/Vintage-Collection/VINTAGE-COLLECTION-PURPLE-PASSION-SKIRT/prod_1504\.html$ /brands/vintage-collection.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/Vintage-Collection/VINTAGE-COLLECTION-SEXY-DENIM-OFF-SHOULDER-TOP-/prod_364\.html$ /brands/vintage-collection.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/Vintage-Collection/VINTAGE-COLLECTION-STUNNING-BEADED-TOP-/prod_460\.html$ /brands/vintage-collection.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Brand/Vintage-Revival/BEYOND-BEAUTIFUL-TRIPLE-CROSS-EARRINGS/prod_1137\.html$ /brands/vintage-revival.html? [L,R=301]
+RewriteRule ^shop/shop-by-brand/vintage-revival/cat_7\.html$ /brands/vintage-revival.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Type/Belts/EXTRAORDINARY-RAYMOND-BEARD-CONCHO-BELT-/prod_1607\.html$ /accessories/belts/concho-belts.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Type/Belts/JUAN-ANTONIO-TOOLED-LEATHER-WIDE-BELT-/prod_408\.html$ /brands/juan-antonio.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Type/Belts/TURQUOISE-SLAB-CONCHO-BELT-/prod_1644\.html$ /accessories/belts/concho-belts.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Type/Belts/WOW-JULES-OF-THE-WEST-CONCHO-BELT-/prod_1555\.html$ /accessories/belts/concho-belts.html? [L,R=301]
+RewriteRule ^shop/Shop-By-Type/Lane-Boots/NEW-LANE-SUNFLOWER-BOOTS-/prod_1952\.html$ /brands/lane-boots.html? [L,R=301]
+RewriteRule ^shop/Sweet-Bird-Studio/SWEET-BIRD-VIVA-LA-VIDA-HEART-PENDANT-NECKLACE-/prod_578\.html$ /accessories/jewelry/necklaces.html? [L,R=301]
+RewriteRule ^shop/Sweet-Bird-Studio/TOO-COOL-SWEET-BIRD-TIN-AND-TURQUOISE-HEART-CROSS-NECKLACE-/prod_576\.html$ /accessories/jewelry/necklaces.html? [L,R=301]
+RewriteRule ^shop/Tasha-Polizzi-Handbag/prod_1454\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^shop/Tasha-Polizzi/TASHA-POLIZZI-VELVET-EMBROIDERED-BLAZER-/prod_449\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^shop/Vintage-Collection/STUNNING-VINTAGE-COLLECTION-DRAGONFLY-VELVET-DUSTER-/prod_483\.html$ /brands/vintage-collection.html? [L,R=301]
+RewriteRule ^shop/Vintage-Collection/VINTAGE-COLLECTION-MILITARY-STYLE-JEAN-JACKET-/prod_473\.html$ /brands/vintage-collection.html? [L,R=301]
+RewriteRule ^silver-creations-linked-cross-necklace-in-blue-green-turquoise\.html$ /accessories/jewelry/necklaces.html? [L,R=301]
+RewriteRule ^simple-and-lovely-coral-navajo-squash-necklace\.html$ /accessories/jewelry/necklaces.html? [L,R=301]
+RewriteRule ^so-cute-tasha-polizzi-beaded-tewa-belt\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^spectacular-masterpiece-ronald-chavez-santo-domingo-treasure-necklace\.html$ /accessories/jewelry/necklaces.html? [L,R=301]
+RewriteRule ^spring-2014-vintage-collection-black-saltillo-embroidered-jewelry-dress\.html$ /brands/vintage-collection.html? [L,R=301]
+RewriteRule ^spring-2015-double-d-ranch-the-stampede-roundup-tee\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^store/boots-sandals/boots/2-die-4-old-gringo-swarvoski-crystal-eagle-boots\.html$ /brands/old-gringo.html? [L,R=301]
+RewriteRule ^store/boots-sandals/boots/old-gringo-diego-crystal-boots\.html$ /brands/old-gringo.html? [L,R=301]
+RewriteRule ^store/boots-sandals/boots/old-gringo-leigh-anne-boots\.html$ /brands/old-gringo.html? [L,R=301]
+RewriteRule ^store/boots-sandals/boots/omg-lane-double-d-ranch-ammunition-boots-en\.html$ /shoes/boots.html? [L,R=301]
+RewriteRule ^store/boots-sandals/cowgirl-boots/lane-boots-tail-feather\.html$ /brands/lane-boots.html? [L,R=301]
+RewriteRule ^store/boots-sandals/old-gringo-black-turq-clarita-boots\.html$ /brands/old-gringo.html? [L,R=301]
+RewriteRule ^store/bridal/marikka-nakk/romance-marrika-nakk-cowgirl-dress\.html$ /brands/marrika-nakk.html? [L,R=301]
+RewriteRule ^store/bridal/marikka-nakk/utterly-romantic-marrika-nakk-white-roses-outfit\.html$ /brands/marrika-nakk.html? [L,R=301]
+RewriteRule ^store/cowgirl-brands/american-west/american-west-carry-on-tote\.html$ /brands/american-west.html? [L,R=301]
+RewriteRule ^store/cowgirl-brands/double-d-ranch-fall-2013\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^store/cowgirl-brands/double-d-ranch-fall-2013/dd-ranch-fall-2013-lightfoot-jacket\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^store/cowgirl-brands/double-d-ranch-fall-2013/double-d-ranch-fall-2013-fetishes-tee-en\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^store/cowgirl-brands/double-d-ranch/dd-ranch-persian-pickles-dress\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^store/cowgirl-brands/double-d-ranch/dd-ranch-spring-2013-free-spirit-vest\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^store/cowgirl-brands/double-d-ranch/dd-ranch-spring-2013-hang-loose-jacket\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^store/cowgirl-brands/double-d-ranch/dd-ranch-spring-2013-indian-bandana-tote\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^store/cowgirl-brands/double-d-ranch/dd-ranchwear-fall-2013-commodity-blues-jacket\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^store/cowgirl-brands/double-d-ranch/dd-rancwear-fall-2013-rainbird-vest\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^store/cowgirl-brands/double-d-ranch/double-d-ranch-fall-2013-american-honor-biker-jacket\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^store/cowgirl-brands/double-d-ranch/double-d-ranch-fall-2013-concho-legging\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^store/cowgirl-brands/double-d-ranch/double-d-ranch-fall-2013-valor-leather-beaded-vest\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^store/cowgirl-brands/double-d-ranch/double-d-ranch-indihar-boho-vest\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^store/cowgirl-brands/double-d-ranch/double-d-ranch-santa-elena-biker-vest\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^store/cowgirl-brands/double-d-ranch/double-d-ranch-woodland-messenger-suede-coat\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^store/cowgirl-brands/juan-antonio/amazing-juan-antonio-rosal-red-tooled-leather-handbag\.html$ /brands/juan-antonio.html? [L,R=301]
+RewriteRule ^store/cowgirl-brands/lane-boots-en/lane-dawson-boots\.html$ /brands/lane-boots.html? [L,R=301]
+RewriteRule ^store/cowgirl-brands/lone-eagle-studios/lone-eagle-studios-desert-blossom-necklace\.html$ /accessories/jewelry/necklaces.html? [L,R=301]
+RewriteRule ^store/cowgirl-brands/marrika-nakk\.html$ /brands/marrika-nakk.html? [L,R=301]
+RewriteRule ^store/cowgirl-brands/old-gringo-cowgirl-boots/old-gringo-elina-brass-knee-high-boots\.html$ /brands/old-gringo.html? [L,R=301]
+RewriteRule ^store/cowgirl-brands/pat-dahnke/pat-dahnke-romantic-corset\.html$ /brands/pat-dahnke.html? [L,R=301]
+RewriteRule ^store/cowgirl-brands/roja-fall-2013/roja-collection-velvet-roses-mesh-dress\.html$ /brands/roja-collection.html? [L,R=301]
+RewriteRule ^store/cowgirl-brands/roja/roja-fit-and-flair-white-w-black-embroidered-tunic\.html$ /brands/roja-collection.html? [L,R=301]
+RewriteRule ^store/cowgirl-brands/spring-2013/double-d-ranch-rainmaker-velvet-beaded-top\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^store/cowgirl-brands/tasha-polizzi-fall-2013\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^store/cowgirl-brands/tasha-polizzi-fall-2013/fall-2013-tasha-polizzi-luxe-vest\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^store/cowgirl-brands/tasha-polizzi/tasha-polizzi-fall-2013-dazzler-skirt\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^store/cowgirl-brands/vintage-collection\.html$ /brands/vintage-collection.html? [L,R=301]
+RewriteRule ^store/cowgirl-brands/vintage-collection/vintage-collection-black-lace-ballet-top\.html$ /brands/vintage-collection.html? [L,R=301]
+RewriteRule ^store/cowgirl-brands/vintage-collection/vintage-collection-romantic-forget-me-not-top\.html$ /brands/vintage-collection.html? [L,R=301]
+RewriteRule ^store/cowgirl-brands/vintage-collection/vintage-collection-rosie-lace-western-blouse\.html$ /brands/vintage-collection.html? [L,R=301]
+RewriteRule ^store/cowgirl-brands/vintage-collection/vintage-collection-turquoise-jewelry-dress\.html$ /brands/vintage-collection.html? [L,R=301]
+RewriteRule ^store/cowgirl-brands/vintage-revival/vintage-revival-copper-navajo-pearls\.html$ /brands/vintage-revival.html? [L,R=301]
+RewriteRule ^store/cowgirl-fashion/belts/jaw-dropping-vincent-platero-sterling-sampler-concho-belt\.html$ /accessories/belts/concho-belts.html? [L,R=301]
+RewriteRule ^store/cowgirl-fashion/belts/rare-find-old-pawn-zuni-petit-point-turquoise-concho-belt\.html$ /accessories/belts/concho-belts.html? [L,R=301]
+RewriteRule ^store/cowgirl-fashion/jackets-and-blazers/tasha-polizzi-blanket-trench\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^store/cowgirl-fashion/pants-leggings/tasha-polizzi-holiday-2013-baker-legging\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^store/cowgirl-fashion/scarves/tasha-polizzi-holiday-2013-myrtle-scarf\.html$ /accessories/extras/scarves-shawls.html? [L,R=301]
+RewriteRule ^store/cowgirl-fashion/seasonal-items/dd-ranch-spring-2014\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^store/cowgirl-fashion/skirts/double-d-ranch-fall-2013-dance-feather-short-skirt\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^store/cowgirl-fashion/skirts/tasha-polizzi-gonzales-skirt\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^store/cowgirl-fashion/tops/tasha-polizzi-2013-colt-44-tunic\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^store/cowgirl-fashion/totes/dd-ranch-spring-2013-bandana-tote\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^store/handbags-luggage/tasha-polizzi-fall-ladies-western-wear-posse-bag\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^store/jewelry/earrings/statement-purple-kingman-slab-earrings\.html$ /accessories/jewelry/earrings.html? [L,R=301]
+RewriteRule ^store/jewelry/earrings/vintage-revival-long-sterling-rifle-earrings\.html$ /brands/vintage-revival.html? [L,R=301]
+RewriteRule ^store/jewelry/native-american\.html$ /accessories/jewelry.html? [L,R=301]
+RewriteRule ^store/jewelry/necklace/navajo-michael-thompson-onyx-heart-necklace\.html$ /accessories/jewelry/necklaces.html? [L,R=301]
+RewriteRule ^store/plus-sizes/double-d-ranch-rainmaker-velvet-beaded-top\.html$ /clothes/plus-sizes/tops.html? [L,R=301]
+RewriteRule ^store/sale-items/dd-ranch-2012-huron-valley-buckskin-shirt\.html$ /sales/sale-clothes/double-d-ranchwear.html? [L,R=301]
+RewriteRule ^store/sale-items/dd-ranch-arsenic-and-old-lace-corset-style-top\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^store/sale-items/dd-ranch-no-reservation-band-dress\.html$ /sales/sale-clothes/double-d-ranchwear.html? [L,R=301]
+RewriteRule ^store/sale-items/double-d-ranch-ventura-highway-jean-jacket\.html$ /brands/double-d-ranch.html? [L,R=301]
+RewriteRule ^tasha-polizzi-bandana-burn-out-scarves-turq-or-crimson\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^tasha-polizzi-beaded-maverick-belt\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^tasha-polizzi-fall-2014-acadia-shirt-2-color-combos\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^tasha-polizzi-fall-2014-catalina-cardigan-2-colors\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^tasha-polizzi-fall-2014-chalet-coat\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^tasha-polizzi-fall-2014-grantham-tweed-jacket\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^tasha-polizzi-fall-2014-hacking-jacket\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^tasha-polizzi-fall-2014-highclere-tweed-jacket\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^tasha-polizzi-fall-2014-luxe-vest-3-colors\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^tasha-polizzi-fall-2014-plains-jacket\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^tasha-polizzi-fall-2014-polo-belt\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^tasha-polizzi-fall-2014-rodeo-shirt\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^tasha-polizzi-fall-2015-barn-blanket-skirt\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^tasha-polizzi-fall-2015-kansas-city-cardigan\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^tasha-polizzi-spring-2014-beaded-desert-belt\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^tasha-polizzi-spring-2014-beaded-iphone-case\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^tasha-polizzi-spring-2014-colt-44-shirt\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^tasha-polizzi-spring-2014-serape-skirt\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^tasha-polizzi-spring-2014-tabasco-tie-shirt\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^tasha-polizzi-spring-2015-blanket-print-tee\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^tasha-polizzi-spring-2015-cibola-multi-color-workshirt\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^tasha-polizzi-spring-2015-colt-tunic\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^tasha-polizzi-spring-2015-four-corners-tunic\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^tasha-polizzi-spring-2015-lace-cami\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^tasha-polizzi-spring-2015-lace-maxi-skirt-2-colors\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^tasha-polizzi-spring-2015-leopard-scarf\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^tasha-polizzi-spring-2015-market-shirt\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^tasha-polizzi-spring-2015-retro-rodeo-star-sweater-2-colors\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^tasha-polizzi-spring-2015-serape-shrug\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^tasha-polizzi-spring-2015-settler-shirt\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^tasha-polizzi-spring-2015-star-light-scarf-2-colors\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^tasha-polizzi-spring-2015-trade-tunic-2-colors\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^tasha-polizzi-summer-2015-cassidy-tunic\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^tasha-polizzi-summer-2015-emma-skirt\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^tasha-polizzi-summer-2015-flower-child-top\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^tasha-polizzi-summer-2015-janis-cardigan\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^tasha-polizzi-sumptuous-velvet-carraway-shirt\.html$ /brands/tasha-polizzi.html? [L,R=301]
+RewriteRule ^union-of-angels-farrah-little-black-dress\.html$ /brands/union-of-angels.html? [L,R=301]
+RewriteRule ^vintage-collection-2014-angel-lace-skirt\.html$ /brands/vintage-collection.html? [L,R=301]
+RewriteRule ^vintage-collection-2014-light-weight-denim-embroidered-jacket\.html$ /brands/vintage-collection.html? [L,R=301]
+RewriteRule ^vintage-collection-denim-embroidered-butterfly-vest\.html$ /brands/vintage-collection.html? [L,R=301]
+RewriteRule ^vintage-collection-diamonds-tunic\.html$ /brands/vintage-collection.html? [L,R=301]
+RewriteRule ^vintage-collection-eden-western-blouse\.html$ /brands/vintage-collection.html? [L,R=301]
+RewriteRule ^vintage-collection-fall-2014-apple-martini-duster-jacket\.html$ /brands/vintage-collection.html? [L,R=301]
+RewriteRule ^vintage-collection-fall-2014-aztec-rose-long-skirt\.html$ /brands/vintage-collection.html? [L,R=301]
+RewriteRule ^vintage-collection-fall-2014-tuxedo-embroidered-duster\.html$ /brands/vintage-collection.html? [L,R=301]
+RewriteRule ^vintage-collection-gorgeous-jewelry-dress\.html$ /brands/vintage-collection.html? [L,R=301]
+RewriteRule ^vintage-collection-ladies-western-wear-romantic-blouse\.html$ /brands/vintage-collection.html? [L,R=301]
+RewriteRule ^vintage-collection-navajo-turquoise-tunic\.html$ /brands/vintage-collection.html? [L,R=301]
+RewriteRule ^vintage-collection-southwest-embroidered-denim-vest\.html$ /brands/vintage-collection.html? [L,R=301]
+RewriteRule ^vintage-collection-spring-2015-butterfly-mesh-top\.html$ /brands/vintage-collection.html? [L,R=301]
+RewriteRule ^vintage-collection-spring-2015-butterfuly-dress\.html$ /brands/vintage-collection.html? [L,R=301]
+RewriteRule ^vintage-collection-spring-2015-embroidered-peace-pipe-ballet-top\.html$ /clothes/tops/ballet.html? [L,R=301]
+RewriteRule ^vintage-collection-spring-2015-hurricane-tunic\.html$ /brands/vintage-collection.html? [L,R=301]
+RewriteRule ^vintage-collection-spring-2015-native-embroidered-knit-ballet-top-7379\.html$ /clothes/tops/ballet.html? [L,R=301]
+RewriteRule ^vintage-collection-spring-2015-native-embroidered-knit-ballet-top-7577\.html$ /clothes/tops/ballet.html? [L,R=301]
+RewriteRule ^vintage-collection-spring-2015-native-embroidered-knit-ballet-top\.html$ /brands/vintage-collection.html? [L,R=301]
+RewriteRule ^vintage-collection-spring-2015-peace-pipe-denim-jacket\.html$ /brands/vintage-collection.html? [L,R=301]
+RewriteRule ^vintage-collection-spring-2015-peace-pipe-skirt\.html$ /brands/vintage-collection.html? [L,R=301]
+RewriteRule ^vintage-collection-spring-2015-sexy-cha-cha-top\.html$ /brands/vintage-collection.html? [L,R=301]
+RewriteRule ^vintage-collection-spring-2015-springtime-embroidered-tunic\.html$ /brands/vintage-collection.html? [L,R=301]
+RewriteRule ^vintage-collection-summer-2014-denim-and-floral-mesh-short-skirt\.html$ /brands/vintage-collection.html? [L,R=301]
+RewriteRule ^vintage-collections-spring-2015-coral-magic-tunic\.html$ /brands/vintage-collection.html? [L,R=301]
+RewriteRule ^vintage-revival-2nd-amendment-bullet-earrings\.html$ /brands/vintage-revival.html? [L,R=301]
+RewriteRule ^vintage-revival-concho-cross-earrings\.html$ /brands/vintage-revival.html? [L,R=301]
+RewriteRule ^vintage-revival-copper-cuff-bracelets\.html$ /brands/vintage-revival.html? [L,R=301]
+RewriteRule ^vintage-revival-copper-door-knocker-earrings-with-sterling-accent\.html$ /brands/vintage-revival.html? [L,R=301]
+RewriteRule ^vintage-revival-copper-earrings\.html$ /brands/vintage-revival.html? [L,R=301]
+RewriteRule ^vintage-revival-copper-navajo-pearls\.html$ /brands/vintage-revival.html? [L,R=301]
+RewriteRule ^vintage-revival-copper-stone-cross-earrings\.html$ /brands/vintage-revival.html? [L,R=301]
+RewriteRule ^vintage-revival-long-sterling-rifle-earrings\.html$ /brands/vintage-revival.html? [L,R=301]
+RewriteRule ^vintage-revival-lynita-cross-earrings\.html$ /brands/vintage-revival.html? [L,R=301]
+RewriteRule ^vintage-revival-pistol-earrings\.html$ /brands/vintage-revival.html? [L,R=301]
+RewriteRule ^vintage-revival-sterling-door-knocker-earrings\.html$ /brands/vintage-revival.html? [L,R=301]
+RewriteRule ^vintage-revival-tooled-sterling-cuff-with-green-turquoise-rosettes\.html$ /brands/vintage-revival.html? [L,R=301]
+RewriteRule ^vintage-revivalsterling-turq-teardrop-earrrings\.html$ /brands/vintage-revival.html? [L,R=301]
+RewriteRule ^wabags-mojitio-vintage-cross-stitch-hobo-bag\.html$ /brands/wabags.html? [L,R=301]
+RewriteRule ^western-vintage-revival-mariposa-charm-necklace\.html$ /brands/vintage-revival.html? [L,R=301]
+RewriteRule ^wow-double-d-ranch-ahwahnee-beaded-belt\.html$ /accessories/belts.html? [L,R=301]
+RewriteRule ^wow-juan-antonio-concealed-handgun-bag\.html$ /brands/juan-antonio.html? [L,R=301]
+RewriteRule ^wow-old-gringo-black-turq-clarita-boots\.html$ /brands/old-gringo.html? [L,R=301]
+RewriteRule ^wow-old-gringo-klak-sugar-skull-boots-purple-black\.html$ /brands/old-gringo.html? [L,R=301]
+RewriteRule ^wow-old-gringo-leopardito-villa-boots\.html$ /brands/old-gringo.html? [L,R=301]
+RewriteRule ^wow-rainbow-concho-belt\.html$ /accessories/belts/concho-belts.html? [L,R=301]
+RewriteRule ^wow-vintage-collection-2013-fuschia-ballet-top\.html$ /clothes/tops/ballet.html? [L,R=301]
+RewriteRule ^wow-vintage-revival-3-feather-copper-earrings\.html$ /brands/vintage-revival.html? [L,R=301]
+RewriteRule ^wow-vintage-sterling-navajo-concho-belt\.html$ /accessories/belts/concho-belts.html? [L,R=301]
+
+
+############################################
+## always send 404 on missing files in these folders
+
+    RewriteCond %{REQUEST_URI} !^/(media|skin|js)/
+
+############################################
+## never rewrite for existing files, directories and links
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-l
+
+############################################
+## rewrite everything else to index.php
+
+    RewriteRule .* index.php [L]
+
+</IfModule>
+
+
+############################################
+## Prevent character encoding issues from server overrides
+## If you still have problems, use the second line instead
+
+    AddDefaultCharset Off
+    #AddDefaultCharset UTF-8
+
+<IfModule mod_expires.c>
+
+############################################
+## Add default Expires header
+## http://developer.yahoo.com/performance/rules.html#expires
+
+    ExpiresDefault "access plus 1 year"
+
+</IfModule>
+
+############################################
+## By default allow all access
+
+    Order allow,deny
+    Allow from all
+
+###########################################
+## Deny access to release notes to prevent disclosure of the installed Magento version
+
+    <Files RELEASE_NOTES.txt>
+        order allow,deny
+        deny from all
+    </Files>
+
+############################################
+## If running in cluster environment, uncomment this
+## http://developer.yahoo.com/performance/rules.html#etags
+
+    #FileETag none
+
+###########################################
+## Deny access to cron.php
+    <Files cron.php>
+
+############################################
+## uncomment next lines to enable cron access with base HTTP authorization
+## http://httpd.apache.org/docs/2.2/howto/auth.html
+##
+## Warning: .htpasswd file should be placed somewhere not accessible from the web.
+## This is so that folks cannot download the password file.
+## For example, if your documents are served out of /usr/local/apache/htdocs
+## you might want to put the password file(s) in /usr/local/apache/.
+
+        #AuthName "Cron auth"
+        #AuthUserFile ../.htpasswd
+        #AuthType basic
+        #Require valid-user
+
+############################################
+
+        Order allow,deny
+        Deny from all
+
+    </Files>
+
+AuthUserFile /home/cowgirlk/.htpasswd
+AuthType Basic
+AuthName "My Files"
+Require kimcow

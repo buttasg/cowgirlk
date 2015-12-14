@@ -1,0 +1,166 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <As_Ourstory>
+            <version>0.1.0</version>
+        </As_Ourstory>
+    </modules>
+    <frontend>
+        <routers>
+            <ourstory>
+                <use>standard</use>
+                <args>
+                    <module>As_Ourstory</module>
+                    <frontName>ourstory</frontName>
+                </args>
+            </ourstory>
+        </routers>
+        <layout>
+            <updates>
+                <ourstory>
+                    <file>ourstory.xml</file>
+                </ourstory>
+            </updates>
+        </layout>
+    </frontend>
+    <admin>
+        <routers>
+            <ourstory>
+                    <use>admin</use>
+                    <args>
+                        <module>As_Ourstory</module>
+                        <frontName>ourstory</frontName>
+                    </args>
+            </ourstory>
+        </routers>
+    </admin>
+    <adminhtml>
+		<menu>
+			<ourstory module="ourstory">
+				<title>Cow Girl Kim</title>
+				<sort_order>72</sort_order>               
+				<children>
+					<items module="ourstory">
+						<title>Manage Our story</title>
+						<sort_order>10</sort_order>
+						<action>ourstory/adminhtml_ourstory/edit/id/1</action>
+					</items>
+                                        <video module="ourstory">
+						<title>Manage Video</title>
+						<sort_order>20</sort_order>
+						<action>ourstory/adminhtml_ourstory/edit/id/2</action>
+					</video>
+                                        <staff module="ourstory">
+						<title>Manage Staff</title>
+						<sort_order>30</sort_order>
+						<action>ourstory/adminhtml_staff</action>
+					</staff>
+					<homeslider module="homeslider">
+						<title>Manage Home Slider</title>
+						<sort_order>40</sort_order>
+						<action>homeslider/adminhtml_homeslider</action>
+					</homeslider>
+					<facebook module="facebook">
+				            <title>Facebook Feed Settings</title>
+				            <sort_order>50</sort_order>
+				            <action>adminhtml/system_config/edit/section/facebook</action>
+				        </facebook>
+				</children>
+			</ourstory>
+		</menu>
+		<acl>
+			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all>
+				<admin>
+					<children>
+						<!--As_Ourstory>
+							<title>Ourstory Module</title>
+							<sort_order>10</sort_order>
+						</As_Ourstory>-->
+                            <ourstory module="ourstory">
+                                    <children>
+                                            <items module="ourstory">
+                                                    <title>Manage Our story</title>
+                                                    <sort_order>11</sort_order>
+                                            </items>
+                                            <staff module="ourstory">
+						<title>Manage Staff</title>
+						<sort_order>12</sort_order>
+                                            </staff>
+                                    </children>
+                            </ourstory>
+			<system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <ourstory>
+                                            <title>Ourstory Module</title>
+                                        </ourstory>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+		<layout>
+			<updates>
+				<ourstory>
+					<file>ourstory.xml</file>
+				</ourstory>
+			</updates>
+		</layout>
+    </adminhtml>   
+    <global>
+        <models>
+            <ourstory>
+                <class>As_Ourstory_Model</class>
+                <resourceModel>ourstory_mysql4</resourceModel>
+            </ourstory>
+            <ourstory_mysql4>
+                <class>As_Ourstory_Model_Mysql4</class>
+                <entities>
+                    <ourstory>
+                        <table>ourstory</table>
+                    </ourstory>
+                     <staff>
+                        <table>staff</table>
+                    </staff>
+                </entities>
+            </ourstory_mysql4>
+        </models>
+        <resources>
+            <ourstory_setup>
+                <setup>
+                    <module>As_Ourstory</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </ourstory_setup>
+            <ourstory_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </ourstory_write>
+            <ourstory_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </ourstory_read>
+        </resources>
+        <blocks>
+            <ourstory>
+                <class>As_Ourstory_Block</class>
+            </ourstory>
+        </blocks>
+        <helpers>
+            <ourstory>
+                <class>As_Ourstory_Helper</class>
+            </ourstory>
+        </helpers>
+    </global>
+</config>

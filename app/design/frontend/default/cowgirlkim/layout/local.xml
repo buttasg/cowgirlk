@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+
+<layout>
+    <default>
+     <remove name="left.newsletter"/>
+     <reference name="head">
+    	 <action method="addItem"><type>skin_css</type><name>css/custom-style.css</name></action>
+    </reference>
+    <reference name="before_body_end">
+   	 <block type="core/template" name="yoptoscript" template="custom/yoptoscript.phtml" />
+    </reference>
+    </default>
+    
+    <catalog_category_default>
+     <reference name="head">
+     <action method="addItem"><type>skin_css</type><name>css/jquery.selectbox.css</name></action>
+     <action method="addItem"><type>skin_js</type><name>js/jquery.selectbox-0.2.min.js</name><params/></action>
+    </reference>
+    
+    <reference name="root">
+            <action method="setTemplate"><template>page/2columns-left.phtml</template></action>
+    </reference>
+       
+     <reference name="before_body_end">
+   	 <block type="core/template" name="selectbox_js" template="custom/selectbox_js.phtml" />
+    </reference>
+    </catalog_category_default>
+    
+    
+    <catalog_category_layered>
+    <reference name="head">
+     <action method="addItem"><type>skin_css</type><name>css/jquery.selectbox.css</name></action>
+     <action method="addItem"><type>skin_js</type><name>js/jquery.selectbox-0.2.min.js</name><params/></action>
+    </reference>
+    	<reference name="root">
+    	<action method="setTemplate"><template>page/2columns-left.phtml</template></action>
+    	</reference>
+    <reference name="before_body_end">
+   	 <block type="core/template" name="selectbox_js" template="custom/selectbox_js.phtml" />
+    </reference>
+    
+    </catalog_category_layered>
+    
+    <catalogsearch_result_index>
+    	
+    <reference name="head">
+     <action method="addItem"><type>skin_css</type><name>css/jquery.selectbox.css</name></action>
+     <action method="addItem"><type>skin_js</type><name>js/jquery.selectbox-0.2.min.js</name><params/></action>
+    </reference>
+    	<reference name="root">
+    	<action method="setTemplate"><template>page/2columns-left.phtml</template></action>
+    	</reference>
+    <reference name="before_body_end">
+   	 <block type="core/template" name="selectbox_js" template="custom/selectbox_js.phtml" />
+    </reference>
+    
+    </catalogsearch_result_index>
+    
+    
+	<catalog_product_view>
+	 <reference name="head">     
+      <action method="addItem"><type>skin_css</type><name>css/carousel.css</name></action>
+      <action method="addItem"><type>skin_js</type><name>js/carousel.js</name><params/></action>
+    </reference>
+	</catalog_product_view>
+	
+	
+ <checkout_onepage_success>
+    <reference name="head">
+     <action method="addItem"><type>skin_css</type><name>css/video.css</name></action>
+     
+
+    <action method="addItem"><type>skin_js</type><name>js/video.js</name><params/></action>
+    <action method="addItem"><type>skin_js</type><name>js/youtube.js</name><params/></action>
+
+    </reference>
+ </checkout_onepage_success>
+ 
+   <customer_account>
+     	<reference name="customer_account_navigation">
+                <action method="removeLinkByName"><name>recurring_profiles</name></action>
+                <action method="removeLinkByName"><name>billing_agreements</name></action>
+                <action method="removeLinkByName"><name>downloadable_products</name></action>
+                <action method="removeLinkByName"><name>tags</name></action>
+                 <action method="removeLinkByName"><name>reviews</name></action>
+                 <action method="removeLinkByName"><name>OAuth Customer Tokens</name></action>
+                 
+        </reference>
+        <remove name="catalog.compare.sidebar"/>  
+    </customer_account>
+</layout>

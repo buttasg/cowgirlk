@@ -1,0 +1,54 @@
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/AW-LICENSE.txt
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * =================================================================
+ * This software is designed to work with Magento community edition and
+ * its use on an edition other than specified is prohibited. aheadWorks does not
+ * provide extension support in case of incorrect edition use.
+ * =================================================================
+ *
+ * @category   AW
+ * @package    AW_Mobile
+ * @version    1.6.7
+ * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
+ */
+?><html>
+<head>
+<script type="text/javascript">
+//<![CDATA[
+<?php if ($this->getGotoSection()): ?>
+    for (var s = 0; s < window.top.checkout.steps.length; s++) {
+        if (window.top.checkout.steps[s] == '<?php echo $this->getGotoSection() ?>') {
+            break;
+        }
+        if (window.top.document.getElementById('opc-' + window.top.checkout.steps[s])) {
+            window.top.document.getElementById('opc-' + window.top.checkout.steps[s]).addClassName('allow');
+        }
+    }
+    window.top.checkout.gotoSection("<?php echo $this->getGotoSection() ?>");
+    window.top.document.getElementById('checkout-review-submit').show();
+    window.top.document.getElementById('iframe-warning').hide();
+    <?php if ($this->getErrorMsg()): ?>
+        alert('<?php echo $this->getErrorMsg() ?>');
+    <?php endif; ?>
+<?php elseif ($this->getGotoSuccessPage()) : ?>
+    window.top.location="<?php echo $this->getUrl('checkout/onepage/success') ?>";
+<?php else : ?>
+    window.top.location="<?php echo $this->getUrl('checkout/cart') ?>";
+<?php endif; ?>
+//]]>
+</script>
+</head>
+<body></body>
+</html>

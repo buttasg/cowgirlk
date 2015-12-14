@@ -1,0 +1,36 @@
+<!--[if !IE]>top-wrapper div start here<![endif]-->
+
+<!--[if !IE]>top-wrapper div end here<![endif]-->
+<!-- STARTHeaderContainer -->
+<div class="top-container">
+<div class="mg-wrapper-inner">
+<div class="top-wrapper"> 
+  <div class="sale-txt"><?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('home_page_sale_text')->toHtml() ?> </div>
+  <div class="top-link-panel">
+    <div class="top-search">
+      <?php echo $this->getChildHtml('topSearch') ?>
+    </div>
+    <ul class="top-link">
+    <?php $helper=Mage::helper('customer') ?>
+  <?php  if (! Mage::getSingleton('customer/session')->isLoggedIn()){?>
+      <li><a href="<?php echo $helper->getLoginUrl();?>" title="Log In">Log In</a></li>
+ <?php } else {?>
+     <li><a href="<?php echo $helper->getLogoutUrl();?>" title="Log Out">Log Out</a></li>
+ <?php }?>
+ 
+  <?php  if (! Mage::getSingleton('customer/session')->isLoggedIn()){?>
+      <li><a href="<?php echo $helper->getRegisterUrl();?>" title="Register">Register</a></li>
+ <?php } else {?>
+     <li><a href="<?php echo $helper->getAccountUrl();?>" title="My Account">My Account</a></li>
+ <?php }?>
+
+       <?php $carthtml=$this->getChildHtml('cartTop') ?>
+       <?php $helper=Mage::helper('custom');?>
+        <?php $helper->saveCart($carthtml);?>
+        <?php echo $carthtml;?>
+    </ul>
+  </div>
+</div>
+</div>
+</div>
+<!-- ENDHeaderContainer -->

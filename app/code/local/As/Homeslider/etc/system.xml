@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<config>
+    <tabs>
+        <homeslider translate="label" module="homeslider">
+            <label>Homeslider Module</label>
+            <sort_order>300</sort_order>
+        </homeslider>
+    </tabs>
+    <sections>
+        <homeslider translate="label" module="homeslider">
+            <label>Homeslider Configuration</label>
+            <tab>datafeed</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>99999</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <homeslider_group>
+                    <label>Homeslider Configuration</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>60</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                    	<field1 translate="label">
+                             <label>Field:</label>
+                               <comment></comment>
+                               <frontend_type>text</frontend_type>
+							   <sort_order>10</sort_order>
+							   <show_in_default>1</show_in_default>
+							   <show_in_website>1</show_in_website>
+							   <show_in_store>1</show_in_store>
+                    	</field1>
+                    </fields>
+                </homeslider_group>
+            </groups>
+        </homeslider>
+    </sections>
+</config>

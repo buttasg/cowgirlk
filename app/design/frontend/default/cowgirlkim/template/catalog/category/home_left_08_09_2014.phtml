@@ -1,0 +1,75 @@
+<?php $_helper = Mage::helper('catalog/category') ?>
+<?php $_helperOuput = Mage::helper('catalog/output'); ?>
+<?php $_helperCustom = Mage::helper('custom'); ?>
+<?php $_helperBrands = Mage::helper('brand'); ?>
+<?php
+$collection=$_helperCustom->getHomeleftCategories();
+if($collection->count()):
+
+$brandCategoryId=Mage::getStoreConfig('brand/brand/category_id');
+//$brandUrl=Mage::getUrl($_helperBrands->getBrandsUrl());
+//$brands=$_helperBrands->getHomeBrands();
+?>
+<div class="left-link">
+<?php
+foreach ($collection as $_category):
+    $url=$_category->getUrl();
+   //$url=($brandCategoryId==$_category->getId()) ?$brandUrl:$_category->getUrl();
+   
+ ?>
+<h2><a href="<?php echo $url;?>" title="<?php echo $_category->getName();?>"><span><?php echo $this->__('SHOP')?></span><br/><?php echo $_category->getName();?></a></h2>
+        <?php $_category = Mage::getModel('catalog/category')->load($_category->getId()) ?>
+        <?php //if($brandCategoryId!=$_category->getId()) {?>
+                <?php $_subcategories = $_category->getChildrenCategories() ?>
+        <?php if (count($_subcategories) > 0): ?>
+                    <ul>
+                        <?php foreach($_subcategories as $_subcategory): ?>
+                        <?php $_subcategory = Mage::getModel('catalog/category')->load($_subcategory->getId()) ?>
+                        <?php $showLeft=$_subcategory->getShowLeft() ?>
+                            <?php if($_helperOuput->categoryAttribute($_subcategory, $showLeft, 'show_left')=="1"){ ?>
+                            <li>
+                            <?php $name=$_helperCustom->escapeCharacters($_subcategory->getName());?>
+                                <a href="<?php echo $_helper->getCategoryUrl($_subcategory) ?>" title="<?php echo $name?>">
+                                    <?php echo $name ?>
+                                </a>
+                            </li>
+                            <?php }?>
+                        <?php endforeach; ?>
+
+                        <?php if($brandCategoryId==$_category->getId()) { ?>
+                        <li>
+                            <li><a title="<?php echo $this->__('See All')?>" href="<?php echo $url ?>"><?php echo $this->__('See All')?></a></li>
+                            </li>
+                        <?php }?>
+                    </ul>
+				
+        <?php endif; ?>
+	<?php //}?>
+	<!---
+	<?php if($brandCategoryId==$_category->getId()) 
+	{ 
+	  if(count($brands)){
+	?>
+	<ul>
+	 <? foreach($_helperBrands->getHomeBrands() as $brand)	
+ 	   {
+	 ?>
+	   <li><a title="<?php echo $brand['title'] ?>" href="<?php echo $_helperBrands->getUrl($brand['url'])?>"><?php echo $brand['title'] ?></a></li>
+	<?php
+	   }
+	   ?>
+	   <li><a title="<?php echo $this->__('See All')?>" href="<?php echo $brandUrl ?>"><?php echo $this->__('See All')?></a></li>
+	  </ul>
+	  <?php 
+	  }
+	   ?>
+	     
+	 <?php }?>
+	 --->
+<?php	
+endforeach;
+?>
+</div>
+<?php
+endif;
+?>

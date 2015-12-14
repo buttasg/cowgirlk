@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+    </default>
+     <constantcontact_index_index>
+        <reference name="content">
+            <block type="constantcontact/constantcontact" name="constantcontact.index" template="constantcontact/index.phtml" />
+        </reference>
+    </constantcontact_index_index>
+    <constantcontact_index_confirmation>
+        <reference name="content">
+            <block type="constantcontact/constantcontact" name="constantcontact" template="constantcontact/confirmation.phtml" />
+        </reference>
+    </constantcontact_index_confirmation>
+</layout> 

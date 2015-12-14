@@ -1,0 +1,116 @@
+/* CSS Document */
+@font-face {
+    font-family: 'scala_sansregular';
+    src: url('../fonts/scala_sans-regular-webfont.eot');
+    src: url('../fonts/scala_sans-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/scala_sans-regular-webfont.woff') format('woff'),
+         url('../fonts/scala_sans-regular-webfont.ttf') format('truetype'),
+         url('../fonts/scala_sans-regular-webfont.svg#scala_sansregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'scala_sansbold';
+    src: url('../fonts/scala_sans-bold-webfont.eot');
+    src: url('../fonts/scala_sans-bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/scala_sans-bold-webfont.woff') format('woff'),
+         url('../fonts/scala_sans-bold-webfont.ttf') format('truetype'),
+         url('../fonts/scala_sans-bold-webfont.svg#scala_sansbold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}	
+
+@font-face {
+	font-family: 'Copperplate-Bold';
+	src: url('../fonts/Copperplate-Bold.eot?') format('eot'), 
+	     url('../fonts/Copperplate-Bold.woff') format('woff'), 
+	     url('../fonts/Copperplate-Bold.ttf')  format('truetype'),
+	     url('../fonts/Copperplate-Bold.svg#Copperplate-Bold') format('svg');
+		     font-weight: normal;
+    font-style: normal;
+
+}
+
+
+@font-face {
+    font-family: 'HelveticaNeueRegular';
+    src: url('../fonts/helveticaneue-condensed-webfont.eot');
+    src: url('../fonts/helveticaneue-condensed-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/helveticaneue-condensed-webfont.woff') format('woff'),
+         url('../fonts/helveticaneue-condensed-webfont.ttf') format('truetype'),
+         url('../fonts/helveticaneue-condensed-webfont.svg#HelveticaNeueRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'HelveticaRegular';
+    src: url('../fonts/helr45w-webfont.eot');
+    src: url('../fonts/helr45w-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/helr45w-webfont.woff') format('woff'),
+         url('../fonts/helr45w-webfont.ttf') format('truetype'),
+         url('../fonts/helr45w-webfont.svg#HelveticaRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+@font-face {
+	font-family: 'TFFCopperplateNormal';
+	src: url('../fonts/TFFCopperplateNormal.eot?') format('eot'), 
+	     url('../fonts/TFFCopperplateNormal.woff') format('woff'), 
+	     url('../fonts/TFFCopperplateNormal.ttf')  format('truetype'),
+	     url('../fonts/TFFCopperplateNormal.svg#TFFCopperplateNormal') format('svg');
+		     font-weight: normal;
+    font-style: normal;
+}
+
+
+@font-face {
+	font-family: 'Conv_Copperplate Bold';
+	src: url('../fonts/Copperplate Bold.eot');
+	src: local('☺'), url('../fonts/Copperplate Bold.woff') format('woff'), 
+	url('../fonts/Copperplate Bold.ttf') format('truetype'), 
+	url('../fonts/Copperplate Bold.svg') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'HelveticaCondensed';
+    src: url('hvc_____-webfont.eot');
+    src: url('hvc_____-webfont.eot?#iefix') format('embedded-opentype'),
+         url('hvc_____-webfont.woff') format('woff'),
+         url('hvc_____-webfont.ttf') format('truetype'),
+         url('hvc_____-webfont.svg#HelveticaCondensed') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+.mt-wrapper{background:url(../images/category1.png) top center no-repeat; width:100%; float:left; }
+/*
+/*.mt-wrapper{background:url(../images/homepage1.png) top center no-repeat; width:100%; float:left;}
+.mt-wrapper{background:url(../images/homepage2.png) top center no-repeat; width:100%; float:left;}
+.mt-wrapper{background:url(../images/homepage3.png) top center no-repeat; width:100%; float:left;}
+.mt-wrapper{background:url(../images/homepage4.png) top center no-repeat; width:100%; float:left;}
+.mt-wrapper{background:url(../images/homepage5.png) top center no-repeat; width:100%; float:left;}
+.mt-wrapper{background:url(../images/homepage6.png) top center no-repeat; width:100%; float:left;}
+.mt-wrapper{background:url(../images/homepage7.png) top center no-repeat; width:100%; float:left;}
+.mt-wrapper{background:url(../images/homepage8.png) top center no-repeat; width:100%; float:left;}
+.mt-wrapper{background:url(../images/homepage9.png) top center no-repeat; width:100%; float:left;}
+.mt-wrapper{background:url(../images/homepage10.png) top center no-repeat; width:100%; float:left;}
+.mt-wrapper{background:url(../images/homepage11.png) top center no-repeat; width:100%; float:left;}
+.mt-wrapper{background:url(../images/homepage12.png) top center no-repeat; width:100%; float:left;}
+.mt-wrapper{background:url(../images/homepage13.png) top center no-repeat; width:100%; float:left;}
+.mt-wrapper{background:url(../images/homepage14.png) top center no-repeat; width:100%; float:left;}
+.mt-wrapper{background:url(../images/homepage15.png) top center no-repeat; width:100%; float:left;}
+.mt-wrapper{background:url(../images/homepage16.png) top center no-repeat; width:100%; float:left;}
+.mt-wrapper{background:url(../images/homepage17.png) top center no-repeat; width:100%; float:left;}*/

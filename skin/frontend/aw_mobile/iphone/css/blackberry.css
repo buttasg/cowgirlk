@@ -1,0 +1,16 @@
+.slide-line div.image {
+    -webkit-box-shadow: none !important;
+}
+
+.media-eye {
+    background: none !important;
+    background-color: #e5e8e9 !important;
+}
+.aw-mobile-wishlist-item-name {
+    float: left;
+    margin-top: 4%;
+    margin-left: 20px;
+}
+.aw-mobile-wishlist-item-img { float: left; }
+
+.aw-mobile-wishlist-item { height: 70px; }

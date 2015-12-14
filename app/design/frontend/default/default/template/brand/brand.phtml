@@ -1,0 +1,62 @@
+<?php
+	$brands=$this->getBrands();
+	$_helper=Mage::helper('brand');
+?>
+<?php if(!count($brands)): ?>
+<p class="note-msg"><?php echo $this->__('There are no products matching the selection.') ?></p>
+<?php else: ?>
+	
+	  <h1>Brands</h1>
+	<?php
+		$brandList=array();
+		foreach($brands as $brand):
+		$brandList[]=array('title'=>$brand['title'],'image'=>$brand['filename'],'url'=>$_helper->getUrl($brand['url']));
+		endforeach;
+		$count=count($brandList);
+		$remainder=$count%4;
+		if($remainder>0 && $remainder<4)
+		{
+		  $count=$count+(4-$remainder);
+		}
+		$parts= $count/4;
+	?>
+ <div class="brands-sec">
+
+	<?php
+	$i=1;
+	foreach($brandList as $brand):
+		if($i==1)
+		{
+		  echo '<ul class="brands-link">';
+		}
+	?>
+		<li>
+		<a href="<?php echo $brand['url']?>" title="<?php echo $brand['title']?>"><?php echo $brand['title']?></a>
+		</li>
+	<?php 
+	if($i%$parts==0 && $i!=$count) {echo '</ul><ul class="brands-link">';}
+	
+	if($i==$count)
+	{
+	  echo '</ul>';
+	}
+	$i++
+	?>
+	
+	<?php endforeach;?>
+
+  </div>
+  <div class="brands-images"> 
+
+	<?php
+        reset($brandList);
+	foreach($brandList as $brand):
+	?>
+
+		  <a href="<?php echo $brand['url']?>" title="<?php echo $brand['title']?>">
+		<img src="<?php echo '/media/'.$brand['image']?>" alt="<?php echo $brand['title']?>" width="238" height="115"/>
+		</a>
+
+	<?php endforeach;?>
+  </div>
+<?php endif;?>

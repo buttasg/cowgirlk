@@ -1,0 +1,102 @@
+<!--[if !IE]>banner-section div start here<![endif]-->
+
+<div class="banner-section1">
+<?php echo $this->getLayout()->createBlock('core/template')->setTemplate('catalog/category/home_left.phtml')->toHtml();?>
+  <div class="slider-section">
+      <?php echo $this->getLayout()->createBlock('homeslider/homeslider')->setTemplate('homeslider/homeslider.phtml')->toHtml();?>
+  </div>
+</div>
+<!--[if !IE]>banner-section div end here<![endif]-->
+<!--[if !IE]>new-arrivals-sec div start here<![endif]-->
+
+<?php $newArrivalcollection=Mage::getModel('catalog/product')->getCollection();?>
+
+<?php     
+$_helperCustom = $this->helper('custom');
+$dealOfTheDayProduct=$_helperCustom->getDealOftheDay();
+
+$helper=Mage::helper('catalog/image');
+$productBlock = new Mage_Catalog_Block_Product();
+
+$newArrivalcollection->addAttributeToFilter('new_arrival',1)
+	   ->addAttributeToFilter('status',1)
+	   ->addAttributeToFilter('visibility',4)
+	   //->addAttributeToFilter('news_from_date',array('or'=>array('lteq'=>date('Y-m-d'), 'eq'=>'null'),'date' => true))
+	   //->addAttributeToFilter('news_to_date',array('or'=>array('gteq'=>date('Y-m-d'), 'eq'=>'null'),'date' => true))
+
+	   ->setPageSize(3)
+	   ->setCurPage(1)
+	   ->addAttributeToSort('updated_at','DESC');
+	//echo $newArrivalcollection->getSelect();   
+if($newArrivalcollection->count() || $dealOfTheDayProduct):
+?>
+
+<div class="new-arrivals-sec">
+  <div class="product-heading-main">
+  <?php if($newArrivalcollection->count()):?>
+    <div class="product-heading default-img">
+      <h3>NEW ARRIVALS</h3>
+    </div>
+   <?php endif;?>
+   <?php if($dealOfTheDayProduct):?>
+    <div class="deal-day default-img">
+      <h3>DEAL OF THE DAY</h3>
+    </div>
+    <?php endif;?>
+  </div>
+  <ul>
+  <?php foreach($newArrivalcollection as $_product):?>
+  <?php $_product=Mage::getModel('catalog/product')->load($_product->getId());?>
+  <?php $productName=$_product->getName();?>
+    <li> 
+	
+	<div class="product-img"> 
+	
+  
+    <img src="<?php echo $helper->init($_product, 'small_image')->resize(238,279); ?>" width="238" height="279" alt="<?php echo $_helperCustom->escapeCharacters($productName)?>" />
+
+	<a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image-new view-img"> </a> 
+		<a class="default-img view-img1" title="view" href="<?php echo $_product->getProductUrl() ?>">view</a>
+	</div>
+      <div class="product-home-price">
+	  <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $_helperCustom->escapeCharacters($productName)?>"><?php echo $productName?></a><br/>
+	  
+	  <div class="brand-txt"><?php echo $_helperCustom->getBrandName($_product);//$_product->getAttributeText('brand'); ?></div>
+        <div><?php echo $productBlock->getPriceHtml($_product);?></div>
+		
+		</div>
+        <?php $percentage=$_helperCustom->getDiscountPercentage($_product); ?>
+          <?php if($percentage) {?>
+          <span class="discount"><?php echo $percentage?>% off</span>
+          <?php }?>
+    </li>
+  <?php endforeach; ?>
+  
+  <?php if($dealOfTheDayProduct):?>
+  <?php $_product=$dealOfTheDayProduct?>
+   <?php $productName=$_product->getName();?>
+    <li> 
+	<div class="product-img"> 
+    <img src="<?php echo $helper->init($_product, 'small_image')->resize(238,279); ?>" width="238" height="279" alt="<?php echo $_helperCustom->escapeCharacters($productName)?>" />
+	<a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image-new view-img"> </a> 
+	<a class="default-img view-img1" title="view" href="<?php echo $_product->getProductUrl() ?>">view</a>
+		</div>
+		
+        <div class="product-home-price">
+	  <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $_helperCustom->escapeCharacters($productName)?>"><?php echo $productName?></a><br/>
+	  <div class="brand-txt"><?php echo $_helperCustom->getBrandName($_product);//$_product->getAttributeText('brand'); ?></div> 
+        <div><?php echo $productBlock->getPriceHtml($_product);?></div>
+		</div>
+      <?php $percentage=$_helperCustom->getDiscountPercentage($_product); ?>
+          <?php if($percentage) {?>
+          <span class="discount"><?php echo $percentage?>% off</span>
+          <?php }?>
+           </li>
+   <?php endif;?>
+  </ul>
+</div>
+<?php endif;?>
+<!--[if !IE]>new-arrivals-sec div end here<![endif]-->
+<!--[if !IE]>category-sec div start here<![endif]-->
+<?php echo $this->getLayout()->createBlock('core/template')->setTemplate('catalog/category/home.phtml')->toHtml();?>
+<!--[if !IE]>category-sec div end here<![endif]-->

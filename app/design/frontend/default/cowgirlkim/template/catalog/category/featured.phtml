@@ -1,0 +1,24 @@
+<?php $_helper = Mage::helper('catalog/category') ?>
+<?php $_helperOuput = Mage::helper('catalog/output'); ?>
+<?php $_helperCustom = Mage::helper('custom'); ?>
+<?php
+$collection=$_helperCustom->getFeaturedCategories();
+if($collection->count()):
+?>
+ <h2>FEATURED</h2>
+      <ul class="brand-link">
+ <?php
+foreach ($collection as $_category):
+        
+ ?>
+  <?php $_category = Mage::getModel('catalog/category')->load($_category->getId()) ?>
+        <li><a href="<?php echo $_helper->getCategoryUrl($_category) ?>" title="<?php echo $_category->getName();?>">
+                                    <?php echo $_category->getName() ?>
+                                </a></li>
+<?php
+endforeach;
+?>
+      </ul>
+<?php
+endif;
+?>

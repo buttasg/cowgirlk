@@ -1,0 +1,147 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <As_Contactus>
+            <version>0.1.0</version>
+        </As_Contactus>
+    </modules>
+    <frontend>
+        <routers>
+            <contactus>
+                <use>standard</use>
+                <args>
+                    <module>As_Contactus</module>
+                    <frontName>contactus</frontName>
+                </args>
+            </contactus>
+        </routers>
+        <layout>
+            <updates>
+                <contactus>
+                    <file>contactus.xml</file>
+                </contactus>
+            </updates>
+        </layout>
+    </frontend>
+    <admin>
+        <routers>
+			<contactus>
+				<use>admin</use>
+				<args>
+					<module>As_Contactus</module>
+					<frontName>contactus</frontName>
+				</args>
+			</contactus>
+        </routers>
+    </admin>
+    <adminhtml>
+
+		<acl>
+			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all>
+				<admin>
+					<children>
+						<!--As_Contactus>
+							<title>Contactus Module</title>
+							<sort_order>10</sort_order>
+						</As_Contactus>-->
+						<contactus module="contactus">
+							<children>
+								<items module="contactus">
+									<title>Manage Contactus</title>
+									<sort_order>11</sort_order>
+								</items>
+							</children>
+						</contactus>
+						  <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <contactus>
+                                            <title>Contactus Module</title>
+                                        </contactus>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+		<layout>
+			<updates>
+				<contactus>
+					<file>contactus.xml</file>
+				</contactus>
+			</updates>
+		</layout>
+    </adminhtml>   
+    <global>
+        <models>
+            <contactus>
+                <class>As_Contactus_Model</class>
+                <resourceModel>contactus_mysql4</resourceModel>
+            </contactus>
+            <contactus_mysql4>
+                <class>As_Contactus_Model_Mysql4</class>
+                <entities>
+                    <contactus>
+                        <table>contactus</table>
+                    </contactus>
+                </entities>
+            </contactus_mysql4>
+        </models>
+        <resources>
+            <contactus_setup>
+                <setup>
+                    <module>As_Contactus</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </contactus_setup>
+            <contactus_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </contactus_write>
+            <contactus_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </contactus_read>
+        </resources>
+        <blocks>
+            <contactus>
+                <class>As_Contactus_Block</class>
+            </contactus>
+        </blocks>
+        <helpers>
+            <contactus>
+                <class>As_Contactus_Helper</class>
+            </contactus>
+        </helpers>
+        
+       <rewrite>
+        <contacts_redirect_url>
+        <from>#^/contacts/index/#</from>
+        <to>/contactus/index/</to>
+        </contacts_redirect_url>
+        </rewrite>
+        
+        
+         <template>
+            <email>
+                <contactus_auto_responder  module="contactus">
+                    <label>Auto Responder</label>
+                    <file>auto_responder.html</file>
+                    <type>html</type>
+                </contactus_auto_responder>
+            </email>
+        </template>
+        
+    </global>
+
+</config>

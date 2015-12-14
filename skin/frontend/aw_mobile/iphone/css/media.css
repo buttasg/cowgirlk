@@ -1,0 +1,67 @@
+.media-eye {
+
+    float:none;
+    height:300px;
+    margin:auto auto -20px -10px;
+    overflow:hidden;
+    padding-top:21px;
+    padding-right: 20px;
+    position:relative;
+    width:100%;
+}
+
+.slide-line {
+    margin-top:0;
+    height:300px;
+    left:17px;
+    padding-left:7px;
+    padding-top:3px;
+    position:absolute; 
+}
+
+
+.slide-line div.image {
+    float:left;
+    margin-right:14px;
+    position:relative;
+    width:270px;
+    height: 270px;
+    -webkit-box-shadow: 0 1px 21px #888888;
+    -moz-box-shadow: 0 1px 21px #888888;
+}
+
+.slide-line.animate {
+    -webkit-transition-property: -webkit-transform;
+    -webkit-transition-timing-function: ease-out;
+    -webkit-transition-duration: 100ms;
+}
+
+.media-eye a.abutton{
+    background-image: url("../images/media_arrows.gif");
+    display: none;
+    height: 62px;
+    margin-top: -28px;
+    position: absolute;
+    top: 50%;
+    width: 38px;
+    z-index: 1001;
+
+}
+
+.media-eye a.abutton.left {
+    left: 0;
+}
+.media-eye a.abutton.right {
+    right: 0;
+    background-position: 100% 0;
+}
+
+.media-eye a.abutton.left:hover {
+    left: 0;
+    background-position: 0 100%;
+}
+.media-eye a.abutton.right:hover {
+    right: 0;
+    background-position: 100% 100%;
+    
+}

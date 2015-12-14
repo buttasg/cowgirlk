@@ -1,0 +1,27 @@
+ <div class="newsletter-box ">
+            <h4 class="default-img" >NEWSLETTER</h4>
+            <p>Don’t miss out on all things Western Chic!<br/>
+              Subscribe to our newsletter and start receiving special deals, exclusive offers, and styling tips from Cowgirl Kim.</p>
+            <div class="newsletter-search">
+              <input type="text" value="" data-watermark="Enter Your Email Address" id="footer_newsletter" name="email" />
+              <input name="btnNlSignup"  class="default-img subscribe-button-wp"  type="submit"  id="btnNlSignup" />
+            </div>
+            <div id="nsl_error" class="no-dispaly"></div>
+          </div>
+		   <?php $url=Mage::helper('custom')->getCommonProtocolUrl(Mage::getUrl('constantcontact/index/subscribeVisitor'));?>
+
+
+<script type="text/javascript">
+//<![CDATA[
+jQuery(function(){
+	jQuery('#footer_newsletter').attr('autocomplete',"off");
+	jQuery('#newsletter-box').cc({textId: "#footer_newsletter",
+		   buttonId: "#btnNlSignup",
+		   errorDivId:"#nsl_error",
+		   fadeImgPath:"<?php echo $this->getSkinUrl('images/subscribe-btn.png')?>",
+		   highlightImgPath:"<?php echo $this->getSkinUrl('images/subscribe-btn1.png')?>",
+		   url:"<?php echo $url?>"
+		   });
+});
+ //]]>
+</script>

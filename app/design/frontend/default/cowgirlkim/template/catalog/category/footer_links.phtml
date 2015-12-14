@@ -1,0 +1,34 @@
+<?php $_helperCustom = Mage::helper('custom');
+$collection=$_helperCustom ->getFooterCategories();
+if($collection->count()):
+ $_helperBrands = Mage::helper('brand'); 
+ $brandCategoryId=Mage::getStoreConfig('brand/brand/category_id');
+$brandUrl=Mage::getUrl($_helperBrands->getBrandsUrl());
+?>
+
+<ul>
+<?php
+foreach ($collection as $_category):
+
+$name=$_helperCustom->ufcase($_category->getName());
+
+ if($brandCategoryId==$_category->getId())
+ {
+ ?>
+ <li><a href="<?php echo $brandUrl;?>" title="<?php echo $name;?>"><?php echo $name;?></a></li>
+ <?php
+ }
+ else
+ {
+ ?>
+<li><a href="<?php echo $_category->getUrl();?>" title="<?php echo $name;?>"><?php echo $name;?></a></li>
+
+<?php
+}
+endforeach;
+?>
+</ul>
+<?php
+endif;
+?>
+
